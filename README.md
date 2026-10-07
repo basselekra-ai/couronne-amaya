@@ -37,7 +37,7 @@ Ce dossier transforme le jeu en application Android et iOS avec [Capacitor](http
 ### Option A : sans rien installer, avec GitHub
 
 1. Crée un dépôt GitHub (privé si tu veux) et envoie-y le contenu de ce dossier.
-2. Onglet **Actions > Android > Run workflow**. Après environ 5 minutes, télécharge l'artefact `couronne-amaya-apk-test` : c'est un APK à installer sur ton téléphone Android pour essayer le jeu.
+2. Onglet **Actions > Android > Run workflow**. Après environ 5 minutes, ouvre **Releases** (colonne de droite de la page du dépôt, ou `/releases/latest`) et touche **couronne-amaya-test.apk** : c'est l'APK à installer sur ton téléphone Android pour essayer le jeu.
 3. Pour Google Play, il faut une **clé de signature**. Crée-la une seule fois sur ton ordinateur (Java requis) :
    ```bash
    keytool -genkeypair -v -keystore couronne-amaya.jks -alias amaya -keyalg RSA -keysize 2048 -validity 10000

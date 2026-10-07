@@ -9,6 +9,9 @@ on:
   push:
     tags: ['v*']
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -69,6 +72,17 @@ jobs:
             grep -E "What went wrong|error:|Error|Exception|> " "$RUNNER_TEMP/gradle-release.log" | head -15 | while IFS= read -r l; do echo "::error::$l"; done
             exit 1
           }
+
+      - name: Page de téléchargement de l'APK (Releases)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp android/app/build/outputs/apk/debug/app-debug.apk couronne-amaya-test.apk
+          TAG="test-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" couronne-amaya-test.apk \
+            --title "Version de test n°${GITHUB_RUN_NUMBER}" \
+            --notes "APK de test à installer sur un téléphone Android. Touche **couronne-amaya-test.apk** ci-dessous pour le télécharger, puis ouvre-le et autorise l'installation." \
+            --target "$GITHUB_SHA" --latest
 
       - uses: actions/upload-artifact@v4
         with:
