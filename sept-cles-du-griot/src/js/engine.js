@@ -33,7 +33,7 @@ const MapScreen = {
   show(focus) {
     UI.show('scr-map');
     if (!Music.cur || ['tension', 'action', 'rumba'].includes(Music.cur)) Music.play('calme');
-    $('#map-keys').textContent = Save.d.keys.length + '/7';
+    $('#map-keys').textContent = Save.d.keys.length < 7 ? Save.d.keys.length + '/7' : `7/7 · ${(Save.d.pages || []).length}/8`;
     UI.refreshCauris();
     this.render();
     this.select(focus || this.current());
@@ -54,16 +54,17 @@ const MapScreen = {
       const done = d.chapters[CHAPTERS[i - 1].id]?.done;
       route += `<path d="M${x1} ${y1}Q${mx} ${my} ${x2} ${y2}" fill="none" stroke="${done ? '#f2b33d' : 'rgba(255,255,255,.35)'}" stroke-width="${done ? 2.6 : 1.8}" ${done ? '' : 'class="map-route"'} stroke-linecap="round"/>`;
     }
-    const LBL = { dakar: [-4, -12, 'middle'], bamako: [6, -12, 'start'], yamoussoukro: [-6, 18, 'end'], accra: [10, 16, 'start'], kinshasa: [-12, 4, 'end'], addis: [12, 4, 'start'], caire: [12, 4, 'start'] };
+    const LBL = { dakar: [-9, 4, 'end'], bamako: [-6, -10, 'end'], yamoussoukro: [-6, 16, 'end'], accra: [6, 15, 'start'], kinshasa: [10, 2, 'start'], addis: [10, 4, 'start'], caire: [10, 4, 'start'],
+      nairobi: [10, 6, 'start'], kigali: [-9, -6, 'end'], antananarivo: [0, 17, 'middle'], luanda: [-10, 6, 'end'], yaounde: [8, 13, 'start'], abuja: [8, -8, 'start'], ouagadougou: [4, -10, 'start'], rabat: [9, 4, 'start'] };
     const nodes = CHAPTERS.map((c, i) => {
       const [x, y] = pts[i], ch = d.chapters[c.id], open = this.unlocked(c.id), cur = open && !ch?.done;
       const [lx, ly, la] = LBL[c.id];
       return `<g class="map-node" data-id="${c.id}">
         <circle cx="${x}" cy="${y}" r="20" fill="transparent"/>
         ${cur ? `<circle class="halo" cx="${x}" cy="${y}" r="10" fill="none" stroke="#ffe08a" stroke-width="2.5"/>` : ''}
-        <circle cx="${x}" cy="${y}" r="${cur ? 8.5 : 7}" fill="${ch?.done ? '#f2b33d' : open ? '#c8553d' : '#4a3a5a'}" stroke="#fff4e0" stroke-width="2"/>
+        <circle cx="${x}" cy="${y}" r="${cur ? 7.5 : 6}" fill="${ch?.done ? '#f2b33d' : open ? '#c8553d' : '#4a3a5a'}" stroke="#fff4e0" stroke-width="2"/>
         ${ch?.done ? `<path d="M${x - 3.2} ${y}l2.2 2.4 4.4-4.8" stroke="#3c1f04" stroke-width="2" fill="none" stroke-linecap="round"/>` : ''}
-        <text x="${x + lx}" y="${y + ly}" text-anchor="${la}" font-family="Lilita One,sans-serif" font-size="12.5" fill="${open ? '#fff4e0' : 'rgba(255,244,224,.45)'}" stroke="#140c1f" stroke-width="3" paint-order="stroke">${c.city}</text>
+        <text x="${x + lx}" y="${y + ly}" text-anchor="${la}" font-family="Lilita One,sans-serif" font-size="11" fill="${open ? '#fff4e0' : 'rgba(255,244,224,.45)'}" stroke="#140c1f" stroke-width="3" paint-order="stroke">${c.city}</text>
       </g>`;
     }).join('');
     $('#map-wrap').innerHTML = `<svg viewBox="-34 -6 446 404" xmlns="http://www.w3.org/2000/svg">
@@ -93,7 +94,7 @@ const MapScreen = {
       if (ch?.done) acts += `<button class="btn terra" data-a="quiz">Quiz ${ch.quiz ? '✓' : ''}</button>`;
     }
     $('#map-panel').innerHTML = `<div class="mp-head"><div class="mp-flag">${flag(c.flag)}</div>
-      <div><div class="mp-city">${c.city}</div><div class="mp-sub">Chapitre ${c.num} · ${c.country}</div></div>
+      <div><div class="mp-city">${c.city}</div><div class="mp-sub">Acte ${c.act || 1} · Chapitre ${c.num} · ${c.country}</div></div>
       ${ch?.done ? `<div class="mp-stars" title="Étoiles">★ ${stars}/${maxS}</div>` : open ? '' : `<span class="ico" style="margin-left:auto;width:28px;height:28px">${Icons.get('cadenas')}</span>`}</div>
       <div class="mp-desc"><b style="color:var(--gold-hi)">${c.sub}.</b> ${open ? c.desc : 'Une nouvelle porte attend…'}</div>
       <div class="mp-actions">${acts}</div>`;
@@ -120,6 +121,7 @@ const Story = {
     Object.assign(this, parsed(chId));
     this.ch = chId; this.i = from;
     Save.d.started = true;
+    if (c.act === 2) unlockTrophy('acte2');
     this.scene = { bg: null, time: 'jour', place: '', music: null, right: null, danger: false };
     this.resetView();
     UI.show('scr-story');
@@ -228,7 +230,7 @@ const Story = {
     const nm = $('#st-name');
     nm.textContent = st.who === 'masque' && Save.d.flags.aveu ? 'Ibrahima' : c.name;
     nm.className = 'dlg-name' + (st.who === 'awa' ? '' : ' right') + (['agent', 'masque'].includes(st.who) ? ' dark' : '');
-    const voice = { awa: 720, seydou: 300, ibrahima: 380, kofi: 460, fanta: 680, akissi: 760, nanan: 280, didi: 420, lukusa: 320, makeda: 640, nour: 700, agent: 220, masque: 180 }[st.who] || 500;
+    const voice = { awa: 720, seydou: 300, ibrahima: 380, kofi: 460, fanta: 680, akissi: 760, nanan: 280, didi: 420, lukusa: 320, makeda: 640, nour: 700, agent: 220, masque: 180, wanjiru: 620, ange: 740, hery: 440, nzinga: 680, ngono: 560, bekolo: 400, tunde: 360, aminata: 660, salma: 600 }[st.who] || 500;
     if (st.mood === 'peur' || st.mood === 'colere') Haptic.tap();
     await this.typeInto($('#st-text'), st.text, voice);
     dlg.classList.add('done');
@@ -253,7 +255,7 @@ const Story = {
     const ph = $('#st-phone'), body = $('#ph-body');
     const from = st.from === 'me' ? this.phoneFrom : st.from;
     if (this.phoneFrom !== from || ph.hidden) {
-      const names = { hibou: 'Le Hibou', gris: 'Numéro inconnu', papi: 'Papi', inconnu: 'Numéro masqué' };
+      const names = { hibou: 'Le Hibou', gris: 'Numéro inconnu', papi: 'Papi', inconnu: 'Numéro masqué', mecene: 'Le Mécène' };
       $('#ph-name').textContent = names[from] || from;
       $('#ph-av').innerHTML = avatar(from === 'papi' ? 'seydou' : from);
       body.innerHTML = '';
@@ -273,9 +275,10 @@ const Story = {
       body.append(typing); body.scrollTop = body.scrollHeight;
       await sleep(650);
       typing.remove();
-      body.append(el('div.bubble' + (from === 'gris' ? '.threat' : ''), { html: fmt(st.text) }));
-      Sfx.play(from === 'gris' ? 'smsBad' : 'sms');
-      from === 'gris' ? Haptic.hard() : Haptic.mid();
+      const bad = from === 'gris' || from === 'mecene';
+      body.append(el('div.bubble' + (bad ? '.threat' : ''), { html: fmt(st.text) }));
+      Sfx.play(bad ? 'smsBad' : 'sms');
+      bad ? Haptic.hard() : Haptic.mid();
     }
     body.scrollTop = body.scrollHeight;
     await this.wait();
@@ -315,6 +318,17 @@ const Story = {
     await this.card(`<div class="rays"></div><div class="cp-kind">Clé de mémoire</div><div class="cp-art">${medallion(n, 170)}</div>
       <div class="cp-title">${['Le baobab', 'Le caïman', 'L\'éléphant', 'L\'étoile', 'Le léopard', 'Le caféier', 'La pyramide'][n - 1]}</div>
       <div class="cp-text">${Save.d.keys.length} clé${Save.d.keys.length > 1 ? 's' : ''} sur 7</div>`, 'key');
+  },
+
+  async page(n) {
+    const d = Save.d;
+    d.pages = d.pages || [];
+    if (!d.pages.includes(n)) { d.pages.push(n); Save.save(); }
+    Sfx.play('key'); Haptic.hard(); UI.flash();
+    if (d.pages.length >= 8) unlockTrophy('huit_pages');
+    await this.card(`<div class="rays"></div><div class="cp-kind">Page perdue du Livre</div><div class="cp-art" style="width:130px;height:146px">${pageArt(n)}</div>
+      <div class="cp-title">${['La page de la savane', 'La page des collines', 'La page de l\'île rouge', 'La page de la reine', 'La page du marché', 'La page du rocher', 'La page du festival', 'La page de l\'océan'][n - 1]}</div>
+      <div class="cp-text">${d.pages.length} page${d.pages.length > 1 ? 's' : ''} sur 8</div>`, 'key');
   },
 
   /* ---------- choix ---------- */
@@ -366,6 +380,7 @@ const Story = {
       let m;
       if ((m = c.match(/^trust>=(-?\d+)$/))) return Save.d.trust >= +m[1];
       if ((m = c.match(/^frags>=(\d+)$/))) return Save.d.frags.length >= +m[1];
+      if ((m = c.match(/^count\(([\w|]+)\)>=(\d+)$/))) return m[1].split('|').filter(f => Save.d.flags[f]).length >= +m[2];
       if (c[0] === '!') return !Save.d.flags[c.slice(1)];
       return !!Save.d.flags[c];
     });
@@ -385,6 +400,7 @@ const Story = {
       case 'clue': return this.clue(st.a[0]);
       case 'fact': return this.fact(st.a[0]);
       case 'key': return this.key(+st.a[0]);
+      case 'page': return this.page(+st.a[0]);
       case 'sfx': Sfx.play(st.a[0]); if (st.a[0] === 'stinger') Haptic.hard(); return;
       case 'wait': await sleep(+st.a[0]); return;
       case 'shake': UI.shake(); Haptic.hard(); return;
@@ -424,13 +440,15 @@ const Story = {
     return undefined;
   },
   async ending(kind) {
+    const E = ENDINGS[kind];
     if (!Save.d.endings.includes(kind)) Save.d.endings.push(kind);
+    for (const k of Object.keys(ENDINGS)) if (ENDINGS[k].act === E.act) delete Save.d.flags['fin_' + k];
+    Save.d.flags['fin_' + kind] = true;
     Save.save();
     unlockTrophy(kind);
-    const T = { lumiere: ['La mémoire libre', 'Le Collectionneur est arrêté. Le Livre des Rives sera partagé avec tout le continent.'], aube: ['L\'aube incertaine', 'Papi est sauvé. Mais le Collectionneur s\'est enfui dans la nuit, avec une page du Livre.'] }[kind];
     Sfx.play('win');
-    await this.card(`<div class="rays"></div><div class="cp-kind">Fin ${kind === 'lumiere' ? '1/2 · la meilleure' : '2/2'}</div><div class="cp-title" style="font-size:30px">${T[0]}</div><div class="cp-text">${T[1]}</div>
-      ${kind === 'aube' ? '<div class="cp-text" style="margin-top:10px;color:var(--gold-hi)">Il existe une autre fin… Fais confiance à tes alliés, et retourne ses armes contre le Collectionneur.</div>' : ''}`, 'key');
+    await this.card(`<div class="rays"></div><div class="cp-kind">Acte ${E.act === 1 ? 'I' : 'II'} · ${E.rank}</div><div class="cp-title" style="font-size:30px">${E.t}</div><div class="cp-text">${E.d}</div>
+      ${E.hint ? `<div class="cp-text" style="margin-top:10px;color:var(--gold-hi)">${E.hint}</div>` : ''}`, 'key');
   },
 
   /* ---------- fin de chapitre ---------- */
@@ -464,6 +482,14 @@ const Story = {
     if (v === 'set') { await Settings.open(); return; }
     if (v === 'map') { this.abort(); MapScreen.show(this.ch); }
   },
+};
+
+const ENDINGS = {
+  lumiere: { act: 1, rank: 'la meilleure fin', t: 'La mémoire libre', d: 'Le Collectionneur est arrêté. Le Livre des Rives sera partagé avec tout le continent.' },
+  aube: { act: 1, rank: 'fin 2 sur 2', t: 'L\'aube incertaine', d: 'Papi est sauvé. Mais le Collectionneur s\'est enfui dans la nuit, avec un manuscrit du Livre.', hint: 'Il existe une autre fin… Fais confiance à tes alliés, et retourne ses armes contre le Collectionneur.' },
+  retour: { act: 2, rank: 'la meilleure fin', t: 'Le grand retour', d: 'Nour a choisi de changer de chemin. Le Registre des Rives est rendu public, et les trésors de l\'Afrique commencent à rentrer chez eux.' },
+  justice: { act: 2, rank: 'fin 2 sur 3', t: 'Justice', d: 'Le Mécène est arrêté et le Registre est sauvé. Mais une amitié s\'est brisée.', hint: 'Et si, au fil du voyage, tu avais tendu la main à Nour ?' },
+  page: { act: 2, rank: 'fin 3 sur 3', t: 'La page manquante', d: 'Nour s\'est enfuie avec une page. Le Registre est presque complet… presque.', hint: 'Nour se souvient de chaque geste de confiance, de Nairobi à Ouagadougou.' },
 };
 
 /* ======================= QUIZ ======================= */
@@ -513,7 +539,7 @@ const Carnet = {
   tab: 'indices',
   async open() {
     const render = () => {
-      const d = Save.d, tabs = [['indices', 'Indices'], ['perso', 'Personnages'], ['savoir', 'Le saviez-vous'], ['cles', 'Clés'], ['trophees', 'Trophées']];
+      const d = Save.d, tabs = [['indices', 'Indices'], ['perso', 'Personnages'], ['savoir', 'Le saviez-vous'], ['cles', 'Trésors'], ['trophees', 'Trophées']];
       let body = '';
       if (this.tab === 'indices') {
         body = d.clues.length ? d.clues.map(id => { const c = CLUES[id]; return `<div class="cn-item"><div class="ic">${id.startsWith('photo') ? guardiansPhoto(id === 'photo' ? 'dechiree' : 'complete') : clueArt(c.art)}</div><div><b>${c.t}</b><p>${fmt(c.d)}</p></div></div>`; }).join('')
@@ -521,7 +547,7 @@ const Carnet = {
       } else if (this.tab === 'perso') {
         const seen = d.seenCast || [];
         body = Object.keys(BIOS).filter(k => seen.includes(k)).map(k => {
-          const after = BIOS_AFTER[k] && ((k === 'seydou' && d.clues.includes('otage')) || (k !== 'seydou' && d.clues.includes('aveu')));
+          const after = BIOS_AFTER[k] && d.clues.includes(BIOS_AFTER_CLUE[k]);
           return `<div class="cn-item"><div class="ic">${portrait(k, 'neutre').replace('viewBox="0 0 200 240"', 'viewBox="30 30 140 140"')}</div><div><b>${CAST[k].name}</b><p>${after ? BIOS_AFTER[k] : BIOS[k]}</p></div></div>`;
         }).join('') || '<div class="cn-empty">Personne pour l\'instant.</div>';
       } else if (this.tab === 'savoir') {
@@ -532,7 +558,9 @@ const Carnet = {
         }).join('');
       } else if (this.tab === 'cles') {
         body = `<div class="cn-keys">${[1, 2, 3, 4, 5, 6, 7].map(n => `<div class="cn-key"><div class="ic">${medallion(n, 80, d.keys.includes(n))}</div>${CHAPTERS[n - 1].city}</div>`).join('')}</div>
-          <h3 style="font-family:var(--f-display);font-weight:400;margin:18px 0 6px">Fragments de mémoire · ${d.frags.length}/7</h3>
+          <h3 style="font-family:var(--f-display);font-weight:400;margin:18px 0 6px">Pages perdues · ${(d.pages || []).length}/8</h3>
+          <div class="cn-keys">${[1, 2, 3, 4, 5, 6, 7, 8].map(n => `<div class="cn-key"><div class="ic">${pageArt(n, (d.pages || []).includes(n))}</div>${CHAPTERS[6 + n].city}</div>`).join('')}</div>
+          <h3 style="font-family:var(--f-display);font-weight:400;margin:18px 0 6px">Fragments de mémoire · ${d.frags.length}/15</h3>
           <p style="color:var(--muted);font-size:13.5px;margin:0 0 8px">Un fragment doré se cache dans un défi de chaque ville. Réunis-les tous pour découvrir le secret de la fin.</p>
           <div class="cn-keys">${CHAPTERS.map(c => `<div class="cn-key"><div class="ic" style="display:grid;place-items:center;font-size:30px;filter:${d.frags.includes(c.id) ? 'none' : 'grayscale(1) brightness(.4)'}">${Icons.get('cauri')}</div>${c.city}</div>`).join('')}</div>`;
       } else {
@@ -559,7 +587,7 @@ const Settings = {
       <div class="set-row">Vibrations <button class="switch ${s.vib ? 'on' : ''}" data-k="vib" aria-label="Vibrations"></button></div>
       <div class="set-row">Vitesse du texte <span style="display:flex;gap:6px">${['Lent', 'Normal', 'Rapide'].map((l, i) => `<button class="tab ${s.speed === i ? 'on' : ''}" data-speed="${i}">${l}</button>`).join('')}</span></div>
       <div class="set-row"><span>Progression</span><button class="btn small ghost" data-reset>Effacer</button></div>
-      <p style="font-size:12.5px;color:var(--muted);margin-top:14px;text-align:center">Les 7 Clés du Griot · v1.0<br>Une fiction : les personnages et le Livre des Rives sont imaginaires ; les lieux et les « Le saviez-vous ? » sont réels.</p></div>`;
+      <p style="font-size:12.5px;color:var(--muted);margin-top:14px;text-align:center">Les 7 Clés du Griot · v1.1<br>Une fiction : les personnages et le Livre des Rives sont imaginaires ; les lieux et les « Le saviez-vous ? » sont réels.</p></div>`;
     const p = UI.modal({ title: 'Réglages', html, buttons: [{ label: 'OK', value: true }] });
     const m = $('#modal');
     m.oninput = e => { const k = e.target.dataset.k; if (!k) return; s[k] = +e.target.value; Snd.applyVolumes(); Save.save(); if (k === 'sfx') Sfx.play('tap'); };

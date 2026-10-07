@@ -560,13 +560,464 @@ awa.determine: Alors on ne le cachera plus. Le Livre des Rives appartient à tou
 seydou.sourire: Les gardiens ont voté, Awa. Il nous faut une nouvelle gardienne. Une qui court plus vite que nous.
 awa.surpris: Moi ?
 seydou.sourire: Toi. La griotte des Sept Clés.
-@if frags>=7 secret
+seydou.inquiet: Mais il y a autre chose, Awa. Le Livre des Rives… Il lui manque ses huit dernières pages.
+> Sur la dernière page restante, une phrase, d'une écriture très ancienne : « Là où finissent les sept portes commence la *huitième*. »
+>> Fin de l'acte I
+@end`,
+  },
+  {
+    id: 'nairobi', num: 8, act: 2, city: 'Nairobi', country: 'Kenya', flag: 'ke', ll: [36.82, -1.29], sub: 'Les girafes et les gratte-ciel',
+    desc: 'Le Livre des Rives a perdu huit pages. La première dort sous un acacia, au milieu des lions… et le Mécène veut toutes les pages.',
+    script: `
+@bg bibliotheque
+@music tension
+@place Le Caire · Trois mois plus tard
+>> Acte II · La Huitième Porte
+> Trois mois plus tard. Awa, Kofi et Nour étudient le Livre des Rives, page après page.
+nour.neutre: Regarde la reliure, Awa. Huit fils coupés. Huit pages arrachées… il y a très longtemps.
+kofi.malin: Et sur la dernière page qui reste, ce dessin : une girafe devant des immeubles. Pas très discret, comme indice.
+awa.determine: Nairobi.
+seydou.neutre: Allô, Awa ? Les Sept avaient juré de ne jamais en parler. Ces huit pages forment le *Registre des Rives* : la liste de tout ce qu'on a pris à l'Afrique… et de l'endroit où c'est caché aujourd'hui.
+@exit
+@sfx smsBad
+sms:mecene Bravo pour Le Caire, Awa. Ibrahima n'était qu'un employé.
+sms:mecene Les huit pages m'appartiennent. J'ai déjà des acheteurs.
+@phone off
+@if fin_aube aube
+awa.inquiet: Ibrahima est en prison… Alors qui est ce « Mécène » ?
 @goto suite
-@label secret
-> Dans la doublure de la vieille kora, Awa trouve un feuillet que personne n'avait jamais vu…
-> « Il existe une *huitième porte*. Nairobi. Kigali. Luanda. Le Livre n'a pas tout dit. »
+@label aube
+awa.inquiet: Ibrahima s'est enfui… mais il ne travaillait pas seul.
 @label suite
->> FIN… pour l'instant.
+nour.inquiet: Le Mécène… Ma mère en parlait. Un acheteur qui ne montre jamais son visage.
+? Nour serre les poings. Elle tremble.
+- Lui prendre la main : « On est ensemble. » => set nour1 ; goto main
+- « Concentrons-nous sur la page. » => goto page
+@label main
+nour.triste: … Merci, Awa. Ça faisait longtemps que personne ne m'avait dit ça.
+@goto depart
+@label page
+nour.neutre: Tu as raison. Au travail.
+@label depart
+@exit
+@bg nairobi jour
+@music savane
+@place Nairobi · Parc national
+@title
+> Nairobi. Aux portes de la ville, des girafes broutent avec les gratte-ciel pour horizon.
+@fact nairobi_parc
+wanjiru.sourire: Karibu ! Je suis Wanjiru, garde du parc. Seydou m'a appelée : il paraît que vous cherchez un très vieux papier.
+wanjiru.neutre: Mon grand-père était garde, lui aussi. Il a enterré une boîte en fer sous l'acacia des lions, dans une zone fermée au public.
+@fact nairobi_nom
+wanjiru.malin: Il l'a fermée avec un cadenas de perles maasaï. Chaque couleur a un sens. Il disait : « La paix d'abord, le ciel à la fin. »
+@exit
+@game cadenas_perles
+@sfx reveal
+> Dans la boîte : une feuille pliée en quatre, couverte d'une écriture serrée.
+@page 1
+nour.surpris: De l'*ajami* ! Une langue africaine écrite avec l'alphabet arabe. Donne, je vais la lire… Pardon. C'est plus fort que moi.
+@clue ajami
+@sfx alarm
+@danger on
+@music action
+wanjiru.colere: Des 4x4 sans plaques ! Ils foncent droit sur nous. Montez, vite !
+@exit
+@place Nairobi · Dans la savane
+@game poursuite_savane
+@danger off
+@music savane
+@bg nairobi soir
+> Le soleil se couche sur la savane. Les 4x4 se sont embourbés dans la rivière.
+wanjiru.sourire: Wangari Maathai disait que ce sont les petits gestes des gens ordinaires qui changent le monde. Les vôtres ne sont pas si petits.
+@fact maathai
+kofi.neutre: Au dos de la page, un nouveau dessin : des collines. Des dizaines de collines.
+awa.determine: Le pays des mille collines. *Kigali*.
+@exit
+@sfx smsBad
+sms:mecene Jolie course. Mais j'ai des yeux partout, Awa.
+sms:mecene Même tout près de toi.
+@phone off
+awa.inquiet: (Tout près de moi ?)
+@end`,
+  },
+  {
+    id: 'kigali', num: 9, act: 2, city: 'Kigali', country: 'Rwanda', flag: 'rw', ll: [30.06, -1.95], sub: 'Les mille collines',
+    desc: 'Dans une maison perdue au milieu des théiers, un mur d\'imigongo « cache la porte ». Mais quelqu\'un est passé avant vous.',
+    script: `
+@bg kigali soir
+@music calme
+@place Kigali · Le centre des congrès
+@title
+> Kigali. La ville s'étage sur les collines. Au crépuscule, le dôme du centre des congrès s'allume de toutes les couleurs.
+@fact kigali_collines
+ange.sourire: Muraho ! Ange, coureuse cycliste… et petite-fille de la dernière gardienne de Kigali. Grand-mère a caché la page dans un endroit que je connais par cœur.
+ange.neutre: Sa maison, au milieu des plantations de thé. Le mur du salon est couvert d'imigongo, de grands zigzags noirs et blancs. Elle disait qu'il « cache la porte ».
+kofi.surpris: Les rues sont tellement propres, ici…
+ange.sourire: Les sacs en plastique sont interdits depuis 2008. Et demain matin, c'est umuganda : tout le monde nettoie son quartier. Personne ne fera attention à nous.
+@fact sacs
+@fact umuganda
+@exit
+@bg kigali nuit
+@music tension
+@place Kigali · Les plantations de thé
+> La nuit tombe sur les plantations. Des lampes torches bougent entre les rangs de thé.
+nour.neutre: Je peux partir en éclaireuse, seule. Je suis plus discrète que vous trois réunis.
+? Laisser Nour partir seule ?
+- « D'accord. Je te fais confiance. » => set nour2 ; goto seule
+- « Non. On reste ensemble. » => goto ensemble
+@label seule
+> Nour disparaît entre les théiers. Elle revient dix minutes plus tard.
+nour.sourire: La voie est libre par l'est. Enfin… presque.
+@goto rangs
+@label ensemble
+nour.neutre: … Comme tu veux.
+@label rangs
+@exit
+@game infiltration_collines
+> Dans la maison silencieuse, le grand panneau d'imigongo a été démonté. Ses planches sont éparpillées sur le sol.
+ange.inquiet: Quelqu'un est passé avant nous ! Mais ils n'ont pas compris le secret. Il faut remettre les planches dans le bon ordre.
+@exit
+@game imigongo
+@sfx reveal
+> Le dernier zigzag s'aligne. Une planche bascule : derrière, une enveloppe jaunie.
+@page 2
+kofi.surpris: Regarde par terre. Un des hommes gris a perdu ça en s'enfuyant.
+@clue sceau
+awa.inquiet: Un sceau de cire. Un scarabée… avec une patte cassée.
+nour.inquiet: Un scarabée ? C'est… un symbole très courant, en Égypte. Ça ne veut rien dire.
+ange.neutre: Le dessin de la page montre des lémuriens et une île rouge.
+awa.determine: Madagascar. *Antananarivo*.
+@end`,
+  },
+  {
+    id: 'antananarivo', num: 10, act: 2, city: 'Antananarivo', country: 'Madagascar', flag: 'mg', ll: [47.52, -18.91], sub: 'L\'île rouge',
+    desc: 'Au sommet du Rova, le palais de la Reine, une page « dort dans ce qui chante ». Et dans le noir, quelqu\'un écoute.',
+    script: `
+@bg avion
+@music calme
+>> Vol Kigali – Antananarivo
+@bg antananarivo jour
+@music lagune
+@place Antananarivo · Le Rova
+@title
+> Antananarivo, « la ville des Mille ». Sur la plus haute colline, le Rova, le palais de la Reine, domine les rizières.
+@fact tana_mille
+hery.sourire: Manao ahoana ! Hery, guide au Rova. Mon arrière-grand-père gardait les archives du palais. La page est là-haut, dans une salle qu'on n'ouvre jamais aux visiteurs.
+@fact rova
+hery.malin: Il a laissé une phrase : « La page dort dans ce qui chante. » Fouillons la salle.
+@exit
+@bg musee
+@place Antananarivo · Les archives du palais
+@game fouille_rova
+hery.surpris: La vieille valiha de mon aïeul ! On dirait une simple flûte de bambou… mais c'est un instrument à cordes. Et une mélodie est gravée sur le bambou.
+awa.neutre: Et ce papier fait main, avec des fleurs séchées dedans…
+hery.sourire: Du papier antemoro. On le fabrique ici depuis des siècles. Les pages du Livre sont faites avec ce papier-là : c'est comme ça qu'on reconnaît les vraies.
+@clue papier
+awa.determine: Si la mélodie est gravée, c'est qu'il faut la jouer.
+@exit
+@game valiha
+@sfx reveal
+> À la dernière note, un déclic. Le fond du tube de bambou glisse. La page était enroulée à l'intérieur.
+@page 3
+@fact lemuriens
+@music tension
+@sfx door
+@shake
+> Les lumières du palais s'éteignent d'un coup. Des pas dans l'escalier. Puis le silence.
+kofi.colere: Mon sac ! Ils ont pris mon sac, avec tous mes outils !
+nour.inquiet: Heureusement, la page est avec Awa.
+? (Comment savaient-ils que nous étions ici ?)
+- Partager tes doutes avec Kofi, à voix basse => trust +1 ; goto doute
+- Garder tes doutes pour toi => goto garde
+@label doute
+kofi.inquiet: J'y pense aussi. Quelqu'un les prévient. Ouvrons l'œil, tous les deux.
+@goto fin
+@label garde
+awa.inquiet: (Ne rien dire. Pas encore.)
+@label fin
+hery.neutre: Votre page parle d'une reine qui a tenu tête à un empire. Ce sera *Luanda*, en Angola.
+@end`,
+  },
+  {
+    id: 'luanda', num: 11, act: 2, city: 'Luanda', country: 'Angola', flag: 'ao', ll: [13.23, -8.84], sub: 'La reine Njinga',
+    desc: 'La page dort dans la vieille forteresse. Mais les hommes gris y sont arrivés une heure après votre découverte. Comment ?',
+    script: `
+@bg luanda soir
+@music semba
+@place Luanda · La Marginale
+@title
+> Luanda. Sur la baie, la longue promenade de la Marginale s'allume. Au-dessus de la ville, la forteresse São Miguel garde la mer depuis des siècles.
+@fact luanda_1576
+nzinga.sourire: Boa noite ! Nzinga, comme la reine. Biologiste marine le jour, danseuse de semba la nuit.
+@fact njinga
+nzinga.neutre: Kofi a déchiffré votre page il y a une heure : elle est dans un coffre de la vieille poudrière de la forteresse. Allons-y avant que…
+@sfx stinger
+nzinga.peur: Attendez. Regardez là-haut. Des hommes gris gardent déjà la poudrière.
+kofi.colere: Une heure ! On l'a déchiffré il y a UNE heure ! Seuls nous trois étions au courant !
+@clue avance
+nour.inquiet: Ils nous suivent, c'est tout. Ils ont dû nous suivre depuis l'aéroport.
+? Que réponds-tu ?
+- « Tu as sûrement raison, Nour. » => set nour3 ; goto croire
+- « Personne ne nous a suivis. Kofi a vérifié. » => goto douter
+@label croire
+nour.sourire: Merci de me croire, Awa.
+@goto plan
+@label douter
+nour.triste: … Tu me soupçonnes ? Après tout ce qu'on a vécu ?
+@label plan
+nzinga.malin: Ce soir, grande fête sur l'Ilha. Les gardes vont tous y danser. Si la fête est assez folle, ils ne remonteront pas de sitôt.
+@exit
+@bg club
+@place Luanda · Une fête sur l'Ilha
+@fact kizomba
+@game rythme_semba
+@music semba
+> Pendant que l'Ilha danse, Nzinga et Awa se glissent dans la poudrière vide. Le coffre s'ouvre en grinçant.
+@page 4
+nzinga.sourire: La reine Njinga aurait été fière de toi.
+@music action
+@danger on
+@sfx alarm
+nzinga.peur: On nous a vues ! Courez, par la Marginale !
+@exit
+@bg luanda nuit
+@place Luanda · La Marginale, minuit
+@game poursuite_ilha
+@danger off
+@music tension
+> Essoufflés, ils s'arrêtent sous les palmiers. La mer est noire.
+kofi.neutre: La page montre sept collines et un marché immense. *Yaoundé*, au Cameroun.
+@sfx smsBad
+sms:mecene Quatre pages pour toi. Moi, j'ai la patience.
+sms:mecene Et j'ai toujours un pas d'avance.
+@phone off
+@end`,
+  },
+  {
+    id: 'yaounde', num: 12, act: 2, city: 'Yaoundé', country: 'Cameroun', flag: 'cm', ll: [11.52, 3.85], sub: 'Le faussaire des sept collines',
+    desc: 'Au marché Mokolo, un antiquaire vend une « page ancienne ». Vraie ou fausse ? Il va falloir le faire parler.',
+    script: `
+@bg yaounde jour
+@music ville
+@place Yaoundé · Le marché Mokolo
+@title
+> Yaoundé, la ville aux sept collines. Au marché Mokolo, on trouve de tout. Même ce qui n'existe pas.
+@fact yaounde_collines
+ngono.sourire: Ah, mes enfants ! Mama Ngono, quarante ans de commerce à Mokolo. Seydou m'a dit que vous chercheriez « un papier qui chante ».
+ngono.inquiet: Le souci, c'est qu'un certain monsieur Bekolo vend une « page ancienne » à qui veut payer. Et depuis une semaine, des hommes gris tournent autour de sa boutique.
+@fact miniature
+@exit
+@bg yaounde nuit
+@music tension
+@place Yaoundé · Le marché, la nuit
+> La nuit, le marché vide devient un labyrinthe d'étals bâchés.
+@game infiltration_mokolo
+@bg musee
+@place Yaoundé · L'arrière-boutique de M. Bekolo
+bekolo.sourire: Mesdemoiselles, messieurs ! Vous venez pour la page ? Une pièce unique. Authentique. Garantie sur facture.
+awa.malin: (Authentique ? Voyons ça.)
+@exit
+@game confrontation_faussaire
+@sfx reveal
+@page 5
+bekolo.peur: Le Mécène va me tuer…
+awa.determine: Alors dites-nous qui c'est.
+bekolo.inquiet: Je ne l'ai jamais vu. Il envoie des messages, l'argent arrive. Mais une fois, au téléphone, j'ai entendu sa voix dire « yalla »…
+@exit
+> Sur le chemin du retour, le téléphone d'Awa vibre : un message du Mécène. Au même instant, dans la poche de Nour, un téléphone vibre aussi.
+@sfx smsBad
+sms:mecene Bekolo n'était qu'un amuseur. Le vrai jeu commence.
+@phone off
+kofi.inquiet: (à voix basse) Awa… Tu as entendu ? Le téléphone de Nour a vibré. Exactement en même temps.
+@clue vibration
+? Que réponds-tu à Kofi ?
+- « Une coïncidence. » => goto coinc
+- « Je sais. Je l'ai remarqué aussi. » => trust +1 ; goto sait
+@label coinc
+kofi.neutre: Peut-être. Mais je garde un œil sur elle.
+@goto fin
+@label sait
+kofi.determine: Alors on reste prudents. Et on ne lui dit plus rien avant le dernier moment.
+@label fin
+@exit
+@fact makossa
+ngono.sourire: La page parle d'un rocher géant au milieu d'une ville toute neuve. C'est *Abuja*, mes enfants.
+@end`,
+  },
+  {
+    id: 'abuja', num: 13, act: 2, city: 'Abuja', country: 'Nigeria', flag: 'ng', ll: [7.49, 9.06], sub: 'Le rocher et la plume',
+    desc: 'Un journaliste suit l\'argent du Mécène depuis deux ans. Ce qu\'il a trouvé change tout ce que tu croyais savoir sur Le Caire.',
+    script: `
+@bg abuja jour
+@music ville
+@place Abuja · Au pied d'Aso Rock
+@title
+> Abuja. Une capitale construite de toutes pièces au centre du Nigeria, au pied d'un rocher géant : Aso Rock.
+@fact abuja_1991
+tunde.neutre: Tunde Bakare, journaliste d'investigation. Ça fait deux ans que je suis l'argent du Mécène. Il achète des objets volés dans toute l'Afrique et les revend à des collections privées.
+@fact aso
+tunde.malin: J'ai récupéré un de ses bordereaux de paiement. Regardez la ligne du bas. Et le sceau.
+@clue bordereau
+awa.surpris: « Équipe du Caire — souk — nuit du 14 ». Et le scarabée à la patte cassée…
+awa.inquiet: Les hommes du souk, au Caire… Ils travaillaient pour le Mécène. Pas pour Ibrahima.
+@if fin_aube ibra
+tunde.neutre: Ibrahima Sarr a parlé, depuis sa prison de Dakar. Il dit que la sixième page est dans une malle de notre vieux musée, fermée par des signes nsibidi.
+@goto coffre
+@label ibra
+> Un homme maigre sort de l'ombre d'un pilier. Costume froissé, regard fatigué. Ibrahima.
+ibrahima.triste: Awa… Le Mécène me traque, moi aussi. Tiens : le manuscrit que j'ai volé au Caire. Rends-le au Livre. Considère ça comme… un début d'excuses.
+ibrahima.neutre: La sixième page est dans une malle du vieux musée, fermée par des signes nsibidi. Fais vite.
+@exit
+@label coffre
+@exit
+@game cadenas_nsibidi
+@page 6
+tunde.sourire: Magnifique. Mais on ne reste pas une seconde de plus : le Mécène a des amis à Abuja.
+@music action
+@danger on
+tunde.colere: Les voilà ! Prenez les okadas, les motos-taxis ! Elles passent partout !
+@exit
+@bg abuja soir
+@place Abuja · Dans les embouteillages
+@game poursuite_okada
+@danger off
+@music calme
+@fact nollywood
+tunde.sourire: Avec tout ça, je pourrais écrire un film pour Nollywood.
+kofi.neutre: La page suivante montre une bobine de film et un cheval doré.
+awa.determine: L'Étalon de Yennenga… Le FESPACO. *Ouagadougou*.
+@end`,
+  },
+  {
+    id: 'ouagadougou', num: 14, act: 2, city: 'Ouagadougou', country: 'Burkina Faso', flag: 'bf', ll: [-1.53, 12.37], sub: 'Le festival',
+    desc: 'Pendant le FESPACO, une bobine de 1987 cache l\'avant-dernière page. Et un carnet qui n\'aurait jamais dû tomber.',
+    script: `
+@bg ouagadougou soir
+@music sahel
+@place Ouagadougou · Place des Cinéastes
+@title
+> Ouagadougou. Tous les deux ans, la ville devient la capitale du cinéma africain. Ce soir, le FESPACO commence.
+@fact fespaco
+aminata.sourire: Bienvenue ! Aminata, réalisatrice. Mon oncle était projectionniste au vieux cinéma. Votre page est dans une de ses bobines, là-haut, dans la cabine.
+@fact integres
+aminata.neutre: Le pays des hommes intègres… Dommage que vos ennemis ne le soient pas.
+@exit
+@bg club
+@place Ouagadougou · La cabine de projection
+@game fouille_cinema
+@clue carnet_nour
+awa.surpris: Le carnet de Nour… Il a dû tomber de son sac.
+> Une page est cornée. Awa ne devrait pas lire. Elle lit : « Registre complet → acheteur prêt. 40 millions. Rabat. »
+@sfx stinger
+awa.triste: (Nour… Pas toi.)
+? Nour entre dans la cabine. Elle voit le carnet entre tes mains.
+- « Explique-moi, Nour. Je t'écoute. » => set nour4 ; goto ecoute
+- Refermer le carnet sans un mot => goto silence
+@label ecoute
+nour.triste: Pas ici, Awa. Pas maintenant. À Rabat, je te dirai tout. Je te le promets.
+@goto bobine
+@label silence
+nour.neutre: … Tu n'as rien vu. D'accord ?
+@label bobine
+@exit
+aminata.neutre: La bobine de 1987 ! Il y a une étiquette : « Pour la défaire, retisse le Faso Dan Fani. »
+@fact dandani
+@exit
+@game faso
+@page 7
+aminata.sourire: Sept pages. Il n'en manque plus qu'une.
+kofi.neutre: Et le dessin de la dernière montre une tour inachevée, au bord de l'océan.
+awa.determine: La tour Hassan. *Rabat*. La huitième porte.
+@end`,
+  },
+  {
+    id: 'rabat', num: 15, act: 2, city: 'Rabat', country: 'Maroc', flag: 'ma', ll: [-6.84, 34.02], sub: 'La huitième porte',
+    desc: 'La dernière page. La dernière porte. Et enfin, le visage du Mécène.',
+    script: `
+@bg rabat soir
+@music maroc
+@place Rabat · La tour Hassan
+@title
+> Rabat. Face à l'océan, la tour Hassan attend depuis plus de huit siècles d'être terminée.
+@fact hassan
+salma.neutre: Inspectrice Salma Benali. Seydou m'a tout raconté. La dernière page est dans la kasbah des Oudayas. Et la porte qu'elle ouvre aussi.
+seydou.sourire: Awa ! Je ne pouvais pas te laisser finir sans moi.
+awa.sourire: Papi !
+@fact oudayas
+salma.neutre: Les zelliges de la vieille fontaine forment un cadenas. Le gardien de Rabat aimait les étoiles… et les portes.
+@exit
+@game cadenas_zellige
+@page 8
+@sfx reveal
+awa.surpris: La huitième page ! Le Registre des Rives est complet !
+@fact rabat_unesco
+@music tension
+@bg rabat nuit
+@place Rabat · La kasbah des Oudayas, minuit
+> Mais quand ils ressortent, la kasbah est encerclée. Les hommes du Mécène gardent chaque ruelle bleue.
+salma.determine: Mes collègues arrivent dans vingt minutes. Atteignez la huitième porte avant eux. Je les retiens.
+@exit
+@game infiltration_oudayas
+@bg bibliotheque
+@music none
+@place Rabat · La huitième porte
+> Au bout du jardin andalou : une porte en cèdre sculpté, percée de huit fentes. Et devant la porte, quelqu'un attend.
+nour.neutre: Bonsoir, Awa.
+@sfx stinger
+awa.triste: Nour.
+nour.malin: Tu n'as pas l'air surprise.
+@exit
+@game confrontation_nour
+nour.triste: Ma mère a gardé ce secret toute sa vie, dans une cave inondée. Elle est morte pauvre et oubliée. Et les Sept n'ont rien fait.
+nour.colere: Ce Registre vaut une fortune. Avec lui, je n'aurai plus jamais peur de rien. Donne-moi les huit pages, Awa.
+seydou.triste: Ta mère était mon amie, Nour. Elle n'aurait jamais voulu ça.
+?!12 Nour tend la main. Derrière elle, ses hommes. Derrière toi, Papi et Kofi.
+- Lui tendre la main : « Il n'est pas trop tard. Viens avec nous. » => goto main
+- Appeler l'inspectrice Salma => goto police
+@label main
+@if count(nour1|nour2|nour3|nour4)>=3 sauvee
+nour.colere: Trop tard ? Il est trop tard depuis vingt ans !
+> Nour arrache une page des mains d'Awa et disparaît dans les ruelles bleues.
+@ending page
+@goto porte
+@label sauvee
+nour.triste: … À Nairobi, tu m'as pris la main. À Kigali, tu m'as fait confiance. Personne n'avait fait ça pour moi depuis longtemps.
+> Lentement, Nour baisse la main. D'un signe, elle renvoie ses hommes.
+nour.triste: Pardon, Awa. Pardon, Seydou.
+@ending retour
+@goto porte
+@label police
+salma.determine: Nour Hassan, vous êtes en état d'arrestation.
+nour.triste: Tu aurais pu me tendre la main, Awa…
+@ending justice
+@label porte
+@exit
+seydou.sourire: La berceuse, Awa. Une dernière fois. Et cette fois, en entier.
+@exit
+@game kora_huitieme
+@sfx reveal
+@flash
+@music titre
+> La huitième porte s'ouvre. Pas d'or, pas de bijoux : des registres, des cartes, des milliers de fiches. Chaque masque, chaque statue, chaque manuscrit emporté loin de l'Afrique… et l'endroit exact où il se trouve aujourd'hui.
+awa.determine: Le Registre des Rives. Avec lui, chaque pays pourra réclamer ce qui lui appartient.
+@bg dakar soir
+@place Dakar · Un an plus tard
+> Un an plus tard. Au Musée des civilisations noires de Dakar, une foule attend devant une vitrine encore vide.
+seydou.sourire: Le premier objet rentre à la maison aujourd'hui, Awa. Grâce à toi.
+kofi.sourire: Grâce à nous, tu veux dire.
+awa.sourire: Grâce à tous les gardiens. De Dakar à Rabat.
+@if fin_retour nourfin
+@goto final
+@label nourfin
+nour.sourire: … Et grâce à ceux qui ont su changer de chemin.
+@label final
+@exit
+@if frags>=15 secret
+@goto rideau
+@label secret
+> Sous la vitrine, Awa remarque une inscription que personne n'avait vue : « Il existe d'autres rives. De l'autre côté de l'océan. »
+@label rideau
+>> FIN
 @end`,
   },
 ];
@@ -590,6 +1041,13 @@ const CLUES = {
   otage: { art: 'sms', t: 'La photo de Papi', d: 'Ligoté sur une chaise. « Les sept clés contre ton grand-père. Le Caire. 72 heures. »' },
   puce: { art: 'puce', t: 'La puce espionne', d: 'Soudée dans le téléphone offert par Tonton. Gravée « IS Holdings ».' },
   aveu: { art: 'bague', t: 'L\'aveu', d: 'Ibrahima Sarr est le Collectionneur. Le huitième homme, refusé par les Sept.' },
+  ajami: { art: 'ajami', t: 'Une écriture en ajami', d: 'Les vraies pages du Livre sont écrites en ajami : des langues africaines notées avec l\'alphabet arabe.' },
+  sceau: { art: 'sceau', t: 'Le sceau au scarabée', d: 'Perdu par un homme gris à Kigali : un scarabée de cire, avec une patte cassée.' },
+  papier: { art: 'papier', t: 'Le papier antemoro', d: 'Les vraies pages sont en papier antemoro, fait main à Madagascar, avec des fleurs séchées dans la pâte.' },
+  avance: { art: 'sms', t: 'Une heure d\'avance', d: 'À Luanda, les hommes gris gardaient la poudrière une heure après qu\'on a déchiffré la page. Seuls Kofi, Nour et moi le savions.' },
+  vibration: { art: 'telephone', t: 'Le téléphone de Nour', d: 'Kofi : « Le téléphone de Nour a vibré exactement quand le Mécène t\'a écrit. »' },
+  bordereau: { art: 'lettre', t: 'Le bordereau du Mécène', d: '« Équipe du Caire — souk — nuit du 14 », cacheté du scarabée. Les hommes du Caire travaillaient pour le Mécène.' },
+  carnet_nour: { art: 'carnet', t: 'Le carnet de Nour', d: '« Registre complet → acheteur prêt. 40 millions. Rabat. »' },
 };
 
 /* ---------------- le saviez-vous ? ---------------- */
@@ -614,6 +1072,30 @@ const FACTS = {
   calendrier: { city: 'addis', t: 'Treize mois de soleil', d: 'Le calendrier éthiopien compte treize mois et a sept à huit ans de décalage avec le calendrier grégorien.' },
   pyramides: { city: 'caire', t: 'La dernière merveille', d: 'La Grande Pyramide de Gizeh a environ 4 500 ans. C\'est la seule des Sept Merveilles du monde antique encore debout.' },
   mansa_or: { city: 'caire', t: 'L\'or de Mansa Musa', d: 'En 1324, Mansa Musa passa par Le Caire en route vers La Mecque. Il distribua tant d\'or que son cours baissa pendant des années.' },
+  nairobi_parc: { city: 'nairobi', t: 'Des lions aux portes de la ville', d: 'Créé en 1946, le parc national de Nairobi touche la ville : girafes, lions et rhinocéros vivent à quelques kilomètres des gratte-ciel.' },
+  nairobi_nom: { city: 'nairobi', t: 'L\'eau fraîche', d: 'Le nom Nairobi vient de l\'expression maasaï « Enkare Nairobi », qui veut dire « l\'eau fraîche ».' },
+  maathai: { city: 'nairobi', t: 'Wangari Maathai', d: 'Cette Kényane a fondé le mouvement de la Ceinture verte, qui a planté des dizaines de millions d\'arbres. En 2004, elle devient la première femme africaine prix Nobel de la paix.' },
+  kigali_collines: { city: 'kigali', t: 'Le pays des mille collines', d: 'Le Rwanda est surnommé « le pays des mille collines ». Kigali, sa capitale, s\'étend sur plusieurs d\'entre elles.' },
+  sacs: { city: 'kigali', t: 'Zéro sac plastique', d: 'Le Rwanda a interdit les sacs en plastique dès 2008. Kigali est souvent citée comme l\'une des villes les plus propres d\'Afrique.' },
+  umuganda: { city: 'kigali', t: 'Umuganda', d: 'Le dernier samedi de chaque mois, les Rwandais participent à l\'umuganda : une matinée de travaux d\'intérêt général pour leur quartier.' },
+  tana_mille: { city: 'antananarivo', t: 'La ville des Mille', d: 'Antananarivo, souvent appelée « Tana », signifie « la ville des Mille », en souvenir des mille soldats qui la gardaient.' },
+  rova: { city: 'antananarivo', t: 'Le Rova', d: 'Le Rova, ancien palais royal, domine la ville depuis la plus haute colline. Ravagé par un incendie en 1995, il a été restauré.' },
+  lemuriens: { city: 'antananarivo', t: 'Les lémuriens', d: 'À l\'état sauvage, les lémuriens ne vivent qu\'à Madagascar. Une grande partie des animaux et des plantes de l\'île n\'existent nulle part ailleurs.' },
+  luanda_1576: { city: 'luanda', t: 'Une très vieille ville', d: 'Luanda a été fondée en 1576. C\'est l\'une des plus anciennes villes d\'Afrique subsaharienne fondées par des Européens.' },
+  njinga: { city: 'luanda', t: 'La reine Njinga', d: 'Au XVIIe siècle, la reine Njinga Mbandé, du Ndongo et du Matamba, a résisté pendant des décennies à la colonisation portugaise.' },
+  kizomba: { city: 'luanda', t: 'Semba et kizomba', d: 'Le semba et la kizomba, deux danses de couple aujourd\'hui dansées dans le monde entier, sont nés en Angola.' },
+  yaounde_collines: { city: 'yaounde', t: 'La ville aux sept collines', d: 'Yaoundé, capitale politique du Cameroun, est surnommée « la ville aux sept collines ».' },
+  miniature: { city: 'yaounde', t: 'L\'Afrique en miniature', d: 'Mer, montagnes, forêt, savane et désert : le Cameroun rassemble presque tous les paysages du continent. On l\'appelle « l\'Afrique en miniature ».' },
+  makossa: { city: 'yaounde', t: 'Le makossa', d: 'Né à Douala, le makossa a conquis le monde en 1972 avec « Soul Makossa » de Manu Dibango.' },
+  abuja_1991: { city: 'abuja', t: 'Une capitale neuve', d: 'Abuja a remplacé Lagos comme capitale du Nigeria en 1991. Elle a été construite exprès, au centre du pays.' },
+  aso: { city: 'abuja', t: 'Aso Rock', d: 'Aso Rock est un monolithe de granit d\'environ 400 mètres de haut. La présidence nigériane est installée à son pied.' },
+  nollywood: { city: 'abuja', t: 'Nollywood', d: 'Le cinéma nigérian, Nollywood, est l\'une des industries du film les plus productives au monde : des milliers de films chaque année.' },
+  fespaco: { city: 'ouagadougou', t: 'Le FESPACO', d: 'Créé en 1969, le Festival panafricain du cinéma de Ouagadougou a lieu tous les deux ans. Son grand prix est l\'Étalon d\'or de Yennenga.' },
+  integres: { city: 'ouagadougou', t: 'Le pays des hommes intègres', d: 'Depuis 1984, la Haute-Volta s\'appelle Burkina Faso, ce qui signifie « le pays des hommes intègres ».' },
+  dandani: { city: 'ouagadougou', t: 'Le Faso Dan Fani', d: 'Ce pagne de coton tissé à la main est l\'un des symboles du Burkina Faso. On le porte avec fierté lors des grandes occasions.' },
+  hassan: { city: 'rabat', t: 'La tour Hassan', d: 'La tour Hassan devait être le minaret de l\'une des plus grandes mosquées du monde. Le chantier s\'est arrêté en 1199 : elle est restée inachevée.' },
+  oudayas: { city: 'rabat', t: 'La kasbah des Oudayas', d: 'Construite au XIIe siècle à l\'embouchure du Bou Regreg, la kasbah est célèbre pour ses ruelles aux murs blancs et bleus.' },
+  rabat_unesco: { city: 'rabat', t: 'Rabat, patrimoine mondial', d: 'Depuis 2012, Rabat est inscrite au patrimoine mondial de l\'UNESCO, pour sa ville moderne et sa ville historique.' },
   khan: { city: 'caire', t: 'Khan el-Khalili', d: 'Le grand souk du Caire a été fondé à la fin du XIVe siècle. On y marchande encore, sous les lanternes, plus de six cents ans plus tard.' },
 };
 
@@ -630,10 +1112,21 @@ const BIOS = {
   lukusa: 'Papa Lukusa. Légende de la rumba, gardien de la cinquième clé depuis 1987.',
   makeda: 'Dr Makeda Tesfaye. Paléoanthropologue à Addis-Abeba. Veille sur Lucy et sur la sixième clé.',
   nour: 'Nour Hassan. Égyptologue au Caire, fille de la septième gardienne.',
+  wanjiru: 'Wanjiru. Garde au parc national de Nairobi, petite-fille d\'un gardien. Connaît chaque acacia de la savane.',
+  ange: 'Ange. Coureuse cycliste à Kigali, petite-fille de la gardienne des mille collines.',
+  hery: 'Hery. Guide au Rova d\'Antananarivo. Son arrière-grand-père gardait les archives du palais.',
+  nzinga: 'Nzinga. Biologiste marine et danseuse de semba à Luanda. Porte le nom d\'une reine, et son courage.',
+  ngono: 'Mama Ngono. Quarante ans de commerce au marché Mokolo de Yaoundé. Rien ne lui échappe.',
+  bekolo: 'M. Bekolo. « Antiquaire » à Yaoundé. Ses pièces uniques le sont rarement.',
+  tunde: 'Tunde Bakare. Journaliste d\'investigation à Abuja. Suit l\'argent du Mécène depuis deux ans.',
+  aminata: 'Aminata. Réalisatrice à Ouagadougou. Son oncle était projectionniste au vieux cinéma.',
+  salma: 'Salma Benali. Inspectrice à Rabat, vieille amie de Seydou.',
   agent: 'Les hommes gris. Gants gris, voix froides. Ils obéissent au Collectionneur.',
   masque: 'Le Collectionneur. Personne n\'a jamais vu son visage.',
 };
+const BIOS_AFTER_CLUE = { seydou: 'otage', ibrahima: 'aveu', masque: 'aveu', nour: 'carnet_nour' };
 const BIOS_AFTER = {
+  nour: 'Nour Hassan. Égyptologue, fille de la septième gardienne… et le Mécène.',
   seydou: 'Seydou Ndiaye. Griot, gardien de la clé de Dakar… et « le Hibou », qui guidait Awa en secret.',
   ibrahima: 'Ibrahima Sarr, dit le Collectionneur. Le huitième homme de la photo, refusé par les Sept.',
   masque: 'Le Collectionneur : Ibrahima Sarr, l\'ami de toujours.',
@@ -641,6 +1134,46 @@ const BIOS_AFTER = {
 
 /* ---------------- quiz ---------------- */
 const QUIZ = {
+  nairobi: [
+    ['Que signifie « Nairobi » en maasaï ?', ['La grande plaine', 'L\'eau fraîche', 'Le lion endormi'], 1, 'nairobi_nom'],
+    ['Quels animaux vit-on aux portes de Nairobi ?', ['Des girafes et des lions', 'Des pingouins', 'Des kangourous'], 0, 'nairobi_parc'],
+    ['Quel prix Wangari Maathai a-t-elle reçu en 2004 ?', ['Le prix Nobel de la paix', 'Un Oscar', 'Le Ballon d\'or'], 0, 'maathai'],
+  ],
+  kigali: [
+    ['Comment surnomme-t-on le Rwanda ?', ['Le pays des mille lacs', 'Le pays des mille collines', 'Le pays du soleil'], 1, 'kigali_collines'],
+    ['Depuis quand les sacs plastique y sont-ils interdits ?', ['2008', '1990', '2020'], 0, 'sacs'],
+    ['Qu\'est-ce que l\'umuganda ?', ['Une danse', 'Une matinée de travaux pour le quartier', 'Un plat de fête'], 1, 'umuganda'],
+  ],
+  antananarivo: [
+    ['Que signifie « Antananarivo » ?', ['La ville des Mille', 'La ville rouge', 'Le port du sud'], 0, 'tana_mille'],
+    ['Qu\'est-ce que le Rova ?', ['Un marché', 'L\'ancien palais royal', 'Un fleuve'], 1, 'rova'],
+    ['Où vivent les lémuriens à l\'état sauvage ?', ['Partout en Afrique', 'Seulement à Madagascar', 'En Asie'], 1, 'lemuriens'],
+  ],
+  luanda: [
+    ['En quelle année Luanda a-t-elle été fondée ?', ['1576', '1888', '1960'], 0, 'luanda_1576'],
+    ['Contre qui la reine Njinga a-t-elle résisté ?', ['Les Portugais', 'Les Romains', 'Les Vikings'], 0, 'njinga'],
+    ['Quelles danses sont nées en Angola ?', ['Le tango et la valse', 'Le semba et la kizomba', 'La salsa et la samba'], 1, 'kizomba'],
+  ],
+  yaounde: [
+    ['Comment surnomme-t-on Yaoundé ?', ['La ville aux sept collines', 'La ville blanche', 'La perle du fleuve'], 0, 'yaounde_collines'],
+    ['Pourquoi dit-on que le Cameroun est « l\'Afrique en miniature » ?', ['Il est tout petit', 'Il réunit presque tous les paysages d\'Afrique', 'Il a une seule ville'], 1, 'miniature'],
+    ['Qui a fait connaître le makossa au monde ?', ['Manu Dibango', 'Fela Kuti', 'Youssou N\'Dour'], 0, 'makossa'],
+  ],
+  abuja: [
+    ['Quelle ville Abuja a-t-elle remplacée comme capitale ?', ['Kano', 'Lagos', 'Ibadan'], 1, 'abuja_1991'],
+    ['Qu\'est-ce qu\'Aso Rock ?', ['Un groupe de rock', 'Un rocher géant de granit', 'Un stade'], 1, 'aso'],
+    ['Comment s\'appelle le cinéma nigérian ?', ['Nollywood', 'Bollywood', 'Kinywood'], 0, 'nollywood'],
+  ],
+  ouagadougou: [
+    ['Que célèbre le FESPACO ?', ['La musique', 'Le cinéma africain', 'Le football'], 1, 'fespaco'],
+    ['Que signifie « Burkina Faso » ?', ['Le pays des hommes intègres', 'La terre rouge', 'Le grand fleuve'], 0, 'integres'],
+    ['Qu\'est-ce que le Faso Dan Fani ?', ['Un plat', 'Un pagne tissé à la main', 'Un instrument'], 1, 'dandani'],
+  ],
+  rabat: [
+    ['Pourquoi la tour Hassan est-elle célèbre ?', ['Elle est inachevée', 'Elle est en or', 'Elle penche'], 0, 'hassan'],
+    ['De quelles couleurs sont les ruelles des Oudayas ?', ['Rouge et noir', 'Blanc et bleu', 'Vert et jaune'], 1, 'oudayas'],
+    ['Depuis quand Rabat est-elle au patrimoine mondial ?', ['2012', '1950', '1999'], 0, 'rabat_unesco'],
+  ],
   dakar: [
     ['Quel est le point le plus à l\'ouest de l\'Afrique continentale ?', ['La pointe des Almadies', 'Le cap de Bonne-Espérance', 'Le cap Bon'], 0, 'dakar_ouest'],
     ['Combien de tournées compte le thé ataya ?', ['Une', 'Trois', 'Sept'], 1, 'dakar_ataya'],
@@ -685,12 +1218,17 @@ const TROPHIES = {
   lumiere: ['Fin : La mémoire libre', 'Piéger le Collectionneur avec Kofi.'],
   aube: ['Fin : L\'aube incertaine', 'Sauver Papi… mais laisser fuir le Collectionneur.'],
   mefiance: ['Méfiante', 'Douter de Tonton dès la première aube.'],
-  curieuse: ['Curieuse', 'Réussir les quiz des sept capitales.'],
-  fragments: ['La huitième porte', 'Trouver les 7 fragments de mémoire.'],
+  curieuse: ['Curieuse', 'Réussir les quiz des quinze capitales.'],
+  fragments: ['D\'autres rives', 'Trouver les 15 fragments de mémoire.'],
+  huit_pages: ['Le Registre des Rives', 'Réunir les huit pages perdues.'],
+  retour: ['Fin : Le grand retour', 'Ramener Nour du bon côté.'],
+  justice: ['Fin : Justice', 'Faire arrêter le Mécène.'],
+  page: ['Fin : La page manquante', 'Laisser Nour s\'enfuir avec une page.'],
   ombre: ['Une ombre', 'Finir une infiltration sans jamais se faire repérer.'],
   rumba: ['Reine de la rumba', 'Réussir le concert avec au moins 95 % de précision.'],
   quiz: ['Griotte savante', 'Réussir un quiz sans aucune faute.'],
   etoiles: ['Perfectionniste', 'Obtenir 3 étoiles à tous les défis d\'un chapitre.'],
+  acte2: ['La huitième porte', 'Commencer l\'acte II.'],
 };
 
 /* ---------------- mini-jeux ---------------- */
@@ -729,6 +1267,45 @@ const GAMES = {
     tuto: 'Les hommes du Collectionneur gardent le souk. Avance dans leur dos, cache-toi derrière les étals.' },
   kora_finale: { type: 'kora', title: 'La berceuse complète', seq: BERCEUSE, start: 4, finale: true,
     tuto: 'La berceuse entière, cette fois. Papi te regarde. Ne tremble pas.' },
+  cadenas_perles: { type: 'cadenas', title: 'Les perles de Wanjiru', set: 'perles', first: 0, last: 1,
+    riddle: '« La paix d\'abord, le ciel à la fin. »',
+    tuto: 'Comme les cadenas de l\'acte I : 4 couleurs toutes différentes. Point d\'or : bonne couleur, bonne place. Point blanc : bonne couleur, mauvaise place.' },
+  poursuite_savane: { type: 'runner', title: 'Safari à toute vitesse', theme: 'savane', time: 42, frag: 'nairobi',
+    tuto: 'Wanjiru conduit, tu guides ! Esquive zèbres, buffles et rochers, saute les trous. Un cauri doré se cache dans la savane…' },
+  infiltration_collines: { type: 'infiltration', title: 'Les rangs de thé', theme: 'collines', levels: 'collines', frag: 'kigali',
+    tuto: 'Avance case par case entre les théiers. Les bananiers te cachent. Ne finis jamais ton tour dans le regard d\'un garde.' },
+  imigongo: { type: 'kente', title: 'Le panneau d\'imigongo', weave: 'imigongo', winTitle: 'Les zigzags s\'alignent !', winText: 'Une planche bascule…',
+    tuto: 'L\'imigongo est un art rwandais de motifs géométriques. Fais glisser chaque planche vers le haut ou le bas pour reformer le modèle.' },
+  fouille_rova: { type: 'fouille', title: 'Les archives du palais', scene: 'rova', time: 90, frag: 'antananarivo',
+    tuto: '« La page dort dans ce qui chante. » Fouille la salle des archives du Rova.' },
+  valiha: { type: 'kora', title: 'La valiha de Hery', instrument: 'valiha', seq: [2, 4, 3, 5, 6, 4, 1], start: 3,
+    tuto: 'La valiha est un instrument malgache : des cordes tendues sur un tube de bambou. Écoute la mélodie gravée, puis rejoue-la.' },
+  rythme_semba: { type: 'rythme', title: 'Semba sur l\'Ilha', chart: 'semba', music: 'semba', beats: 64, frag: 'luanda', go: 'Semba !', winTitle: 'L\'Ilha danse !',
+    tuto: 'Une fête de semba ! Touche chaque tambour au bon moment pour que la fête soit si belle que les gardes ne remontent pas.' },
+  poursuite_ilha: { type: 'runner', title: 'Fuite sur la Marginale', theme: 'ilha', time: 42,
+    tuto: 'Cours le long de la baie ! Change de couloir pour esquiver, saute les caisses.' },
+  infiltration_mokolo: { type: 'infiltration', title: 'Le marché Mokolo, la nuit', theme: 'mokolo', levels: 'mokolo', frag: 'yaounde',
+    tuto: 'Les allées du marché sont gardées. Avance dans le dos des gardes et cache-toi derrière les tissus.' },
+  confrontation_faussaire: { type: 'confrontation', title: 'Le faussaire', set: 'faussaire',
+    tuto: 'M. Bekolo jure que sa page est vraie. Quand une phrase est fausse, appuie sur « Objection ! » et montre l\'indice qui le prouve.' },
+  cadenas_nsibidi: { type: 'cadenas', title: 'La malle aux signes', set: 'nsibidi', first: 0, last: 1,
+    riddle: '« La parole d\'abord, le serment à la fin. »',
+    tuto: 'Ces signes s\'inspirent du nsibidi, une très ancienne écriture du sud-est du Nigeria. Même règle : 4 signes, tous différents.' },
+  poursuite_okada: { type: 'runner', title: 'Okada dans Abuja', theme: 'okada', time: 44, frag: 'abuja',
+    tuto: 'Tu es à l\'arrière d\'un okada, une moto-taxi. Esquive bus, voitures et chèvres. Saute les nids-de-poule !' },
+  fouille_cinema: { type: 'fouille', title: 'La cabine de projection', scene: 'cinema', time: 85, frag: 'ouagadougou',
+    tuto: 'La page est dans une bobine de 1987. Fouille la cabine du vieux cinéma.' },
+  faso: { type: 'kente', title: 'Le Faso Dan Fani', weave: 'faso', winTitle: 'Le pagne est tissé !', winText: 'La bobine s\'ouvre en deux.',
+    tuto: 'Le Faso Dan Fani est tissé en bandes, comme le kente. Fais glisser chaque bande pour retrouver le motif.' },
+  cadenas_zellige: { type: 'cadenas', title: 'La fontaine de zellige', set: 'zellige', first: 0, last: 1,
+    riddle: '« L\'étoile d\'abord, la porte à la fin. »',
+    tuto: 'Les zelliges sont des mosaïques marocaines. 4 motifs tous différents, comme pour les autres cadenas.' },
+  infiltration_oudayas: { type: 'infiltration', title: 'Les ruelles bleues', theme: 'oudayas', levels: 'oudayas', frag: 'rabat',
+    tuto: 'La kasbah est encerclée. Dernière infiltration : la plus difficile.' },
+  confrontation_nour: { type: 'confrontation', title: 'Face à face', set: 'nour',
+    tuto: 'Nour va tout nier. Utilise les indices réunis depuis Kigali pour la confronter.' },
+  kora_huitieme: { type: 'kora', title: 'La berceuse de la huitième porte', seq: [...BERCEUSE, 5, 6, 4], start: 5, finale: true,
+    tuto: 'La berceuse entière, et trois notes de plus. La dernière porte n\'attend que toi.' },
 };
 
 const CH_GAMES = {};

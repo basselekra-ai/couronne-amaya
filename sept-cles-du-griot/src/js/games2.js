@@ -75,6 +75,102 @@ const INF_LEVELS = {
       '...S...',
     ], guards: [{ mode: 'patrol', path: [[1, 5], [2, 5], [3, 5], [4, 5], [5, 5]], r: 2 }, { x: 3, y: 2, mode: 'turn', dirs: ['W', 'E'], r: 3 }, { x: 0, y: 3, mode: 'turn', dirs: ['E', 'N'], r: 3 }] },
   ],
+  collines: [
+    { name: 'Les rangs de thé', map: [
+      '###E###',
+      '#..*..#',
+      '#.##.##',
+      '#.....#',
+      '##.#*##',
+      '#.....#',
+      '#.#.#.#',
+      '...S...',
+    ], guards: [{ mode: 'patrol', path: [[1, 3], [2, 3], [3, 3], [4, 3], [5, 3]], r: 2 }, { x: 5, y: 5, mode: 'turn', dirs: ['W', 'N'], r: 3 }] },
+    { name: 'Le séchoir', map: [
+      '#E#####',
+      '#.*...#',
+      '#.#.#.#',
+      '#...*..',
+      '##.#.##',
+      '*.....*',
+      '.#.#.#.',
+      '.F.S...',
+    ], guards: [{ x: 3, y: 3, mode: 'turn', dirs: ['N', 'E', 'S', 'W'], r: 2 }, { mode: 'patrol', path: [[0, 5], [1, 5], [2, 5], [3, 5], [4, 5], [5, 5], [6, 5]], r: 2 }] },
+    { name: 'La maison d\'Ange', map: [
+      '~~~E~~~',
+      '.......',
+      '.#.#.#.',
+      '*.....*',
+      '~~.~.~~',
+      '.......',
+      '#.#*#.#',
+      '...S...',
+    ], guards: [{ mode: 'patrol', path: [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1]], r: 2 }, { x: 3, y: 3, mode: 'turn', dirs: ['S', 'E', 'N', 'W'], r: 2 }, { mode: 'patrol', path: [[0, 5], [1, 5], [2, 5], [3, 5], [4, 5], [5, 5], [6, 5]], r: 2 }] },
+  ],
+  mokolo: [
+    { name: 'Les allées du marché', map: [
+      '###E###',
+      '#.....#',
+      '#*#.#*#',
+      '.......',
+      '.#.#.#.',
+      '.......',
+      '#.#*#.#',
+      '...S...',
+    ], guards: [{ mode: 'patrol', path: [[0, 3], [1, 3], [2, 3], [3, 3], [4, 3], [5, 3], [6, 3]], r: 2 }, { x: 1, y: 1, mode: 'turn', dirs: ['E', 'S'], r: 3 }] },
+    { name: 'Les étals de tissus', map: [
+      '#####E#',
+      '#.*...#',
+      '#.##.##',
+      '#...*..',
+      '##.#.#.',
+      '*......',
+      '.#.#.#F',
+      '...S...',
+    ], guards: [{ x: 1, y: 3, mode: 'turn', dirs: ['E', 'S'], r: 3 }, { mode: 'patrol', path: [[6, 3], [6, 4], [6, 5]], r: 2 }, { x: 0, y: 6, mode: 'turn', dirs: ['N', 'E'], r: 3 }] },
+    { name: 'L\'atelier du faussaire', map: [
+      '###E###',
+      '#..*..#',
+      '#.#.#.#',
+      '*.....*',
+      '.#.#.#.',
+      '.......',
+      '#*#.#*#',
+      '...S...',
+    ], guards: [{ mode: 'patrol', path: [[1, 5], [2, 5], [3, 5], [4, 5], [5, 5]], r: 2 }, { x: 3, y: 2, mode: 'turn', dirs: ['W', 'E', 'S'], r: 3 }, { x: 6, y: 3, mode: 'turn', dirs: ['W', 'N'], r: 3 }] },
+  ],
+  oudayas: [
+    { name: 'La porte des Oudayas', map: [
+      '##E####',
+      '#..*..#',
+      '#.#.#.#',
+      '.......',
+      '.#*#.#.',
+      '.......',
+      '#.#.#.#',
+      '...S...',
+    ], guards: [{ mode: 'patrol', path: [[0, 3], [1, 3], [2, 3], [3, 3], [4, 3], [5, 3], [6, 3]], r: 3 }, { x: 6, y: 5, mode: 'turn', dirs: ['W', 'N'], r: 3 }] },
+    { name: 'Les ruelles bleues', map: [
+      '#####E#',
+      '#*....#',
+      '#.##..#',
+      '#....*.',
+      '##.#...',
+      '*....#.',
+      '.#.#..F',
+      '...S..#',
+    ], guards: [{ x: 4, y: 1, mode: 'turn', dirs: ['W', 'S'], r: 3 }, { mode: 'patrol', path: [[6, 3], [6, 4], [6, 5]], r: 2 }, { x: 0, y: 6, mode: 'turn', dirs: ['N', 'E'], r: 3 }] },
+    { name: 'Le jardin andalou', map: [
+      '###E###',
+      '#..*..#',
+      '#.#.#.#',
+      '*.....*',
+      '.#.#.#.',
+      '.......',
+      '#*#.#*#',
+      '...S...',
+    ], guards: [{ mode: 'patrol', path: [[1, 5], [2, 5], [3, 5], [4, 5], [5, 5]], r: 2 }, { x: 3, y: 2, mode: 'turn', dirs: ['W', 'S', 'E'], r: 3 }, { x: 0, y: 3, mode: 'turn', dirs: ['E', 'N', 'N'], r: 3 }, { x: 6, y: 3, mode: 'turn', dirs: ['W', 'N'], r: 2 }] },
+  ],
 };
 
 const INF = {
@@ -159,6 +255,22 @@ const INF_ART = {
     exit: '<svg viewBox="0 0 40 40"><rect x="4" y="4" width="32" height="32" fill="#1a1008"/><path d="M8 32H32M10 26H30M12 20H28M14 14H26" stroke="#c9a24a" stroke-width="3"/></svg>',
     floor: '#4a3a40', floor2: '#52424a',
   },
+};
+
+INF_ART.collines = {
+  wall: '<svg viewBox="0 0 40 40"><ellipse cx="20" cy="26" rx="18" ry="12" fill="#2f7a3a"/>' + [0, 1, 2, 3, 4].map(i => `<circle cx="${6 + i * 7}" cy="${20 + (i % 2) * 4}" r="5" fill="#4a9a4a"/>`).join('') + '</svg>',
+  water: '<svg viewBox="0 0 40 40"><path d="M4 20h32" stroke="rgba(255,255,255,.3)" stroke-width="2" stroke-dasharray="4 4"/></svg>', croc: '',
+  bush: '<svg viewBox="0 0 40 40"><path d="M20 40V14" stroke="#5a7a2a" stroke-width="3"/><path d="M20 16Q4 10 2 24M20 16Q36 10 38 24M20 18Q8 0 18 2M20 18Q32 0 24 2" stroke="#3d8a3a" stroke-width="6" fill="none" stroke-linecap="round"/></svg>',
+  exit: '<svg viewBox="0 0 40 40"><path d="M6 20L20 8L34 20V34H6Z" fill="#c9703a"/><path d="M4 21L20 6L36 21" stroke="#7a3a2a" stroke-width="3" fill="none"/><rect x="16" y="24" width="8" height="10" fill="#2a1608"/></svg>',
+  floor: '#6a4a2a', floor2: '#74522f',
+};
+INF_ART.mokolo = { ...INF_ART.souk, floor: '#5a4232', floor2: '#634a38' };
+INF_ART.oudayas = {
+  wall: '<svg viewBox="0 0 40 40"><rect x="2" y="2" width="36" height="36" rx="3" fill="#2f6fb5"/><rect x="2" y="24" width="36" height="14" fill="#f4f1ea"/><rect x="14" y="8" width="12" height="12" rx="6" fill="#1f4f8a"/></svg>',
+  water: '', croc: '',
+  bush: '<svg viewBox="0 0 40 40"><rect x="10" y="22" width="20" height="16" fill="#c8553d"/><path d="M20 24V6" stroke="#4a7a3a" stroke-width="3"/><circle cx="20" cy="8" r="8" fill="#3d8a4a"/><circle cx="14" cy="14" r="6" fill="#4a9a52"/><circle cx="26" cy="14" r="6" fill="#4a9a52"/></svg>',
+  exit: '<svg viewBox="0 0 40 40"><path d="M6 38V18Q20 0 34 18V38Z" fill="#2f9e62"/><path d="M12 38V20Q20 8 28 20V38Z" fill="#1a1008"/></svg>',
+  floor: '#b9a68a', floor2: '#c4b294',
 };
 
 GAME_TYPES.infiltration = (stage, cfg, ctl) => new Promise(res => {
@@ -294,9 +406,18 @@ const KENTE_DESIGN = [
   'NGGGGN',
 ];
 
+const WEAVES = {
+  kente: { design: KENTE_DESIGN, colors: KENTE_COLORS },
+  imigongo: { colors: { N: '#1a1410', B: '#f1e6d2', R: '#a8442a', G: '#8a8478' }, design: [
+    'NBRRBN', 'BNRRNB', 'RBNNBR', 'RRBBRR', 'BNGGNB', 'NBGGBN', 'GNBBNG', 'BGNNGB', 'NRBBRN', 'RNBBNR'] },
+  faso: { colors: { B: '#1d4b9b', W: '#f4ecd8', R: '#c22d23', N: '#1a1410' }, design: [
+    'BWRRWB', 'WBNNBW', 'RNWWNR', 'BRBBRB', 'WWNNWW', 'NBRRBN', 'RWBBWR', 'BNWWNB', 'WRNNRW', 'NWBBWN'] },
+};
+
 GAME_TYPES.kente = (stage, cfg, ctl) => new Promise(res => {
-  const rows = KENTE_DESIGN.length, cols = KENTE_DESIGN[0].length;
-  const col = c => KENTE_DESIGN.map(r => r[c]);
+  const WV = WEAVES[cfg.weave || 'kente'], DESIGN = WV.design, COLORS = WV.colors;
+  const rows = DESIGN.length, cols = DESIGN[0].length;
+  const col = c => DESIGN.map(r => r[c]);
   const off = Array.from({ length: cols }, () => irnd(2, rows - 2));
   const optimal = off.reduce((a, o) => a + Math.min(o, rows - o), 0);
   let moves = 0, over = false;
@@ -305,13 +426,13 @@ GAME_TYPES.kente = (stage, cfg, ctl) => new Promise(res => {
     <div class="kt"><div class="kt-row"><div class="kt-cloth"></div><div class="kt-target">Modèle<div class="mini"></div></div></div>
     <div class="g-sub">Glisse une bande vers le haut ou le bas, ou utilise les flèches.</div></div><div class="g-foot"></div>`;
   const cloth = $('.kt-cloth', stage);
-  $('.kt-target .mini', stage).innerHTML = Array.from({ length: cols }, (_, c) => `<div style="display:flex;flex-direction:column">${col(c).map(k => `<i style="display:block;width:9px;height:7px;background:${KENTE_COLORS[k]}"></i>`).join('')}</div>`).join('');
+  $('.kt-target .mini', stage).innerHTML = Array.from({ length: cols }, (_, c) => `<div style="display:flex;flex-direction:column">${col(c).map(k => `<i style="display:block;width:9px;height:7px;background:${COLORS[k]}"></i>`).join('')}</div>`).join('');
   $('.g-foot', stage).append(hintButton(15, 'Ajuster', () => {
     const c = off.findIndex(o => o !== 0);
     if (c < 0) return false;
     off[c] = 0; render(); check();
   }));
-  const cellHtml = (k, h) => `<span class="kt-cell" style="width:40px;height:${h}px;background:${KENTE_COLORS[k]};background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.12) 0 2px,transparent 2px 5px),repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 1px,transparent 1px 4px)"></span>`;
+  const cellHtml = (k, h) => `<span class="kt-cell" style="width:40px;height:${h}px;background:${COLORS[k]};background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.12) 0 2px,transparent 2px 5px),repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 1px,transparent 1px 4px)"></span>`;
   const render = () => {
     const h = cellH();
     cloth.innerHTML = Array.from({ length: cols }, (_, c) => {
@@ -335,7 +456,7 @@ GAME_TYPES.kente = (stage, cfg, ctl) => new Promise(res => {
     over = true;
     stage.classList.add('kt-done');
     Sfx.play('reveal');
-    ctl.timeout(() => { stage.classList.remove('kt-done'); res({ win: true, stars: moves <= optimal + 4 ? 3 : moves <= optimal + 12 ? 2 : 1, title: 'Le tissu parle !', text: 'Une flèche d\'or apparaît au centre du motif.' }); }, 1500);
+    ctl.timeout(() => { stage.classList.remove('kt-done'); res({ win: true, stars: moves <= optimal + 4 ? 3 : moves <= optimal + 12 ? 2 : 1, title: cfg.winTitle || 'Le tissu parle !', text: cfg.winText || 'Une flèche d\'or apparaît au centre du motif.' }); }, 1500);
   };
   ctl.listen(cloth, 'click', e => { const b = e.target.closest('.arr'); if (b) shift(+b.dataset.c, +b.dataset.d); });
   // glisser une bande
@@ -353,11 +474,20 @@ GAME_TYPES.kente = (stage, cfg, ctl) => new Promise(res => {
 /* ======================================================================
    RYTHME : notes qui tombent sur trois tambours
    ====================================================================== */
+const RHYTHM_CHARTS = {};
 const RHYTHM_BARS = [
   '0...1...2...1...', '0...0...1...2...', '0.1.2.1.0.1.2...', '0...1.1.2...2...',
   '0.0.1...2.2.1...', '0.1.0.2.0.1.2...', '2...1...0.1.2...', '0.1.2.2.1.0.1.2.',
   '0...2...0.1.2...', '1.1.0...2.2.0...', '0.1.2.1.0.2.1...', '2.1.0.1.2.1.0...',
   '0.0.1.1.2.2.1...', '0.1.2.0.1.2.1...', '2.2.1.1.0.0.1...', '0...1...2...0...',
+];
+
+RHYTHM_CHARTS.rumba = RHYTHM_BARS;
+RHYTHM_CHARTS.semba = [
+  '0...2...0...2...', '0.1...2.0.1...2.', '0.0.2...1.1.2...', '0...1.2.0...1.2.',
+  '2.1.0...2.1.0...', '0.1.2.1.2.1.0...', '0...0.1.2...2.1.', '1.0.1.2.1.0.1.2.',
+  '0.2.0.2.1...1...', '0.1.2...0.1.2...', '2.2.1.0.2.2.1.0.', '0.1.0.2.0.1.0.2.',
+  '1...2...0.1.2.1.', '0.2.1.0.2.1.0...', '2.1.2.1.0.0.1...', '0...1...2...0...',
 ];
 
 GAME_TYPES.rythme = (stage, cfg, ctl) => new Promise(res => {
@@ -370,10 +500,11 @@ GAME_TYPES.rythme = (stage, cfg, ctl) => new Promise(res => {
 
   const c = Snd.ensure();
   Music.stop(0.2); Music.cur = null;
-  Music.play('rumba');
-  const bpm = THEMES.rumba.bpm, beat = 60 / bpm, startBeat = 8;
+  const theme = cfg.music || 'rumba';
+  Music.play(theme);
+  const bpm = THEMES[theme].bpm, beat = 60 / bpm, startBeat = 8;
   const notes = [];
-  const bars = RHYTHM_BARS.slice(0, Math.ceil((cfg.beats || 64) / 4));
+  const bars = (RHYTHM_CHARTS[cfg.chart || 'rumba']).slice(0, Math.ceil((cfg.beats || 64) / 4));
   bars.forEach((p, b) => [...p].forEach((ch, s) => { if (ch !== '.') notes.push({ lane: +ch, time: Music.beatTime(startBeat + b * 4 + s / 4) }); }));
   const clock = () => (c ? c.currentTime : performance.now() / 1000);
   const endTime = notes[notes.length - 1].time + 1.5;
@@ -446,18 +577,18 @@ GAME_TYPES.rythme = (stage, cfg, ctl) => new Promise(res => {
     for (const p of pops) { g.globalAlpha = 1 - (now - p.t) / 0.6; g.fillStyle = p.col; g.fillText(p.text, (p.lane + 0.5) * W / 3, hitY() - 50 - (now - p.t) * 60); }
     g.globalAlpha = 1;
     if (combo >= 5) { g.font = '30px "Lilita One",sans-serif'; g.fillStyle = '#fff4e0'; g.fillText(`Combo ×${combo}`, W / 2, H * 0.2); }
-    if (now < notes[0].time - 0.4) { g.font = '26px "Lilita One",sans-serif'; g.fillStyle = '#ffe08a'; g.fillText(['3', '2', '1', 'Rumba !'][clamp(Math.floor((now - (notes[0].time - 4 * beat - 0.4)) / beat), 0, 3)] || '', W / 2, H * 0.4); }
+    if (now < notes[0].time - 0.4) { g.font = '26px "Lilita One",sans-serif'; g.fillStyle = '#ffe08a'; g.fillText(['3', '2', '1', cfg.go || 'Rumba !'][clamp(Math.floor((now - (notes[0].time - 4 * beat - 0.4)) / beat), 0, 3)] || '', W / 2, H * 0.4); }
     const acc = judged ? score / judged : 0.5;
     $('#ry-c i').style.transform = `scaleX(${acc})`;
     $('#ry-p').textContent = Math.round((judged ? score / notes.length : 0) * 100) + '%';
     if (!over && now > endTime) {
       over = true;
       const fin = score / notes.length;
-      if (fin >= 0.95) unlockTrophy('rumba');
+      if (fin >= 0.95 && theme === 'rumba') unlockTrophy('rumba');
       Sfx.play('crowd');
       ctl.timeout(() => res(fin >= 0.6
-        ? { win: true, stars: fin >= 0.9 ? 3 : fin >= 0.75 ? 2 : 1, frag: fin >= 0.9, title: 'La salle est en feu !', text: `Précision : ${Math.round(fin * 100)} % · meilleur combo ×${best}.` }
-        : { win: false, title: 'La foule décroche…', text: `Précision : ${Math.round(fin * 100)} %. Il faut au moins 60 % pour approcher la guitare.` }), 600);
+        ? { win: true, stars: fin >= 0.9 ? 3 : fin >= 0.75 ? 2 : 1, frag: fin >= 0.9, title: cfg.winTitle || 'La salle est en feu !', text: `Précision : ${Math.round(fin * 100)} % · meilleur combo ×${best}.` }
+        : { win: false, title: 'La foule décroche…', text: `Précision : ${Math.round(fin * 100)} %. Il faut au moins 60 %.` }), 600);
     }
   });
 });
@@ -465,19 +596,51 @@ GAME_TYPES.rythme = (stage, cfg, ctl) => new Promise(res => {
 /* ======================================================================
    CONFRONTATION : présenter l'indice qui contredit
    ====================================================================== */
-const CONFRONT = [
-  { text: 'Ce téléphone ? Je l\'ai acheté au marché Sandaga, le matin même. Au hasard, chez le premier vendeur venu.', ev: 'puce', react: ['inquiet', 'Je… Des tas d\'entreprises s\'appellent « IS » !'] },
-  { text: 'Ton grand-père et moi, on ne s\'était pas parlé depuis des mois. Aucune dispute. Rien du tout.', ev: 'lettre', react: ['inquiet', 'Une offre… Une simple offre d\'affaires, entre vieux amis.'] },
-  { text: 'Et comment aurais-je su que tu partais pour Bamako, hein ? Je ne suis pas devin.', ev: 'billet', react: ['peur', 'Je… J\'ai pu deviner, voilà tout…'] },
-  { text: 'Les Sept ? Une photo de 1987 ? Je n\'y étais pas. Je ne connais aucun de ces gens.', ev: 'bague', react: ['colere', 'Cette bague… Seydou garde vraiment tout.'] },
-];
-const CONFRONT_MOCK = ['Et alors ? Ça ne prouve rien, ma petite.', 'Tu perds ton temps. Et celui de Seydou.', 'Hm. Tu es fatiguée, Awa. Va dormir.'];
+const CONFRONT_SETS = {
+  ibrahima: {
+    who: 'ibrahima', call: 'Appel en cours · Tonton Ibrahima',
+    stmts: [
+      { text: 'Ce téléphone ? Je l\'ai acheté au marché Sandaga, le matin même. Au hasard, chez le premier vendeur venu.', ev: 'puce', react: ['inquiet', 'Je… Des tas d\'entreprises s\'appellent « IS » !'] },
+      { text: 'Ton grand-père et moi, on ne s\'était pas parlé depuis des mois. Aucune dispute. Rien du tout.', ev: 'lettre', react: ['inquiet', 'Une offre… Une simple offre d\'affaires, entre vieux amis.'] },
+      { text: 'Et comment aurais-je su que tu partais pour Bamako, hein ? Je ne suis pas devin.', ev: 'billet', react: ['peur', 'Je… J\'ai pu deviner, voilà tout…'] },
+      { text: 'Les Sept ? Une photo de 1987 ? Je n\'y étais pas. Je ne connais aucun de ces gens.', ev: 'bague', react: ['colere', 'Cette bague… Seydou garde vraiment tout.'] },
+    ],
+    mocks: ['Et alors ? Ça ne prouve rien, ma petite.', 'Tu perds ton temps. Et celui de Seydou.', 'Hm. Tu es fatiguée, Awa. Va dormir.'],
+    win: ['Il est démasqué', 'Au bout du fil, un long silence. Puis un rire froid.'],
+    lose: ['Il a raccroché', 'Tonton Ibrahima a coupé l\'appel. Relis tes indices, et rappelle-le.'],
+  },
+  faussaire: {
+    who: 'bekolo', call: 'Interrogatoire · M. Bekolo, « antiquaire »',
+    stmts: [
+      { text: 'Cette page est authentique, madame. Regardez ce papier lisse, parfait, typique de l\'époque.', ev: 'papier', react: ['inquiet', 'Antemoro ? Je… je n\'ai jamais entendu ce mot.'] },
+      { text: 'Et le texte est en vieux français, comme toutes les autres pages du Livre.', ev: 'ajami', react: ['peur', 'De l\'ajami ? Bon… J\'ai peut-être un peu… recopié.'] },
+      { text: 'Je l\'ai achetée à un brocanteur, au hasard. Je ne connais aucun « Mécène ».', ev: 'sceau', react: ['colere', 'Ce sceau… D\'accord ! Il m\'a payé pour vous envoyer sur une fausse piste !'] },
+    ],
+    mocks: ['Vous n\'y connaissez rien, mademoiselle.', 'Un client mécontent, voilà tout.', 'Ha ! Les jeunes croient tout savoir.'],
+    win: ['Le faussaire avoue', 'M. Bekolo baisse les yeux et sort la vraie page d\'un tiroir secret.'],
+    lose: ['Il vous met dehors', 'Le faussaire appelle ses gros bras. Reviens avec de meilleures preuves.'],
+  },
+  nour: {
+    who: 'nour', call: 'Face à face · Nour Hassan',
+    stmts: [
+      { text: 'Le Mécène ? Je ne connais même pas son numéro. Je l\'ai découvert en même temps que toi.', ev: 'vibration', react: ['inquiet', 'Mon téléphone… vibre souvent. Ça ne veut rien dire.'] },
+      { text: 'Comment aurais-je pu prévenir qui que ce soit, à Luanda ? J\'étais avec vous tout le temps.', ev: 'avance', react: ['inquiet', 'Il y avait… d\'autres façons de savoir.'] },
+      { text: 'Les hommes du souk, au Caire, travaillaient pour Ibrahima. Pas pour moi.', ev: 'bordereau', react: ['peur', 'Ce bordereau… Tunde l\'a trouvé, n\'est-ce pas ?'] },
+      { text: 'Ce scarabée à mon poignet ? Un bijou de touriste, il y en a des milliers au Caire.', ev: 'sceau', react: ['triste', 'Une patte cassée. Ma mère l\'avait fait tomber, quand j\'avais six ans.'] },
+      { text: 'Et je n\'ai jamais, jamais voulu vendre le Livre.', ev: 'carnet_nour', react: ['colere', '… Quarante millions. Tu sais ce que ma mère avait, elle, à la fin ? Rien.'] },
+    ],
+    mocks: ['Tu te trompes, Awa. Je suis ton amie.', 'Tu vois des traîtres partout depuis Ibrahima.', 'Réfléchis. Pourquoi t\'aurais-je aidée ?'],
+    win: ['Le masque tombe', 'Nour ne nie plus. Ses yeux brillent de larmes et de colère.'],
+    lose: ['Nour se referme', 'Elle s\'éloigne, blessée. Reprends tes preuves une à une.'],
+  },
+};
 
 GAME_TYPES.confrontation = (stage, cfg, ctl) => new Promise(res => {
-  let cur = 0, lives = 3, over = false, mood = 'sourire', mock = 0;
+  const SET = CONFRONT_SETS[cfg.set || 'ibrahima'], CONFRONT = SET.stmts, CONFRONT_MOCK = SET.mocks;
+  let cur = 0, lives = 3, over = false, mood = SET.who === 'nour' ? 'neutre' : 'sourire', mock = 0;
   const done = new Set();
   stage.innerHTML = `<div class="g-hud"><span class="hearts" id="cf-h"></span><span class="grow"></span><span class="cf-dots" id="cf-d"></span></div>
-    <div class="cf"><div class="cf-call">● Appel en cours · Tonton Ibrahima</div><div class="cf-port"></div>
+    <div class="cf"><div class="cf-call">● ${SET.call}</div><div class="cf-port"></div>
     <div class="cf-stmt"><span class="n"></span><div class="tx"></div></div>
     <div class="cf-acts"><button class="btn ghost small" id="cf-prev">◀</button><button class="btn terra" id="cf-obj">Objection !</button><button class="btn ghost small" id="cf-next">▶</button></div>
     <div class="g-sub">Lis chaque phrase. Quand l'une d'elles est fausse, présente la preuve.</div></div><div class="g-foot"></div>`;
@@ -490,7 +653,7 @@ GAME_TYPES.confrontation = (stage, cfg, ctl) => new Promise(res => {
   const render = () => {
     $('#cf-h').textContent = '♥'.repeat(lives) + '♡'.repeat(3 - lives);
     $('#cf-d').innerHTML = CONFRONT.map((_, i) => `<i class="${done.has(i) ? 'done' : i === cur ? 'on' : ''}"></i>`).join('');
-    port.innerHTML = portrait('ibrahima', mood, 1);
+    port.innerHTML = portrait(SET.who, mood, 1);
     $('.n', stmt).textContent = `Déclaration ${cur + 1}/${CONFRONT.length}`;
     $('.tx', stmt).innerHTML = fmt(done.has(cur) ? `~~${CONFRONT[cur].text}~~` : CONFRONT[cur].text).replace(/~~(.+)~~/, '<s style="opacity:.55">$1</s>');
     stmt.classList.toggle('hit', done.has(cur));
@@ -531,7 +694,7 @@ GAME_TYPES.confrontation = (stage, cfg, ctl) => new Promise(res => {
       if (done.size === CONFRONT.length) {
         over = true;
         await ctl.sleep(300);
-        res({ win: true, stars: lives === 3 ? 3 : lives === 2 ? 2 : 1, title: 'Il est démasqué', text: 'Au bout du fil, un long silence. Puis un rire froid.' });
+        res({ win: true, stars: lives === 3 ? 3 : lives === 2 ? 2 : 1, title: SET.win[0], text: SET.win[1] });
         return;
       }
       cur = [...Array(CONFRONT.length).keys()].find(i => !done.has(i));
@@ -540,7 +703,7 @@ GAME_TYPES.confrontation = (stage, cfg, ctl) => new Promise(res => {
       lives--;
       Sfx.play('bad'); Haptic.mid();
       await say('malin', CONFRONT_MOCK[mock++ % CONFRONT_MOCK.length], 1700);
-      if (lives <= 0) { over = true; res({ win: false, title: 'Il a raccroché', text: 'Tonton Ibrahima a coupé l\'appel. Relis tes indices, et rappelle-le.' }); }
+      if (lives <= 0) { over = true; res({ win: false, title: SET.lose[0], text: SET.lose[1] }); }
     }
   };
   render();

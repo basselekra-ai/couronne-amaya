@@ -1,17 +1,17 @@
 # Les 7 Clés du Griot
 
-Jeu d'aventure et d'enquête pour Android et iOS. Awa Ndiaye, 22 ans, part à la recherche de son grand-père griot, enlevé à Dakar. Pour le sauver, elle doit réunir sept clés cachées dans sept capitales africaines, avant le mystérieux Collectionneur.
+Jeu d'aventure et d'enquête pour Android et iOS. Awa Ndiaye, 22 ans, part à la recherche de son grand-père griot, enlevé à Dakar. **Acte I** : elle réunit sept clés dans sept capitales pour le sauver du Collectionneur. **Acte II** : elle traque les huit pages perdues du Livre des Rives dans huit autres capitales, face au mystérieux Mécène. En tout, **15 capitales africaines**.
 
 ## Le jeu en bref
 
 | | |
 |---|---|
-| Genre | Aventure narrative et énigmes (environ 1 h 30 pour la première partie) |
-| Villes | Dakar, Bamako, Yamoussoukro, Accra, Kinshasa, Addis-Abeba, Le Caire |
-| Personnages | 13 personnages illustrés, avec 9 expressions (Awa, Papi Seydou, Kofi, Fanta, Akissi, Ya Didi, Dr Makeda, Nour…) |
-| Mini-jeux | 15 défis de 8 types : fouille, kora (mémoire musicale), course-poursuite en 3D, cadenas à déduction, infiltration au tour par tour, tissage du kente, concert de rumba (rythme), confrontation avec preuves |
-| Suspense | SMS anonymes et menaçants, choix à temps limité, trahison, compte à rebours de 72 heures, deux fins |
-| Curiosité | 21 « Le saviez-vous ? » vérifiés sur les capitales, 7 quiz, carnet d'enquête, 7 fragments secrets qui débloquent un épilogue caché |
+| Genre | Aventure narrative et énigmes (environ 3 heures pour une première partie) |
+| Villes (15) | Acte I : Dakar, Bamako, Yamoussoukro, Accra, Kinshasa, Addis-Abeba, Le Caire. Acte II : Nairobi, Kigali, Antananarivo, Luanda, Yaoundé, Abuja, Ouagadougou, Rabat |
+| Personnages | 22 personnages illustrés, avec 9 expressions (Awa, Papi Seydou, Kofi, Akissi, Ya Didi, Wanjiru, Hery, Nzinga, Mama Ngono, Tunde, Aminata…) |
+| Mini-jeux | 33 défis de 8 types : fouille, kora et valiha (mémoire musicale), course-poursuite en 3D (ruelles, pirogue, moto, safari, okada), cadenas à déduction (bogolan, hiéroglyphes, perles maasaï, nsibidi, zellige), infiltration au tour par tour (15 niveaux), tissage (kente, imigongo, Faso Dan Fani), rythme (rumba, semba), confrontation avec preuves |
+| Suspense | SMS anonymes et menaçants, choix à temps limité, deux trahisons, compte à rebours de 72 heures, 5 fins (2 dans l'acte I, 3 dans l'acte II) |
+| Curiosité | 45 « Le saviez-vous ? » sur les capitales, 15 quiz, carnet d'enquête, 15 fragments secrets qui débloquent un épilogue caché |
 | Rejouabilité | Étoiles par défi, trophées, deuxième fin à découvrir, cauris à gagner pour acheter des indices |
 | Technique | 100 % hors ligne, aucune donnée collectée, aucun fichier image ou son : tout est dessiné et composé par le code (léger, environ 3 Mo installé) |
 
@@ -24,7 +24,7 @@ Les personnages et le « Livre des Rives » sont imaginaires. Les lieux et les �
 | `src/index.html`, `src/style.css` | Page du jeu et mise en forme |
 | `src/js/story.js` | **Le scénario** (dialogues, choix), les indices, les « Le saviez-vous ? », les quiz, les trophées et les réglages des mini-jeux. C'est le fichier à modifier pour écrire de nouveaux chapitres. |
 | `src/js/engine.js` | Moteur : écran titre, carte de l'Afrique, dialogues, SMS, carnet, réglages |
-| `src/js/games.js`, `src/js/games2.js` | Les 8 types de mini-jeux et les niveaux d'infiltration |
+| `src/js/games.js`, `src/js/games2.js` | Les 8 types de mini-jeux, leurs variantes et les niveaux d'infiltration |
 | `src/js/art.js`, `src/js/scenes.js` | Portraits, décors des villes, carte, drapeaux, médaillons |
 | `src/js/audio.js` | Musiques et bruitages synthétisés (kora, djembé, rumba, oud…) |
 | `scripts/build-www.mjs` | Construit `www/` (le jeu prêt pour le mobile) à partir de `src/` |
@@ -77,7 +77,7 @@ Un Mac avec Xcode et l'Apple Developer Program (99 $ par an) sont nécessaires :
 
 ## Ce qui a été vérifié, et ce qui ne l'a pas été
 
-- **Vérifié** dans Chrome (format téléphone 390 × 844) : l'histoire complète se joue du début à la fin, avec les deux fins, sans erreur. Chacun des mini-jeux a été gagné par un programme de test qui joue « pour de vrai » (kora, cadenas, kente, infiltration, rythme, confrontation). Les 6 niveaux d'infiltration ont été vérifiés par un solveur : tous ont une solution, et les fragments cachés sont atteignables.
+- **Vérifié** dans Chrome (format téléphone 390 × 844) : les 15 chapitres se jouent du début à la fin sans erreur, avec les 5 fins. Les défis de mémoire, cadenas, tissage, infiltration, rythme et confrontation ont été gagnés par un programme de test qui joue « pour de vrai ». Les 15 niveaux d'infiltration ont été vérifiés par un solveur : tous ont une solution, et les fragments cachés sont atteignables.
 - **Vérifié** : `npm run sync` construit le jeu et prépare les projets Android et iOS, icônes comprises.
 - **Non vérifié** : la compilation de l'APK et de l'application iOS (l'environnement de préparation n'avait ni SDK Android ni Mac). Les réglages sont les mêmes que ceux de La Couronne d'Amaya ; le premier lancement du workflow GitHub fera ce test.
 - **À tester par des humains** : la difficulté réelle sur téléphone (courses-poursuites surtout), le son sur différents appareils, et la relecture des textes.

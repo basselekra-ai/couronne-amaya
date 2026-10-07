@@ -46,7 +46,7 @@ const Save = {
       cur: null,             // {ch, step, scene}
       flags: {}, trust: 0,
       cauris: 40,
-      clues: [], facts: [], keys: [], frags: [], trophies: [], endings: [],
+      clues: [], facts: [], keys: [], pages: [], frags: [], trophies: [], endings: [],
       settings: { music: 0.6, sfx: 0.9, vib: true, speed: 1 },
       seenTuto: {},
     };

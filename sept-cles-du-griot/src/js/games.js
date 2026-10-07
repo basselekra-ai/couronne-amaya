@@ -85,7 +85,7 @@ const Games = {
     const gain = (res.cauris || 0) + Math.max(0, stars - prev) * 5;
     if (gain) Save.addCauris(gain);
     let frag = false;
-    if (res.frag && cfg.frag && !Save.d.frags.includes(cfg.frag)) { Save.d.frags.push(cfg.frag); frag = true; if (Save.d.frags.length >= 7) unlockTrophy('fragments'); }
+    if (res.frag && cfg.frag && !Save.d.frags.includes(cfg.frag)) { Save.d.frags.push(cfg.frag); frag = true; if (Save.d.frags.length >= 15) unlockTrophy('fragments'); }
     Save.save();
     Sfx.play('win'); Haptic.mid();
     await UI.modal({
@@ -125,6 +125,9 @@ const TUTO_ART = {
 const ITEM_ART = {
   bobine: '<ellipse cx="32" cy="14" rx="16" ry="5" fill="#8a5a2a"/><rect x="18" y="14" width="28" height="36" fill="#ffd23f"/><path d="M18 22h28M18 30h28M18 38h28" stroke="#c99a10" stroke-width="2"/><ellipse cx="32" cy="50" rx="16" ry="5" fill="#8a5a2a"/>',
   antenne: '<path d="M10 50q6-30 12 0t12 0 12 0 12 0" stroke="#d88a3a" stroke-width="4" fill="none"/><circle cx="10" cy="50" r="4" fill="#d88a3a"/>',
+  valiha: '<rect x="24" y="4" width="16" height="56" rx="7" fill="#d9b86a"/><path d="M28 8v48M32 8v48M36 8v48" stroke="#7a5a20" stroke-width="1.2"/>',
+  cle: '<circle cx="20" cy="32" r="9" fill="none" stroke="#b8862a" stroke-width="4"/><path d="M29 32H56M48 32v8M54 32v6" stroke="#b8862a" stroke-width="4"/>',
+  affiche: '<rect x="14" y="6" width="36" height="52" fill="#e8c84a"/><rect x="18" y="10" width="28" height="26" fill="#c8553d"/><circle cx="32" cy="23" r="7" fill="#2a1a10"/>',
   micro: '<circle cx="32" cy="30" r="16" fill="#3a3a44"/><g fill="#8a8a96">' + [0, 1, 2, 3, 4, 5, 6, 7].map(i => `<circle cx="${32 + Math.cos(i * 0.785) * 9}" cy="${30 + Math.sin(i * 0.785) * 9}" r="2"/>`).join('') + '<circle cx="32" cy="30" r="2.5"/></g><path d="M32 46v10" stroke="#3a3a44" stroke-width="4"/>',
 };
 const itemIcon = k => `<svg viewBox="0 0 64 64">${ITEM_ART[k] || CLUE_ART[k] || ''}</svg>`;
@@ -218,6 +221,67 @@ const FOUILLE_SCENES = {
         <rect x="150" y="470" width="120" height="10" fill="#5a3418"/>
         <g class="hit" data-id="photo"><rect x="160" y="420" width="56" height="52" fill="transparent"/><rect x="166" y="428" width="44" height="36" fill="#c9a24a"/><rect x="170" y="432" width="36" height="26" fill="#8a7a62"/>${[0, 1, 2, 3, 4, 5].map(i => `<circle cx="${174 + i * 5.6}" cy="444" r="2.2" fill="#2a1e14"/>`).join('')}<path d="M188 464l-6 6M188 464l6 6" stroke="#5a3418" stroke-width="3"/></g>
         <path d="M236 470q4-20 14-20q10 0 10 20" fill="#2f9e62"/>`,
+    };
+  },
+  rova() {
+    const frame = (x, y, w, h, inner) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#c9a24a"/><rect x="${x + 4}" y="${y + 4}" width="${w - 8}" height="${h - 8}" fill="${inner}"/>`;
+    return {
+      bg: '#3a2418',
+      targets: [['carte', 'Carte de l\'île', 'carte'], ['plume', 'Plume d\'écrivain', 'plume'], ['valiha', 'Valiha', 'valiha'], ['cle', 'Clé de bronze', 'cle']],
+      svg: `<rect width="360" height="520" fill="#7a3a2a"/><rect y="340" width="360" height="180" fill="#4a2a1a"/>
+        ${Array.from({ length: 9 }, (_, i) => `<path d="M0 ${360 + i * 18}H360" stroke="#3a1e12" stroke-width="2"/>`).join('')}
+        <rect x="0" y="0" width="360" height="26" fill="#5a2a1e"/><path d="M0 26H360" stroke="#c9a24a" stroke-width="3"/>
+        <!-- portraits anciens -->
+        ${frame(30, 50, 60, 76, '#4a3a2a')}<circle cx="60" cy="80" r="12" fill="#2a1a10"/><rect x="46" y="94" width="28" height="26" fill="#2a1a10"/>
+        ${frame(270, 50, 60, 76, '#3a4a3a')}<circle cx="300" cy="80" r="12" fill="#2a1a10"/><rect x="286" y="94" width="28" height="26" fill="#2a1a10"/>
+        <!-- vitrine centrale -->
+        <rect x="120" y="60" width="120" height="150" fill="#cfe6f0" opacity=".14" stroke="#c9a24a" stroke-width="3"/>
+        <path d="M150 160L160 110L180 130L200 110L210 160Z" fill="#c9a24a"/><circle cx="180" cy="104" r="5" fill="#c22d23"/>
+        <g class="hit" data-id="cle"><rect x="196" y="168" width="40" height="34" fill="transparent"/><circle cx="206" cy="184" r="7" fill="none" stroke="#b8862a" stroke-width="3"/><path d="M213 184H232M226 184v6M230 184v5" stroke="#b8862a" stroke-width="3"/></g>
+        <rect x="110" y="210" width="140" height="130" fill="#3a2010"/>
+        <!-- étagères et rouleaux -->
+        <rect x="20" y="230" width="80" height="6" fill="#5a3418"/><rect x="20" y="290" width="80" height="6" fill="#5a3418"/>
+        ${[0, 1, 2, 3].map(i => `<rect x="${24 + i * 18}" y="214" width="14" height="16" rx="7" fill="#e9dcc0"/>`).join('')}
+        ${[0, 1, 2].map(i => `<rect x="${26 + i * 22}" y="266" width="18" height="24" fill="${['#7a3a2a', '#3a5a3a', '#2a3a6a'][i]}"/>`).join('')}
+        <g class="hit" data-id="carte"><rect x="268" y="226" width="74" height="54" fill="transparent"/><path d="M272 232l20-4 20 4 24-4v44l-24 4-20-4-20 4Z" fill="#e8d6a8"/><path d="M300 240q10 10 4 22t8 8" stroke="#c8553d" stroke-width="2.5" fill="none"/></g>
+        <!-- lamba plié, coffre -->
+        <rect x="270" y="300" width="70" height="40" fill="#5a3418"/><rect x="270" y="296" width="70" height="8" fill="#7a4a24"/><circle cx="305" cy="320" r="4" fill="#c9a24a"/>
+        <path d="M120 380h120l-10 30H130Z" fill="#fbf7ee"/><path d="M124 388h112" stroke="#c84b2a" stroke-width="3"/>
+        <!-- valiha posée -->
+        <g class="hit" data-id="valiha"><rect x="20" y="380" width="70" height="120" fill="transparent"/><g transform="rotate(-20 55 440)"><rect x="44" y="380" width="22" height="120" rx="10" fill="#d9b86a"/>${[0, 1, 2, 3].map(i => `<path d="M${48 + i * 5} 384V496" stroke="#7a5a20" stroke-width="1"/>`).join('')}<rect x="42" y="420" width="26" height="5" fill="#8a6a2a"/></g></g>
+        <!-- encrier et plume -->
+        <g class="hit" data-id="plume"><rect x="250" y="430" width="70" height="60" fill="transparent"/><rect x="262" y="462" width="20" height="18" rx="3" fill="#1a1410"/><path d="M276 466Q290 440 312 434Q296 452 278 468Z" fill="#f4ecd8" stroke="#a89a80"/></g>
+        <!-- livres empilés, chandelier -->
+        <rect x="160" y="450" width="60" height="12" fill="#7a3a2a"/><rect x="164" y="438" width="54" height="12" fill="#2a4a6a"/><rect x="158" y="426" width="58" height="12" fill="#3a5a3a"/>
+        <path d="M110 300v30M100 300h20" stroke="#c9a24a" stroke-width="4"/><path d="M110 290q-5 6 0 10q5-4 0-10z" fill="#ffd27a"/>
+        <g class="hit" data-id="frag"><rect x="318" y="480" width="36" height="36" fill="transparent"/><ellipse cx="336" cy="498" rx="4" ry="5" fill="#ffd23f" stroke="#a8680f"/></g>`,
+    };
+  },
+  cinema() {
+    const reel = (x, y, r, c = '#5a5a66') => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/><circle cx="${x}" cy="${y}" r="${r * 0.3}" fill="#22222a"/>${[0, 1, 2].map(i => { const a = i * 2.09; return `<circle cx="${x + Math.cos(a) * r * 0.6}" cy="${y + Math.sin(a) * r * 0.6}" r="${r * 0.18}" fill="#22222a"/>`; }).join('')}`;
+    return {
+      bg: '#1a1420',
+      targets: [['bobine', 'Bobine marquée « 1987 »', 'bobine'], ['affiche', 'Vieille affiche', 'affiche'], ['carnet', 'Carnet de Nour', 'carnet'], ['ticket', 'Ticket déchiré', 'billet']],
+      svg: `<rect width="360" height="520" fill="#2a2030"/><rect y="350" width="360" height="170" fill="#1a141e"/>
+        <!-- fenêtre de projection -->
+        <rect x="140" y="40" width="80" height="40" fill="#0a0810"/><path d="M180 60L360 0V140Z" fill="#fff6c0" opacity=".08"/>
+        <!-- projecteur -->
+        <g transform="translate(80 180)"><rect x="0" y="40" width="110" height="60" rx="6" fill="#3a3a44"/><rect x="104" y="56" width="30" height="24" fill="#22222a"/>${reel(20, 20, 26)}${reel(90, 20, 26)}<path d="M20 20L60 60L90 20" stroke="#8a6a3a" stroke-width="2" fill="none"/></g>
+        <!-- affiches -->
+        <g class="hit" data-id="affiche"><rect x="250" y="100" width="90" height="120" fill="transparent"/><rect x="254" y="104" width="82" height="112" fill="#e8c84a"/><rect x="262" y="112" width="66" height="60" fill="#c8553d"/><circle cx="295" cy="142" r="16" fill="#2a1a10"/><text x="295" y="196" text-anchor="middle" font-family="Lilita One,sans-serif" font-size="12" fill="#2a1a10">FESPACO 87</text></g>
+        <rect x="20" y="60" width="70" height="96" fill="#3a6a9a"/><rect x="28" y="70" width="54" height="44" fill="#f4ecd8"/><text x="55" y="140" text-anchor="middle" font-family="Lilita One,sans-serif" font-size="10" fill="#fff">CINÉMA</text>
+        <!-- étagère de bobines (leurres) -->
+        <rect x="20" y="300" width="320" height="8" fill="#4a3a2a"/>
+        ${[0, 1, 2, 3, 4, 5, 6].map(i => reel(40 + i * 44, 280, 18, ['#5a5a66', '#6a5a4a', '#4a5a6a'][i % 3])).join('')}
+        <g class="hit" data-id="bobine"><rect x="260" y="250" width="44" height="50" fill="transparent"/>${reel(282, 280, 18, '#b8862a')}<text x="282" y="256" text-anchor="middle" font-size="9" font-weight="900" font-family="sans-serif" fill="#ffd27a">1987</text></g>
+        <!-- table, tasse, carnet -->
+        <rect x="40" y="400" width="200" height="14" fill="#5a3a24"/><path d="M50 414v80M230 414v80" stroke="#4a2a18" stroke-width="8"/>
+        <g class="hit" data-id="carnet"><rect x="150" y="370" width="66" height="34" fill="transparent"/><rect x="156" y="376" width="52" height="24" rx="2" fill="#1f7a7a" transform="rotate(-6 182 388)"/><path d="M162 382h40" stroke="#c9a24a" stroke-width="2" transform="rotate(-6 182 388)"/></g>
+        <path d="M70 384h20l-3 16h-14z" fill="#f4f1ea"/><path d="M90 388q8 2 0 8" stroke="#f4f1ea" stroke-width="2.5" fill="none"/>
+        <g class="hit" data-id="ticket"><rect x="270" y="440" width="60" height="40" fill="transparent"/><rect x="276" y="450" width="44" height="20" fill="#e2589a" transform="rotate(14 298 460)"/><path d="M284 456h24" stroke="#fff" stroke-width="2" stroke-dasharray="3 2" transform="rotate(14 298 460)"/></g>
+        <!-- pellicules au sol -->
+        <path d="M20 470q60-30 120 0t120 10" stroke="#3a3a2a" stroke-width="8" fill="none"/><path d="M20 470q60-30 120 0t120 10" stroke="#8a7a5a" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
+        <g class="hit" data-id="frag"><rect x="16" y="360" width="34" height="34" fill="transparent"/><ellipse cx="32" cy="378" rx="4" ry="5" fill="#ffd23f" stroke="#a8680f"/></g>`,
     };
   },
   telephone() {
@@ -319,26 +383,41 @@ GAME_TYPES.fouille = (stage, cfg, ctl) => new Promise(res => {
 GAME_TYPES.kora = (stage, cfg, ctl) => new Promise(res => {
   const N = 7, seq = cfg.seq;
   const colors = ['#e2589a', '#ff8a3a', '#ffd23f', '#7ad05a', '#3ad0c0', '#3a9aff', '#a07aff'];
-  const bx = i => 70 + i * 36, nx = i => 172 + (i - 3) * 5, ny = i => 40 + i * 4;
-  let strings = '';
-  for (let i = 0; i < N; i++) {
-    const x1 = bx(i), y1 = 380, x2 = nx(i), y2 = ny(i);
-    strings += `<g class="string" data-i="${i}">
-      <path d="M${x1 - 18} ${y1 + 40}L${x1 + 18} ${y1 + 40}L${x2 + 6} ${y2}L${x2 - 6} ${y2}Z" fill="transparent"/>
-      <path class="glow" d="M${x1} ${y1}L${x2} ${y2}" stroke="${colors[i]}" stroke-width="9" stroke-linecap="round" opacity="0"/>
-      <path d="M${x1} ${y1}L${x2} ${y2}" stroke="#fff4e0" stroke-width="2.2"/>
-      <circle cx="${x1}" cy="${y1 + 22}" r="14" fill="${colors[i]}" stroke="#2a1608" stroke-width="2.5"/></g>`;
-  }
-  stage.innerHTML = `<div class="g-hud"><span class="hearts" id="ko-h"></span><span class="grow"></span><span id="ko-r"></span></div>
-    <div class="g-msg" id="ko-m">Écoute…</div>
-    <div class="kora"><svg viewBox="0 0 360 560">
-      <defs><radialGradient id="koraG" cx=".4" cy=".35"><stop offset="0" stop-color="#d98a4a"/><stop offset="1" stop-color="#7a3a14"/></radialGradient></defs>
+  let art;
+  if (cfg.instrument === 'valiha') {
+    // valiha malgache : tube de bambou, cordes tendues sur sa longueur
+    let strings = '';
+    for (let i = 0; i < N; i++) {
+      const x = 96 + i * 28;
+      strings += `<g class="string" data-i="${i}"><rect x="${x - 14}" y="40" width="28" height="470" fill="transparent"/>
+        <path class="glow" d="M${x} 60V470" stroke="${colors[i]}" stroke-width="9" stroke-linecap="round" opacity="0"/>
+        <path d="M${x} 60V470" stroke="#fff4e0" stroke-width="2"/><rect x="${x - 5}" y="${120 + (i % 3) * 30}" width="10" height="7" rx="2" fill="#8a5a2a"/>
+        <circle cx="${x}" cy="500" r="12" fill="${colors[i]}" stroke="#2a1608" stroke-width="2.5"/></g>`;
+    }
+    art = `<defs><linearGradient id="valG" x1="0" x2="1"><stop offset="0" stop-color="#8a6a2a"/><stop offset=".45" stop-color="#e8c87a"/><stop offset="1" stop-color="#7a5a20"/></linearGradient></defs>
+      <rect x="74" y="30" width="212" height="460" rx="24" fill="url(#valG)"/>
+      ${[110, 230, 350].map(y => `<rect x="70" y="${y}" width="220" height="10" rx="5" fill="#6a4a18"/>`).join('')}${strings}`;
+  } else {
+    const bx = i => 70 + i * 36, nx = i => 172 + (i - 3) * 5, ny = i => 40 + i * 4;
+    let strings = '';
+    for (let i = 0; i < N; i++) {
+      const x1 = bx(i), y1 = 380, x2 = nx(i), y2 = ny(i);
+      strings += `<g class="string" data-i="${i}">
+        <path d="M${x1 - 18} ${y1 + 40}L${x1 + 18} ${y1 + 40}L${x2 + 6} ${y2}L${x2 - 6} ${y2}Z" fill="transparent"/>
+        <path class="glow" d="M${x1} ${y1}L${x2} ${y2}" stroke="${colors[i]}" stroke-width="9" stroke-linecap="round" opacity="0"/>
+        <path d="M${x1} ${y1}L${x2} ${y2}" stroke="#fff4e0" stroke-width="2.2"/>
+        <circle cx="${x1}" cy="${y1 + 22}" r="14" fill="${colors[i]}" stroke="#2a1608" stroke-width="2.5"/></g>`;
+    }
+    art = `<defs><radialGradient id="koraG" cx=".4" cy=".35"><stop offset="0" stop-color="#d98a4a"/><stop offset="1" stop-color="#7a3a14"/></radialGradient></defs>
       <rect x="164" y="20" width="16" height="400" rx="6" fill="#5a3418"/>
       ${[0, 1, 2, 3, 4, 5, 6, 7].map(i => `<rect x="160" y="${40 + i * 4.5}" width="24" height="3" rx="1.5" fill="#2a1608"/>`).join('')}
       <circle cx="172" cy="420" r="110" fill="url(#koraG)"/><circle cx="172" cy="420" r="92" fill="#ecd3a2"/>
       ${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(i => { const a = i * 0.52; return `<circle cx="${172 + Math.cos(a) * 100}" cy="${420 + Math.sin(a) * 100}" r="3" fill="#f2b33d"/>`; }).join('')}
-      <rect x="62" y="376" width="236" height="10" rx="4" fill="#3a2010"/>
-      ${strings}</svg></div>
+      <rect x="62" y="376" width="236" height="10" rx="4" fill="#3a2010"/>${strings}`;
+  }
+  stage.innerHTML = `<div class="g-hud"><span class="hearts" id="ko-h"></span><span class="grow"></span><span id="ko-r"></span></div>
+    <div class="g-msg" id="ko-m">Écoute…</div>
+    <div class="kora"><svg viewBox="0 0 360 560">${art}</svg></div>
     <div class="g-sub" id="ko-s">Retiens l'ordre des cordes.</div><div class="g-foot"></div>`;
   const svg = $('.kora svg', stage), msg = $('#ko-m'), sub = $('#ko-s');
   let lives = 3, len = cfg.start, pos = 0, listening = false, mistakes = 0, over = false;
@@ -346,7 +425,7 @@ GAME_TYPES.kora = (stage, cfg, ctl) => new Promise(res => {
   const round = () => ($('#ko-r').textContent = `Notes : ${len}/${seq.length}`);
   hearts(); round();
   const pluck = i => {
-    Sfx.play('kora', { i: i + 3 });
+    Sfx.play('kora', { i: i + 3, kind: cfg.instrument === 'valiha' ? 'krar' : 'kora' });
     const g = $(`.string[data-i="${i}"]`, svg);
     g.classList.add('on'); $('.glow', g).style.opacity = 1;
     setTimeout(() => { g.classList.remove('on'); $('.glow', g).style.opacity = 0; }, 260);
@@ -397,6 +476,12 @@ GAME_TYPES.kora = (stage, cfg, ctl) => new Promise(res => {
    COURSE-POURSUITE : couloirs en pseudo-3D
    ====================================================================== */
 const RUN_THEMES = {
+  savane: { sky: ['#3d8fd6', '#f2d9a0'], ground: '#b8925a', line: 'rgba(255,255,255,.25)', side: ['#c9a95a', '#a8893a'], water: true, speed: 15,
+    tall: [['🦓', 1.1], ['🐃', 1.15], ['rock']], low: [['hole']], player: 'jeep' },
+  ilha: { sky: ['#0a0a24', '#3a2a5a'], ground: '#3a3444', line: 'rgba(255,210,120,.3)', side: ['#2a2440', '#3a2a50'], win: '#ffd27a', speed: 13,
+    tall: [['🛵', 1], ['🚕', 1.1], ['car']], low: [['📦', 0.8], ['🧺', 0.75]], player: 'awa', night: true },
+  okada: { sky: ['#4a9ad6', '#f4dcb0'], ground: '#5a5048', line: 'rgba(255,255,255,.45)', side: ['#c98a5a', '#b87a4a'], win: '#3a4a5a', speed: 15,
+    tall: [['🚌', 1.2], ['🚗', 1.05], ['🐐', 0.9]], low: [['hole'], ['📦', 0.8]], player: 'moto' },
   medina: { sky: ['#070818', '#1d2557'], ground: '#2c2433', line: 'rgba(255,210,120,.18)', side: ['#3a2a3e', '#2c2032'], win: '#ffd27a', speed: 13,
     tall: [['🐑', 1.1], ['car'], ['🛵', 1]], low: [['📦', 0.8], ['🧺', 0.75]], player: 'awa', night: true },
   niger: { sky: ['#3d8fd6', '#cfe9f2'], ground: '#2c7fb0', line: 'rgba(255,255,255,.25)', side: ['#d8b27a', '#3d7a4a'], water: true, speed: 12,
@@ -528,6 +613,13 @@ GAME_TYPES.runner = (stage, cfg, ctl) => new Promise(res => {
       g.fillStyle = '#1c1210'; g.beginPath(); g.arc(x, y - u * 0.65, u * 0.1, 0, 7); g.fill();
       for (let k = -2; k <= 2; k++) { g.fillRect(x + k * u * 0.035 - u * 0.012, y - u * 0.65, u * 0.025, u * 0.17); }
       g.fillStyle = '#f2b33d'; g.beginPath(); g.arc(x - u * 0.07, y - u * 0.48, u * 0.015, 0, 7); g.arc(x + u * 0.07, y - u * 0.48, u * 0.015, 0, 7); g.fill();
+    } else if (T.player === 'jeep') {
+      g.fillStyle = '#5a6a3a'; g.fillRect(x - u * 0.3, y - u * 0.42, u * 0.6, u * 0.36);
+      g.fillStyle = '#6a7a4a'; g.fillRect(x - u * 0.26, y - u * 0.62, u * 0.52, u * 0.22);
+      g.fillStyle = '#2a2a2a'; g.fillRect(x - u * 0.34, y - u * 0.14, u * 0.14, u * 0.14); g.fillRect(x + u * 0.2, y - u * 0.14, u * 0.14, u * 0.14);
+      g.fillStyle = '#ff3a2a'; g.fillRect(x - u * 0.27, y - u * 0.36, u * 0.07, u * 0.05); g.fillRect(x + u * 0.2, y - u * 0.36, u * 0.07, u * 0.05);
+      g.fillStyle = '#3a3a3a'; g.beginPath(); g.arc(x, y - u * 0.3, u * 0.08, 0, 7); g.fill();
+      g.fillStyle = '#1c1210'; g.beginPath(); g.arc(x - u * 0.12, y - u * 0.7, u * 0.07, 0, 7); g.fill(); g.fillStyle = '#4f2f1c'; g.beginPath(); g.arc(x + u * 0.12, y - u * 0.7, u * 0.07, 0, 7); g.fill();
     } else if (T.player === 'pirogue') {
       g.fillStyle = '#5a3a24'; g.beginPath(); g.moveTo(x - u * 0.16, y - u * 0.05); g.quadraticCurveTo(x, y + u * 0.06, x + u * 0.16, y - u * 0.05);
       g.lineTo(x + u * 0.12, y - u * 0.75); g.quadraticCurveTo(x, y - u * 0.9, x - u * 0.12, y - u * 0.75); g.fill();
@@ -664,6 +756,35 @@ const SYMBOLS = {
     ['Le scarabée', '<ellipse cx="22" cy="26" rx="9" ry="12" fill="#2a1a10"/><circle cx="22" cy="11" r="5" fill="#2a1a10"/><path d="M13 20L4 14M31 20L40 14M13 30L4 36M31 30L40 36M22 16V38" stroke="#2a1a10" stroke-width="2.6"/><path d="M22 16V38" stroke="#e8d6b5" stroke-width="1.2"/>'],
   ],
 };
+// Perles maasaï : chaque couleur porte un sens
+const bead = (cols) => cols.map((c, i) => `<circle cx="${10 + (i % 3) * 12}" cy="${12 + Math.floor(i / 3) * 12}" r="5.2" fill="${c}" stroke="#2a1a10" stroke-width="1.2"/>`).join('');
+SYMBOLS.perles = [
+  ['Le blanc du lait (la paix)', bead(['#fff', '#fff', '#fff', '#fff', '#c22d23', '#fff', '#fff', '#fff', '#fff'])],
+  ['Le bleu du ciel', bead(['#2f6fd0', '#2f6fd0', '#2f6fd0', '#fff', '#2f6fd0', '#fff', '#2f6fd0', '#2f6fd0', '#2f6fd0'])],
+  ['Le rouge du courage', bead(['#c22d23', '#c22d23', '#c22d23', '#c22d23', '#111', '#c22d23', '#c22d23', '#c22d23', '#c22d23'])],
+  ['Le vert de la terre', bead(['#2f9e62', '#ffd23f', '#2f9e62', '#2f9e62', '#ffd23f', '#2f9e62', '#2f9e62', '#ffd23f', '#2f9e62'])],
+  ['L\'orange de l\'accueil', bead(['#ff8a2a', '#ff8a2a', '#ff8a2a', '#ff8a2a', '#fff', '#ff8a2a', '#ff8a2a', '#ff8a2a', '#ff8a2a'])],
+  ['Le noir du peuple', bead(['#111', '#fff', '#111', '#111', '#111', '#111', '#111', '#fff', '#111'])],
+];
+// Signes inspirés du nsibidi (écriture idéographique du sud-est du Nigeria)
+SYMBOLS.nsibidi = [
+  ['La parole', '<path d="M8 22Q22 6 36 22Q22 38 8 22Z" fill="none" stroke="#2a1a10" stroke-width="3"/><path d="M22 10V34" stroke="#2a1a10" stroke-width="3"/>'],
+  ['Le serment', '<path d="M8 8L36 36M36 8L8 36" stroke="#2a1a10" stroke-width="3.4"/><circle cx="22" cy="22" r="6" fill="#e8d6b5" stroke="#2a1a10" stroke-width="3"/>'],
+  ['L\'amitié', '<path d="M6 30Q14 8 22 30Q30 8 38 30" fill="none" stroke="#2a1a10" stroke-width="3.2"/><path d="M6 34H38" stroke="#2a1a10" stroke-width="3"/>'],
+  ['La maison', '<path d="M8 36V18L22 6L36 18V36Z" fill="none" stroke="#2a1a10" stroke-width="3"/><path d="M18 36V26H26V36" fill="none" stroke="#2a1a10" stroke-width="3"/>'],
+  ['Le chemin', '<path d="M6 36Q16 26 12 18T22 6M38 36Q28 26 32 18T22 6" fill="none" stroke="#2a1a10" stroke-width="3"/>'],
+  ['La lune', '<path d="M28 6A16 16 0 1 0 28 38A12 16 0 0 1 28 6Z" fill="#2a1a10"/><circle cx="34" cy="22" r="3" fill="#2a1a10"/>'],
+];
+// Motifs de zellige
+const zstar = (r1, r2, n) => Array.from({ length: n * 2 }, (_, i) => { const a = -Math.PI / 2 + i * Math.PI / n, r = i % 2 ? r2 : r1; return (i ? 'L' : 'M') + (22 + Math.cos(a) * r).toFixed(1) + ' ' + (22 + Math.sin(a) * r).toFixed(1); }).join('') + 'Z';
+SYMBOLS.zellige = [
+  ['L\'étoile à huit branches', `<path d="${zstar(17, 10, 8)}" fill="#1f6fb5" stroke="#2a1a10" stroke-width="1.6"/><circle cx="22" cy="22" r="4" fill="#f4ecd8"/>`],
+  ['La porte', '<path d="M10 40V20Q22 2 34 20V40Z" fill="#2f9e62" stroke="#2a1a10" stroke-width="2"/><path d="M16 40V24Q22 14 28 24V40" fill="#e8d6b5"/>'],
+  ['La rosace', `<path d="${zstar(17, 12, 12)}" fill="#c8553d" stroke="#2a1a10" stroke-width="1.4"/><circle cx="22" cy="22" r="6" fill="#ffd23f"/>`],
+  ['Le carré tourné', '<path d="M22 4L40 22L22 40L4 22Z" fill="#ffd23f" stroke="#2a1a10" stroke-width="2"/><path d="M22 14L30 22L22 30L14 22Z" fill="#1f6fb5"/>'],
+  ['La fontaine', '<path d="M8 36H36L32 26H12Z" fill="#1f6fb5"/><path d="M22 26V10M22 10Q14 12 12 20M22 10Q30 12 32 20" stroke="#2a1a10" stroke-width="2.6" fill="none"/>'],
+  ['Le croissant', '<path d="M30 6A17 17 0 1 0 30 38A13 17 0 0 1 30 6Z" fill="#2f9e62" stroke="#2a1a10" stroke-width="1.6"/>'],
+];
 const symSvg = (set, i) => `<svg viewBox="0 0 44 44">${SYMBOLS[set][i][1]}</svg>`;
 
 GAME_TYPES.cadenas = (stage, cfg, ctl) => new Promise(res => {

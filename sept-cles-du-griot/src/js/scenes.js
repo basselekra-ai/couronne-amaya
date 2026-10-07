@@ -229,6 +229,136 @@ const CITY_ART = {
     s += `<path d="M0 660Q200 640 400 662V720H0Z" fill="${P.near}"/>` + palm(30, 670, 130, P.dark, 10) + palm(380, 680, 110, P.dark, -10);
     return s;
   },
+  nairobi(P, t) {
+    let s = skyLayer(P, t, 91);
+    s += buildings(P, 91, 430, [[150, 26, 70], [178, 22, 100, 'ant'], [232, 30, 84], [266, 24, 120], [292, 28, 64], [330, 22, 90]], P.far);
+    // KICC : tour cylindrique à chapeau
+    const kc = t === 'jour' ? '#c98a5a' : P.mid;
+    s += `<g transform="translate(212 430)" fill="${kc}"><rect x="-11" y="-150" width="22" height="150"/><ellipse cx="0" cy="-152" rx="20" ry="6"/><path d="M-4-158h8v-10h-8z"/>
+      ${t !== 'jour' ? [0, 1, 2, 3, 4, 5, 6, 7].map(i => `<rect x="-8" y="${-140 + i * 17}" width="16" height="3" fill="${P.win}" opacity=".6"/>`).join('') : ''}</g>`;
+    const grass = t === 'jour' ? '#c9a95a' : t === 'soir' ? '#6a4a3a' : '#1a1830';
+    s += `<path d="M-10 430Q200 420 410 432V700H-10Z" fill="${grass}"/>`;
+    const acacia = (x, y, k) => `<g transform="translate(${x} ${y}) scale(${k})" fill="${P.dark}"><path d="M-3 0V-46M-3-30L-20-50M-3-36L16-54" stroke="${P.dark}" stroke-width="5" fill="none"/><ellipse cx="0" cy="-56" rx="46" ry="10"/><ellipse cx="-14" cy="-50" rx="22" ry="7"/></g>`;
+    const giraffe = (x, y, k) => `<g transform="translate(${x} ${y}) scale(${k})" fill="${P.dark}"><path d="M-14 0V-26M-6 0V-26M8 0V-26M14 0V-26" stroke="${P.dark}" stroke-width="3"/><ellipse cx="0" cy="-30" rx="18" ry="8"/><path d="M12-34L22-78L28-76L20-32Z"/><path d="M20-78l12 4-2 4-12-2z"/><path d="M22-80v-6M26-80v-6" stroke="${P.dark}" stroke-width="2"/></g>`;
+    s += acacia(70, 520, 1.2) + acacia(330, 560, 1.5) + giraffe(150, 540, 1.1) + giraffe(250, 600, 1.4);
+    s += `<path d="M0 640Q200 620 400 646V720H0Z" fill="${P.near}"/>`;
+    return s;
+  },
+  kigali(P, t) {
+    let s = skyLayer(P, t, 92);
+    const g1 = t === 'jour' ? '#4f8a52' : P.far, g2 = t === 'jour' ? '#3d7a44' : P.mid, g3 = t === 'jour' ? '#2f6a3a' : P.near;
+    s += `<path d="M-10 420Q50 360 120 400Q180 340 250 392Q320 350 410 400V520H-10Z" fill="${g1}"/>`;
+    // centre des congrès : dôme lumineux
+    const dome = t === 'nuit' ? ['#ff6a3a', '#ffd23f', '#3ad0ff', '#2f9e62', '#e2589a'] : ['#c9c2b4', '#b8b0a2', '#c9c2b4', '#b8b0a2', '#c9c2b4'];
+    s += `<g transform="translate(250 420)">${dome.map((c, i) => `<path d="M${-44 + i * 17.6} 0Q${-44 + i * 17.6 + 8.8} -${70 - Math.abs(i - 2) * 12} ${-44 + (i + 1) * 17.6} 0Z" fill="${c}"/>`).join('')}
+      <path d="M-44 0Q0-92 44 0" fill="none" stroke="${t === 'nuit' ? '#fff' : '#8a8478'}" stroke-width="2" opacity=".6"/>${t === 'nuit' ? '<ellipse cx="0" cy="-30" rx="70" ry="50" fill="#ffd27a" opacity=".1"/>' : ''}</g>`;
+    s += buildings(P, 92, 440, [[40, 26, 40], [70, 20, 56], [120, 30, 36], [320, 28, 48], [352, 22, 34]], P.mid);
+    s += `<path d="M-10 470Q90 420 190 466Q290 430 410 470V600H-10Z" fill="${g2}"/>`;
+    for (let i = 0; i < 22; i++) { const x = (i * 53) % 400, y = 470 + ((i * 37) % 60); s += `<rect x="${x}" y="${y}" width="10" height="7" fill="${t === 'nuit' ? P.win : '#e9e2d0'}" opacity="${t === 'nuit' ? 0.8 : 0.9}"/><path d="M${x - 1} ${y}l6-5 6 5z" fill="${t === 'nuit' ? '#2a1a2a' : '#a8482a'}"/>`; }
+    s += `<path d="M-10 560Q120 520 240 556Q330 580 410 550V720H-10Z" fill="${g3}"/>`;
+    for (let i = 0; i < 6; i++) s += `<path d="M${-10} ${590 + i * 22}Q200 ${570 + i * 22} 410 ${592 + i * 22}" stroke="${t === 'jour' ? '#5a9a5a' : 'rgba(255,255,255,.05)'}" stroke-width="7" fill="none"/>`;
+    return s;
+  },
+  antananarivo(P, t) {
+    let s = skyLayer(P, t, 93);
+    const red = t === 'jour' ? '#b8603a' : t === 'soir' ? '#6a3a3a' : '#2a1a2a';
+    s += `<path d="M-10 460Q60 400 120 420Q180 300 260 330Q330 380 410 400V560H-10Z" fill="${red}"/>`;
+    // Rova (palais de la Reine)
+    const st = t === 'jour' ? '#d9c2a2' : P.mid;
+    s += `<g transform="translate(200 336)" fill="${st}"><rect x="-36" y="-40" width="72" height="40"/><rect x="-42" y="-54" width="10" height="54"/><rect x="32" y="-54" width="10" height="54"/>
+      <rect x="-42" y="-58" width="10" height="5"/><rect x="32" y="-58" width="10" height="5"/><path d="M-36-40L0-58L36-40Z"/>
+      ${[-24, -8, 8, 24].map(x => `<rect x="${x - 4}" y="-30" width="8" height="12" fill="${t === 'nuit' ? P.win : P.dark}" opacity=".7"/>`).join('')}</g>`;
+    // maisons hautes à balcons, sur les pentes
+    for (let i = 0; i < 12; i++) { const x = 20 + i * 32 + (i % 2) * 6, y = 420 + (Math.abs(i - 6) * 10); s += `<rect x="${x}" y="${y}" width="22" height="30" fill="${t === 'jour' ? ['#e9d2b2', '#d98a5a', '#c9b48a'][i % 3] : P.near}"/><path d="M${x - 3} ${y}l14-10 14 10z" fill="${t === 'jour' ? '#8a3a2a' : P.dark}"/><rect x="${x + 7}" y="${y + 10}" width="7" height="8" fill="${t === 'nuit' ? P.win : P.dark}" opacity=".7"/>`; }
+    s += water(P, 520, 15);
+    // lac Anosy, jacarandas et l'ange sur l'île
+    s += `<ellipse cx="200" cy="560" rx="40" ry="10" fill="${t === 'jour' ? '#3d7a44' : P.near}"/><path d="M200 560V520M192 530l8-8 8 8" stroke="${t === 'jour' ? '#e9e2d0' : '#8a86a0'}" stroke-width="3" fill="none"/>`;
+    const jac = (x, y, k) => `<g transform="translate(${x} ${y}) scale(${k})"><path d="M0 0V-40" stroke="${P.dark}" stroke-width="5"/><g fill="${t === 'nuit' ? '#4a3a7a' : '#9b6bd0'}"><circle cx="-14" cy="-48" r="16"/><circle cx="6" cy="-58" r="19"/><circle cx="20" cy="-44" r="14"/></g></g>`;
+    s += `<rect x="0" y="640" width="400" height="80" fill="${P.ground}"/>` + jac(50, 650, 1.2) + jac(350, 660, 1.4);
+    // rizières
+    for (let i = 0; i < 3; i++) s += `<path d="M0 ${660 + i * 14}H400" stroke="${t === 'jour' ? '#7ab04a' : 'rgba(255,255,255,.05)'}" stroke-width="5"/>`;
+    return s;
+  },
+  luanda(P, t) {
+    let s = skyLayer(P, t, 94);
+    s += buildings(P, 94, 440, [[150, 30, 90], [184, 24, 130, 'ant'], [212, 34, 110], [250, 26, 150], [280, 30, 96], [314, 24, 120], [342, 30, 80]], P.mid);
+    // mausolée d'Agostinho Neto : flèche élancée
+    const mc = t === 'jour' ? '#c9c2b4' : P.near;
+    s += `<g transform="translate(80 440)" fill="${mc}"><path d="M-22 0L-8-60L-4-150L0-176L4-150L8-60L22 0Z"/><rect x="-28" y="-4" width="56" height="8"/></g>`;
+    // forteresse São Miguel
+    const fo = t === 'jour' ? '#d9b98f' : P.far;
+    s += `<path d="M110 440V418L122 418V410H180V418L192 418V440Z" fill="${fo}"/>`;
+    s += water(P, 440, 16);
+    // la Marginale : promenade en arc et palmiers
+    s += `<path d="M-10 520Q200 470 410 520V540Q200 492 -10 540Z" fill="${t === 'jour' ? '#e9e2d0' : P.near}"/>`;
+    for (let i = 0; i < 8; i++) { const x = 10 + i * 54, y = 528 - Math.sin(i / 7 * Math.PI) * 24; s += palm(x, y, 60, P.dark, (i % 2 ? 6 : -6)); if (t !== 'jour') s += `<circle cx="${x + 26}" cy="${y - 20}" r="3" fill="${P.win}"/>`; }
+    s += `<path d="M-10 540Q200 492 410 540V720H-10Z" fill="${P.ground}"/>`;
+    s += pirogue(320, 480, 0.6, '#f4ecd8', '#c22d23');
+    return s;
+  },
+  yaounde(P, t) {
+    let s = skyLayer(P, t, 95);
+    const hc = [t === 'jour' ? '#5f8a5a' : P.far, t === 'jour' ? '#4a7a4a' : P.mid];
+    for (let i = 0; i < 7; i++) s += `<ellipse cx="${-20 + i * 70}" cy="${430 + (i % 2) * 14}" rx="70" ry="${60 + (i % 3) * 14}" fill="${hc[i % 2]}"/>`;
+    s += buildings(P, 95, 470, [[30, 26, 60], [60, 30, 84, 'ant'], [100, 24, 50], [290, 28, 70], [324, 30, 96], [360, 26, 60]], P.mid);
+    // monument de la Réunification (spirale)
+    const mo = t === 'jour' ? '#c9c2b4' : P.near;
+    s += `<g transform="translate(200 470)" fill="${mo}"><path d="M-70 0L-20-90H20L70 0Z"/><path d="M-60-10L50-34M-46-34L36-58M-32-58L24-80" stroke="${t === 'jour' ? '#9a948a' : P.dark}" stroke-width="5"/>
+      <path d="M-8-90L-4-140L4-140L8-90Z"/><circle cx="0" cy="-146" r="8"/></g>`;
+    s += `<rect x="0" y="470" width="400" height="250" fill="${P.near}"/>`;
+    s += `<path d="M0 520H400" stroke="${t === 'nuit' ? P.win : P.dark}" stroke-width="2" stroke-dasharray="12 10" opacity=".4"/>`;
+    s += palm(40, 620, 140, P.dark, 10) + palm(360, 640, 120, P.dark, -12);
+    return s;
+  },
+  abuja(P, t) {
+    let s = skyLayer(P, t, 96);
+    // Aso Rock
+    const rock = t === 'jour' ? '#8a7a6a' : t === 'soir' ? '#5a3a4a' : '#1d1a34';
+    s += `<path d="M-10 460C10 380 40 300 100 280C160 262 210 300 230 350C250 330 280 340 300 380C320 360 360 380 410 420V480H-10Z" fill="${rock}"/>
+      <path d="M100 280C80 320 70 380 60 450M160 278C150 330 150 400 140 460" stroke="rgba(0,0,0,.15)" stroke-width="4" fill="none"/>`;
+    s += buildings(P, 96, 500, [[20, 30, 60], [56, 26, 80], [250, 28, 70], [282, 24, 100, 'ant'], [340, 30, 64]], P.mid);
+    // tour du Millénaire
+    const mt = t === 'jour' ? '#d9d2c4' : P.near;
+    s += `<g transform="translate(170 500)" fill="${mt}"><path d="M-6 0L-3-200H3L6 0Z"/><path d="M-14-150L14-150L0-120Z"/><circle cx="0" cy="-160" r="12" fill="${t === 'nuit' ? '#3ad0a0' : mt}"/></g>`;
+    s += `<rect x="0" y="500" width="400" height="220" fill="${P.near}"/>`;
+    s += `<path d="M0 540H400" stroke="${t === 'nuit' ? P.win : P.dark}" stroke-width="2" stroke-dasharray="14 10" opacity=".4"/>`;
+    s += baobab(70, 650, 0.9, P.dark) + palm(350, 660, 120, P.dark, -8);
+    return s;
+  },
+  ouagadougou(P, t) {
+    let s = skyLayer(P, t, 97);
+    const laterite = t === 'jour' ? '#c9703a' : t === 'soir' ? '#6a3a3a' : '#2a1a2a';
+    s += buildings(P, 97, 470, [[20, 40, 34], [64, 34, 46], [104, 40, 30], [286, 36, 50], [326, 40, 36], [370, 30, 44]], P.mid);
+    // monument des cinéastes : pile de bobines et caméra
+    const mc = t === 'jour' ? '#c9c2b4' : P.near;
+    s += `<g transform="translate(200 470)" fill="${mc}"><rect x="-26" y="-6" width="52" height="6"/>
+      ${[0, 1, 2, 3].map(i => `<ellipse cx="${(i % 2 ? 6 : -6)}" cy="${-20 - i * 26}" rx="22" ry="12"/><circle cx="${(i % 2 ? 6 : -6)}" cy="${-20 - i * 26}" r="4" fill="${t === 'jour' ? '#8a8478' : P.dark}"/>`).join('')}
+      <rect x="-14" y="-140" width="28" height="18" rx="3"/><circle cx="-6" cy="-148" r="7"/><circle cx="8" cy="-148" r="7"/><path d="M14-134l12-6v14z"/></g>`;
+    s += `<rect x="0" y="470" width="400" height="250" fill="${laterite}"/>`;
+    s += baobab(60, 560, 0.9, P.dark) + baobab(340, 580, 1.1, P.dark);
+    // mobylettes
+    for (const [x, y] of [[150, 600], [250, 640]]) s += `<g fill="${P.dark}"><circle cx="${x}" cy="${y}" r="9"/><circle cx="${x + 34}" cy="${y}" r="9"/><path d="M${x} ${y}L${x + 14} ${y - 14}H${x + 28}L${x + 34} ${y}M${x + 14} ${y - 14}V${y - 30}" stroke="${P.dark}" stroke-width="4" fill="none"/><circle cx="${x + 16}" cy="${y - 38}" r="6"/></g>`;
+    return s;
+  },
+  rabat(P, t) {
+    let s = skyLayer(P, t, 98);
+    s += water(P, 470, 17);
+    // Kasbah des Oudayas
+    const wall = t === 'jour' ? '#c99a6a' : P.mid;
+    s += `<path d="M-10 470V400H20V390H40V400H120V410H160V470Z" fill="${wall}"/>
+      ${[0, 1, 2, 3, 4, 5].map(i => `<rect x="${-6 + i * 26}" y="392" width="10" height="8" fill="${wall}"/>`).join('')}
+      <path d="M70 470V432Q84 412 98 432V470Z" fill="${P.dark}" opacity=".8"/>
+      ${[0, 1, 2, 3].map(i => `<rect x="${10 + i * 34}" y="${440 - (i % 2) * 6}" width="22" height="20" fill="${t === 'jour' ? '#f4f1ea' : '#4a4a7a'}"/><rect x="${10 + i * 34}" y="${452 - (i % 2) * 6}" width="22" height="8" fill="${t === 'jour' ? '#2f6fb5' : '#2a3a6a'}"/>`).join('')}`;
+    // tour Hassan et colonnes
+    const ht = t === 'jour' ? '#c98a5a' : P.near;
+    s += `<g transform="translate(290 470)" fill="${ht}"><rect x="-22" y="-160" width="44" height="160"/>
+      <path d="M-14-140h10v20h-10zM4-140h10v20H4zM-14-100h10v20h-10zM4-100h10v20H4z" fill="${P.dark}" opacity=".5"/>
+      <path d="M-16-150Q-9-158-2-150M2-150Q9-158 16-150" stroke="${P.dark}" stroke-width="2" fill="none" opacity=".5"/></g>`;
+    for (let i = 0; i < 8; i++) s += `<rect x="${196 + i * 22}" y="${450}" width="6" height="20" fill="${ht}"/>`;
+    s += `<path d="M-10 520Q200 500 410 520V720H-10Z" fill="${P.ground}"/>`;
+    s += palm(350, 620, 130, P.dark, -10) + palm(40, 640, 110, P.dark, 8);
+    return s;
+  }
 };
 
 /* ---------------- intérieurs ---------------- */
@@ -341,6 +471,16 @@ const FLAGS = {
   gh: () => `<rect width="30" height="20" fill="#ce1126"/><rect y="6.67" width="30" height="6.67" fill="#fcd116"/><rect y="13.33" width="30" height="6.67" fill="#006b3f"/>${star5(15, 10, 3.4, '#000')}`,
   cd: () => `<rect width="30" height="20" fill="#007fff"/><path d="M0 17L26 0H30V3L4 20H0Z" fill="#f7d618"/><path d="M0 18.6L28.2 0H30V1.4L1.8 20H0Z" fill="#ce1021"/>${star5(6, 5, 3.2, '#f7d618')}`,
   et: () => `<rect width="30" height="20" fill="#078930"/><rect y="6.67" width="30" height="6.67" fill="#fcdd09"/><rect y="13.33" width="30" height="6.67" fill="#da121a"/><circle cx="15" cy="10" r="4.6" fill="#0f47af"/>${star5(15, 10, 3.2, 'none').replace('fill="none"', 'fill="none" stroke="#fcdd09" stroke-width=".6"')}`,
+  ke: () => `<rect width="30" height="20" fill="#fff"/><rect width="30" height="6" fill="#000"/><rect y="7" width="30" height="6" fill="#bb0000"/><rect y="14" width="30" height="6" fill="#006600"/>
+    <ellipse cx="15" cy="10" rx="3" ry="6.4" fill="#bb0000" stroke="#000" stroke-width=".6"/><ellipse cx="15" cy="10" rx="1.2" ry="5" fill="#000"/><path d="M11 4l8 12M19 4l-8 12" stroke="#fff" stroke-width=".5"/>`,
+  rw: () => `<rect width="30" height="20" fill="#00a1de"/><rect y="10" width="30" height="5" fill="#fad201"/><rect y="15" width="30" height="5" fill="#20603d"/>
+    <circle cx="25" cy="5" r="1.8" fill="#e5be01"/>${Array.from({ length: 12 }, (_, i) => { const a = i * Math.PI / 6; return `<path d="M${(25 + Math.cos(a) * 2.2).toFixed(2)} ${(5 + Math.sin(a) * 2.2).toFixed(2)}L${(25 + Math.cos(a) * 3.4).toFixed(2)} ${(5 + Math.sin(a) * 3.4).toFixed(2)}" stroke="#e5be01" stroke-width=".7"/>`; }).join('')}`,
+  mg: () => `<rect width="30" height="20" fill="#fff"/><rect x="10" width="20" height="10" fill="#fc3d32"/><rect x="10" y="10" width="20" height="10" fill="#007e3a"/>`,
+  ao: () => `<rect width="30" height="10" fill="#cc092f"/><rect y="10" width="30" height="10" fill="#000"/><path d="M11.5 12.5A4.5 4.5 0 1 1 17.5 7" fill="none" stroke="#ffcb00" stroke-width="1.1"/><path d="M12 13L18 7.5" stroke="#ffcb00" stroke-width="1"/>${star5(13, 8.2, 1.6, '#ffcb00')}`,
+  cm: () => `<rect width="10" height="20" fill="#007a5e"/><rect x="10" width="10" height="20" fill="#ce1126"/><rect x="20" width="10" height="20" fill="#fcd116"/>${star5(15, 10, 3.2, '#fcd116')}`,
+  ng: () => `<rect width="30" height="20" fill="#008751"/><rect x="10" width="10" height="20" fill="#fff"/>`,
+  bf: () => `<rect width="30" height="10" fill="#ef2b2d"/><rect y="10" width="30" height="10" fill="#009e49"/>${star5(15, 10, 3.2, '#fcd116')}`,
+  ma: () => `<rect width="30" height="20" fill="#c1272d"/><path d="${[0, 2, 4, 1, 3].map((k, i) => { const a = -Math.PI / 2 + k * 2 * Math.PI / 5; return (i ? 'L' : 'M') + (15 + Math.cos(a) * 4.4).toFixed(2) + ' ' + (10.4 + Math.sin(a) * 4.4).toFixed(2); }).join('')}Z" fill="none" stroke="#006233" stroke-width=".9" stroke-linejoin="round"/>`,
   eg: () => `<rect width="30" height="20" fill="#000"/><rect width="30" height="13.33" fill="#fff"/><rect width="30" height="6.67" fill="#ce1126"/><path d="M13.6 8.2h2.8l.5 1.6-1.9 1.6-1.9-1.6z" fill="#c09300"/>`,
 };
 const flag = c => `<svg viewBox="0 0 30 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">${FLAGS[c] ? FLAGS[c]() : ''}</svg>`;
@@ -398,8 +538,27 @@ const CLUE_ART = {
   guitare: '<ellipse cx="26" cy="42" rx="14" ry="13" fill="#b5602a"/><ellipse cx="34" cy="32" rx="10" ry="9" fill="#b5602a"/><circle cx="28" cy="38" r="4" fill="#2a1a10"/><path d="M34 32L54 10" stroke="#3a2414" stroke-width="5"/><path d="M50 8l6 4" stroke="#3a2414" stroke-width="6"/>',
   sms: '<rect x="8" y="12" width="48" height="34" rx="8" fill="#4a1520"/><path d="M18 46l-4 10 12-10" fill="#4a1520"/><path d="M18 24h28M18 32h20" stroke="#ff9a9a" stroke-width="3" stroke-linecap="round"/>',
   croquis: '<rect x="10" y="8" width="44" height="48" fill="#f4ecd8"/><path d="M18 18l8 8 8-8 8 8M18 34l8 8 8-8 8 8" stroke="#2a1a14" stroke-width="2" fill="none"/><circle cx="32" cy="30" r="3" fill="#c8553d"/>',
+  sceau: '<circle cx="32" cy="32" r="22" fill="#a8222a"/><circle cx="32" cy="32" r="16" fill="none" stroke="#7a1218" stroke-width="2"/><ellipse cx="32" cy="35" rx="7" ry="9" fill="#7a1218"/><circle cx="32" cy="23" r="4" fill="#7a1218"/><path d="M25 30l-6-4M39 30l6-4M25 40l-6 4M39 40l3 2" stroke="#7a1218" stroke-width="2.5"/>',
+  papier: '<rect x="12" y="8" width="40" height="48" fill="#efe2c2"/><circle cx="22" cy="20" r="4" fill="#d06a8a"/><circle cx="26" cy="17" r="3" fill="#e8a03a"/><path d="M22 24q2 8 8 10" stroke="#5a8a3a" stroke-width="1.6" fill="none"/><circle cx="42" cy="44" r="3.5" fill="#9a6ad0"/><path d="M18 36h20M18 42h14" stroke="#b8a888" stroke-width="1.4"/>',
+  ajami: '<rect x="10" y="8" width="44" height="48" fill="#efe2c2"/><path d="M46 18q-6 4-12 0t-12 2M46 28q-8-3-14 1t-10-1M46 38q-5 4-11 0t-13 2M40 46q-6-2-10 1" stroke="#3a2a1a" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="30" cy="14" r="1.4" fill="#3a2a1a"/><circle cx="36" cy="34" r="1.4" fill="#3a2a1a"/>',
   plume: '<path d="M48 8C30 12 18 30 16 52L20 52C24 36 32 24 48 8Z" fill="#f4ecd8"/><path d="M48 8L18 50" stroke="#a89a80" stroke-width="1.5"/><path d="M14 56l6-6" stroke="#2a1a14" stroke-width="3"/>',
 };
+/* Page perdue du Livre des Rives : papier antemoro, écriture ajami et dessin de la ville suivante */
+const PAGE_DRAW = [
+  '<path d="M18 50L22 30L26 50M22 30L28 18L32 20L26 32" stroke="#7a4a1a" stroke-width="2.4" fill="none"/>',
+  '<path d="M6 52Q16 34 26 46Q34 32 44 44Q50 36 58 46" stroke="#4a7a3a" stroke-width="2.6" fill="none"/>',
+  '<circle cx="24" cy="40" r="7" fill="none" stroke="#7a4a1a" stroke-width="2.2"/><path d="M30 40q8 0 10 8M18 36l-4-6M28 36l2-6" stroke="#7a4a1a" stroke-width="2.2" fill="none"/>',
+  '<path d="M16 52V30L24 24L32 30V52ZM36 52V36h10v16" stroke="#7a4a1a" stroke-width="2.2" fill="none"/>',
+  '<path d="M10 52L22 34L34 52M28 44L40 30L52 52" stroke="#4a7a3a" stroke-width="2.4" fill="none"/><path d="M14 52h40" stroke="#7a4a1a" stroke-width="2"/>',
+  '<path d="M12 52C14 34 24 26 34 26C44 28 50 40 52 52Z" fill="none" stroke="#7a4a1a" stroke-width="2.4"/>',
+  '<circle cx="24" cy="38" r="9" fill="none" stroke="#7a4a1a" stroke-width="2.2"/><circle cx="40" cy="38" r="9" fill="none" stroke="#7a4a1a" stroke-width="2.2"/><path d="M14 50h36" stroke="#7a4a1a" stroke-width="2"/>',
+  '<rect x="26" y="20" width="12" height="32" fill="none" stroke="#7a4a1a" stroke-width="2.4"/><path d="M8 52q12-6 24 0t24 0" stroke="#3a6a9a" stroke-width="2.4" fill="none"/>',
+];
+function pageArt(n, lit = true) {
+  return `<svg viewBox="0 0 64 72" xmlns="http://www.w3.org/2000/svg"><path d="M6 4H50L58 12V68H6Z" fill="${lit ? '#efe2c2' : '#3a3346'}"/><path d="M50 4V12H58" fill="${lit ? '#d8c8a2' : '#2a2436'}"/>
+    ${lit ? `<path d="M48 14q-8 3-14 0t-14 2M48 22q-9-2-16 1t-14-1" stroke="#3a2a1a" stroke-width="1.6" fill="none"/><circle cx="12" cy="62" r="2.5" fill="#d06a8a"/><circle cx="16" cy="64" r="2" fill="#e8a03a"/>
+    <g transform="translate(0 6)">${PAGE_DRAW[n - 1] || ''}</g>` : `<text x="32" y="44" text-anchor="middle" font-family="Lilita One,sans-serif" font-size="20" fill="#5a5266">${n}</text>`}</svg>`;
+}
 function clueArt(kind) { return `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">${CLUE_ART[kind] || CLUE_ART.carnet}</svg>`; }
 
 /* Photo des gardiens (1987), qui revient dans plusieurs indices. variant: 'dechiree' | 'complete' */

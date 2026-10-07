@@ -143,7 +143,7 @@ const Sfx = {
       case 'hit': S.noise(t, 0.25, { vol: 0.7, type: 'lowpass', freq: 600 }); S.tone(90, t, 0.25, { vol: 0.5, slide: 0.5 }); break;
       case 'jump': S.tone(300, t, 0.18, { vol: 0.14, type: 'triangle', slide: 2.2 }); break;
       case 'drum': S.djembe(t, opt.kind || 'tone', 0.7, S.sfxBus); break;
-      case 'kora': S.pluck(KORA[opt.i] || 440, t, 0.6, 'kora', S.sfxBus, ((opt.i || 0) % 5 - 2) * 0.15); break;
+      case 'kora': S.pluck(KORA[opt.i] || 440, t, 0.6, opt.kind || 'kora', S.sfxBus, ((opt.i || 0) % 5 - 2) * 0.15); break;
       case 'page': S.noise(t, 0.12, { vol: 0.12, freq: 3000, q: 0.6, sweep: 0.5 }); break;
       case 'crowd': S.noise(t, 1.4, { vol: 0.25, freq: 1200, q: 0.4 }); break;
     }
@@ -162,6 +162,9 @@ const THEMES = {
   caire:   { bpm: 90, inst: 'oud', root: -7, scale: [0, 1, 4, 5, 7, 8, 10], prog: [0, 0, 5, 0], perc: 'doum', drone: true },
   tension: { bpm: 66, inst: 'kora', root: -9, scale: [0, 1, 3, 6, 7], prog: [0], perc: 'heart', drone: true, sparse: true },
   action:  { bpm: 138, inst: 'kora', root: -7, scale: [0, 3, 5, 7, 10], prog: [0, 0, 3, 5], perc: 'djembe', bass: true },
+  savane:  { bpm: 100, inst: 'krar', root: -5, scale: [0, 2, 4, 7, 9], prog: [0, 5, 7, 0], perc: 'soft', drone: true },
+  semba:   { bpm: 124, inst: 'guitar', root: 0, scale: [0, 2, 4, 5, 7, 9], prog: [0, 5, 7, 0], perc: 'rumba', bass: true },
+  maroc:   { bpm: 86, inst: 'oud', root: -5, scale: [0, 1, 4, 5, 7, 8, 10], prog: [0, 0, 5, 0], perc: 'doum', drone: true },
   rumba:   { bpm: 116, inst: 'guitar', root: -2, scale: [0, 2, 4, 7, 9, 11], prog: [0, 5, 7, 5], perc: 'rumba', bass: true },
 };
 

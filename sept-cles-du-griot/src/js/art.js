@@ -18,6 +18,15 @@ const CAST = {
   lukusa:  { name: 'Papa Lukusa', skin: '#4a2d1c', shade: '#352012', lip: '#331a10', hair: { type: 'shortgrey', c: '#a9a29a' }, outfit: 'shirt', beard: 'whiteShort', old: true },
   makeda:  { name: 'Dr Makeda', skin: '#8c5a3a', shade: '#6e4228', lip: '#5c2d22', hair: { type: 'afro', c: '#1b1310' }, outfit: 'habesha', acc: ['glassesRound'], fem: true },
   nour:    { name: 'Nour', skin: '#b07a52', shade: '#92603d', lip: '#7a3b30', hair: { type: 'hijab', c: '#1f7a7a' }, outfit: 'blouse', fem: true },
+  wanjiru: { name: 'Wanjiru', skin: '#4f2f1c', shade: '#3a2112', lip: '#3e1c14', hair: { type: 'short', c: '#120a06' }, outfit: 'ranger', acc: ['studs'], fem: true },
+  ange:    { name: 'Ange', skin: '#6a4027', shade: '#512f1b', lip: '#55271e', hair: { type: 'braids', c: '#140c08' }, outfit: 'cycliste', fem: true },
+  hery:    { name: 'Hery', skin: '#8f5f3e', shade: '#734a2d', lip: '#5e2f24', hair: { type: 'hat', c: '#1a120c', hat: '#e3c27a', band: '#c84b2a' }, outfit: 'lamba' },
+  nzinga:  { name: 'Nzinga', skin: '#5b3822', shade: '#452815', lip: '#4a2219', hair: { type: 'afro', c: '#120a07' }, outfit: 'wax', wax: ['#c22d23', '#111', '#f2b33d', '#f4ecd8'], acc: ['hoops'], fem: true },
+  ngono:   { name: 'Mama Ngono', skin: '#4f301c', shade: '#3a2112', lip: '#3b1b12', hair: { type: 'gele', c: '#120a07' }, outfit: 'wax', wax: ['#2f9e62', '#c22d23', '#ffd23f', '#1d4b9b'], acc: ['studs'], fem: true, old: true },
+  bekolo:  { name: 'M. Bekolo', skin: '#6a4129', shade: '#52301c', lip: '#45231a', hair: { type: 'fade', c: '#1a120c' }, beard: 'mustache', outfit: 'suit', suit: ['#6a4a2e', '#55391f', '#e0b84a'] },
+  tunde:   { name: 'Tunde', skin: '#4e2e1b', shade: '#3a2012', lip: '#3a1b11', hair: { type: 'fila', c: '#8a1f2e' }, outfit: 'agbada', acc: ['glassesRound'], beard: 'mustache' },
+  aminata: { name: 'Aminata', skin: '#5e3923', shade: '#472915', lip: '#4c241a', hair: { type: 'headband', c: '#140c08' }, outfit: 'dandani', acc: ['hoops'], fem: true },
+  salma:   { name: 'Inspectrice Salma', skin: '#b98a62', shade: '#9a6d48', lip: '#7e3e33', hair: { type: 'bun', c: '#2a1a12' }, outfit: 'uniform', fem: true },
   agent:   { name: 'Homme gris', skin: '#5a3a26', shade: '#432a1a', lip: '#3a1d12', hair: { type: 'cap', c: '#2b2c33' }, outfit: 'agent', acc: ['gaiter'] },
   masque:  { name: 'Le Collectionneur', skin: '#4a3a30', shade: '#2f241d', lip: '#2a1a12', hair: { type: 'hood', c: '#17141c' }, outfit: 'cloak', acc: ['mask'] },
 };
@@ -34,6 +43,7 @@ function portrait(id, mood = 'neutre', look = 0) {
   const k = uid('p');
   const H = c.hair || {};
   const ey = 108, exL = 80, exR = 120;
+  const W = c.wax || ['#e9761d', '#1d4b9b', '#ffd23f', '#2c8a4a'];
   let back = '', body = '', front = '', face = '', extra = '', defs = '';
 
   /* ----- motifs de tissu ----- */
@@ -41,9 +51,11 @@ function portrait(id, mood = 'neutre', look = 0) {
   <pattern id="${k}bg" width="26" height="26" patternUnits="userSpaceOnUse"><rect width="26" height="26" fill="#5b3a1f"/>
     <path d="M3 4l5 5M8 4l-5 5" stroke="#efe0c2" stroke-width="2"/><circle cx="19" cy="7" r="2.2" fill="#efe0c2"/>
     <path d="M0 18l4-4 4 4 4-4 4 4 4-4 4 4 2-2" fill="none" stroke="#efe0c2" stroke-width="1.8"/></pattern>
-  <pattern id="${k}wx" width="34" height="34" patternUnits="userSpaceOnUse"><rect width="34" height="34" fill="#e9761d"/>
-    <circle cx="10" cy="10" r="7.5" fill="#1d4b9b"/><circle cx="10" cy="10" r="3.5" fill="#ffd23f"/>
-    <circle cx="27" cy="27" r="6" fill="none" stroke="#1d4b9b" stroke-width="3"/><path d="M24 6c4 2 6 6 5 10-4-1-6-5-5-10z" fill="#2c8a4a"/></pattern>
+  <pattern id="${k}wx" width="34" height="34" patternUnits="userSpaceOnUse"><rect width="34" height="34" fill="${W[0]}"/>
+    <circle cx="10" cy="10" r="7.5" fill="${W[1]}"/><circle cx="10" cy="10" r="3.5" fill="${W[2]}"/>
+    <circle cx="27" cy="27" r="6" fill="none" stroke="${W[1]}" stroke-width="3"/><path d="M24 6c4 2 6 6 5 10-4-1-6-5-5-10z" fill="${W[3]}"/></pattern>
+  <pattern id="${k}fd" width="18" height="18" patternUnits="userSpaceOnUse"><rect width="18" height="18" fill="#f4ecd8"/>
+    <rect width="4" height="18" fill="#1d4b9b"/><rect x="7" width="2" height="18" fill="#c22d23"/><rect x="12" width="4" height="18" fill="#1a1410"/><rect y="8" width="18" height="2" fill="#c22d23" opacity=".5"/></pattern>
   <pattern id="${k}kt" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#f2b33d"/>
     <rect width="16" height="4" fill="#1d7a3e"/><rect y="8" width="8" height="4" fill="#c22d23"/><rect x="8" y="8" width="8" height="4" fill="#111"/><rect x="6" width="4" height="16" fill="#1d7a3e" opacity=".55"/></pattern>
   <pattern id="${k}pg" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#e8dcc3"/>
@@ -90,9 +102,9 @@ function portrait(id, mood = 'neutre', look = 0) {
         <path d="M100 214V240" stroke="#f2b33d" stroke-width="2.4" stroke-dasharray="5 4"/>`;
       break;
     case 'suit':
-      body = `<path d="${shoulders}" fill="#33333c"/><path d="M82 180L100 230L118 180Z" fill="#f4f1ea"/>
-        <path d="M95 186L105 186L108 236L100 240L92 236Z" fill="url(#${k}kt)"/><path d="M94 180L106 180L104 190L96 190Z" fill="#c22d23"/>
-        <path d="M80 180L98 232L86 240L64 190Z" fill="#26262e"/><path d="M120 180L102 232L114 240L136 190Z" fill="#26262e"/>
+      body = `<path d="${shoulders}" fill="${c.suit?.[0] || '#33333c'}"/><path d="M82 180L100 230L118 180Z" fill="#f4f1ea"/>
+        <path d="M95 186L105 186L108 236L100 240L92 236Z" fill="${c.suit ? c.suit[2] : `url(#${k}kt)`}"/><path d="M94 180L106 180L104 190L96 190Z" fill="${c.suit?.[2] || '#c22d23'}"/>
+        <path d="M80 180L98 232L86 240L64 190Z" fill="${c.suit?.[1] || '#26262e'}"/><path d="M120 180L102 232L114 240L136 190Z" fill="${c.suit?.[1] || '#26262e'}"/>
         <path d="M138 206L152 202L154 210L140 213Z" fill="#f2b33d"/>`;
       break;
     case 'bogolan':
@@ -125,6 +137,31 @@ function portrait(id, mood = 'neutre', look = 0) {
         <path d="M80 180Q100 210 120 180" fill="none" stroke="#2a8f4b" stroke-width="3"/><path d="M83 184Q100 214 117 184" fill="none" stroke="#f2b33d" stroke-width="2.4"/>
         <path d="M86 188Q100 218 114 188" fill="none" stroke="#c22d23" stroke-width="2"/><path d="M100 212V240" stroke="#2a8f4b" stroke-width="3"/>
         <path d="M14 240C18 200 40 186 66 182L58 240Z" fill="#fffdf6" opacity=".95"/><path d="M66 182L58 240" stroke="#2a8f4b" stroke-width="3"/>`;
+      break;
+    case 'ranger':
+      body = `<path d="${shoulders}" fill="#7a7a4a"/><path d="M82 180L100 206L118 180L112 172L100 190L88 172Z" fill="#8e8e5a"/>
+        <rect x="46" y="204" width="28" height="22" rx="3" fill="#6a6a3e"/><rect x="126" y="204" width="28" height="22" rx="3" fill="#6a6a3e"/>
+        <path d="M100 206V240" stroke="#5a5a34" stroke-width="2"/><circle cx="140" cy="198" r="5" fill="#c9a24a"/>`;
+      break;
+    case 'cycliste':
+      body = `<path d="${shoulders}" fill="#2a8fd0"/><path d="M14 240C16 216 26 204 40 196L160 196C174 204 184 216 186 240Z" fill="#ffd23f"/>
+        <path d="M14 240C16 226 22 218 30 212L170 212C178 218 184 226 186 240Z" fill="#2f9e62"/><path d="M86 180Q100 196 114 180" fill="${c.skin}"/><path d="M86 180Q100 196 114 180" fill="none" stroke="#fff" stroke-width="3"/>`;
+      break;
+    case 'lamba':
+      body = `<path d="${shoulders}" fill="#e9e2d0"/><path d="M84 180L100 202L116 180Z" fill="${c.skin}"/>
+        <path d="M30 210C50 190 80 186 100 200C120 186 150 190 170 210L176 240H140C130 214 70 214 60 240H24Z" fill="#fbf7ee"/>
+        <path d="M34 214C54 196 80 192 100 206C120 192 146 196 166 214" stroke="#c84b2a" stroke-width="2.5" fill="none"/>`;
+      break;
+    case 'agbada':
+      body = `<path d="M6 240C10 196 40 178 100 176C160 178 190 196 194 240Z" fill="#7fb3d5"/><path d="M76 180Q100 216 124 180" fill="#5f93b5"/>
+        <path d="M74 182Q100 226 126 182M80 196Q100 232 120 196" fill="none" stroke="#f4ecd8" stroke-width="2.5"/><path d="M100 220v20" stroke="#f4ecd8" stroke-width="2.5" stroke-dasharray="3 3"/>`;
+      break;
+    case 'dandani':
+      body = `<path d="${shoulders}" fill="url(#${k}fd)"/><path d="M84 180Q100 200 116 180" fill="${c.skin}"/><path d="M84 180Q100 200 116 180" fill="none" stroke="#1a1410" stroke-width="3"/>`;
+      break;
+    case 'uniform':
+      body = `<path d="${shoulders}" fill="#1f2a4a"/><path d="M82 180L100 204L118 180L112 172L100 192L88 172Z" fill="#2c3a62"/>
+        <path d="M128 200l8-4 8 4v8l-8 6-8-6z" fill="#c9a24a"/><path d="M50 196L76 190M150 196L124 190" stroke="#c9a24a" stroke-width="3"/>`;
       break;
     case 'blouse':
       body = `<path d="${shoulders}" fill="#e8d7b9"/>`;
@@ -196,6 +233,7 @@ function portrait(id, mood = 'neutre', look = 0) {
         <path d="M60 80Q100 56 140 80" stroke="#9c9690" stroke-width="2" fill="none" stroke-dasharray="2 3"/>`;
       break;
     case 'shortgrey':
+    case 'short':
       front = `<path d="M52 104C50 64 72 46 100 46C128 46 150 64 148 104C142 78 124 66 100 66C76 66 58 78 52 104Z" fill="${H.c}"/>`;
       break;
     case 'kufi':
@@ -217,8 +255,21 @@ function portrait(id, mood = 'neutre', look = 0) {
       break;
     case 'hat':
       front = `<path d="M52 104C50 70 70 58 100 58C130 58 150 70 148 104C142 84 124 76 100 76C76 76 58 84 52 104Z" fill="${H.c}"/>
-        <path d="M66 62C64 40 72 22 100 22C128 22 136 40 134 62Z" fill="#f4ecd8"/><rect x="65" y="50" width="70" height="10" fill="#6b2fa0"/>
-        <ellipse cx="100" cy="64" rx="64" ry="11" fill="#f4ecd8"/><ellipse cx="100" cy="62" rx="50" ry="6" fill="#e2d6be"/>`;
+        <path d="M66 62C64 40 72 22 100 22C128 22 136 40 134 62Z" fill="${H.hat || '#f4ecd8'}"/><rect x="65" y="50" width="70" height="10" fill="${H.band || '#6b2fa0'}"/>
+        <ellipse cx="100" cy="64" rx="64" ry="11" fill="${H.hat || '#f4ecd8'}"/><ellipse cx="100" cy="62" rx="50" ry="6" fill="rgba(0,0,0,.08)"/>`;
+      break;
+    case 'fila':
+      front = `<path d="M52 104C50 74 66 64 100 64C134 64 150 74 148 104C142 86 124 80 100 80C76 80 58 86 52 104Z" fill="#140c08"/>
+        <path d="M58 76C56 40 84 30 110 32C138 34 150 50 146 70C140 64 120 60 100 62C80 62 66 68 58 76Z" fill="${H.c}"/>
+        <path d="M110 32C130 26 152 36 150 58" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="3"/><path d="M62 72Q100 60 142 68" stroke="#f2b33d" stroke-width="2" fill="none" stroke-dasharray="3 3"/>`;
+      break;
+    case 'bun':
+      front = `<circle cx="100" cy="34" r="17" fill="${H.c}"/><path d="M52 108C48 64 72 44 100 44C128 44 152 64 148 108C142 80 124 64 100 64C76 64 58 80 52 108Z" fill="${H.c}"/>
+        <path d="M70 58Q100 46 130 58" stroke="rgba(255,255,255,.15)" stroke-width="2" fill="none"/>`;
+      break;
+    case 'headband':
+      front = `<path d="M52 104C48 60 72 40 100 40C128 40 152 60 148 104C142 80 124 68 100 68C76 68 58 80 52 104Z" fill="${H.c}"/>
+        <path d="M54 82Q100 58 146 82L146 92Q100 68 54 92Z" fill="url(#${k}fd)"/>`;
       break;
     case 'cap':
       front = `<path d="M52 92C52 58 74 42 100 42C126 42 148 58 148 92Z" fill="${H.c}"/><path d="M52 92C70 84 130 84 148 92C140 96 60 96 52 92Z" fill="#1a1b20"/>
@@ -308,6 +359,7 @@ function avatar(id) {
   if (id === 'hibou') return `<svg viewBox="0 0 40 40"><rect width="40" height="40" fill="#2b2436"/><path d="M10 30V16l4-6 6 4 6-4 4 6v14q-10 6-20 0z" fill="#8a6a4a"/>
     <circle cx="15" cy="19" r="4.5" fill="#f2b33d"/><circle cx="25" cy="19" r="4.5" fill="#f2b33d"/><circle cx="15" cy="19" r="2" fill="#111"/><circle cx="25" cy="19" r="2" fill="#111"/><path d="M18.5 24l1.5 3 1.5-3z" fill="#e0952a"/></svg>`;
   if (id === 'gris') return `<svg viewBox="0 0 40 40"><rect width="40" height="40" fill="#1a1820"/><path d="M14 31v-11M18 30V13M22 30V12M26 30V15M14 24q-4-2-4 2l4 6h12q4-4 4-10" stroke="#9a96a0" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
+  if (id === 'mecene') return `<svg viewBox="0 0 40 40"><rect width="40" height="40" fill="#1a1410"/><ellipse cx="20" cy="23" rx="7" ry="9" fill="#c9a24a"/><circle cx="20" cy="12" r="4" fill="#c9a24a"/><path d="M13 20l-6-4M27 20l6-4M13 28l-6 4M27 28l3 2" stroke="#c9a24a" stroke-width="2.4" stroke-linecap="round"/><path d="M20 15v17" stroke="#1a1410" stroke-width="1.4"/></svg>`;
   if (id === 'inconnu') return `<svg viewBox="0 0 40 40"><rect width="40" height="40" fill="#3a3346"/><circle cx="20" cy="16" r="7" fill="#7d7490"/><path d="M8 36q12-16 24 0" fill="#7d7490"/></svg>`;
   return portrait(id, 'neutre').replace('viewBox="0 0 200 240"', 'viewBox="30 30 140 140"');
 }
