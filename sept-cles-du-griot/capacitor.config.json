@@ -1,0 +1,12 @@
+{
+  "appId": "com.basselekra.septclesgriot",
+  "appName": "Les 7 Clés du Griot",
+  "webDir": "www",
+  "backgroundColor": "#140c1f",
+  "android": { "backgroundColor": "#140c1f" },
+  "ios": { "backgroundColor": "#140c1f", "contentInset": "never" },
+  "plugins": {
+    "SplashScreen": { "launchAutoHide": false, "backgroundColor": "#140c1f", "showSpinner": false },
+    "StatusBar": { "style": "DARK", "backgroundColor": "#140c1f" }
+  }
+}
