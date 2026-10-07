@@ -1,5 +1,7 @@
 # La Couronne d'Amaya : application mobile
 
+> Ce dépôt contient aussi un deuxième jeu, **Les 7 Clés du Griot** (aventure à travers 15 capitales africaines), dans le dossier [`sept-cles-du-griot/`](sept-cles-du-griot/README.md).
+
 Ce dossier transforme le jeu en application Android et iOS avec [Capacitor](https://capacitorjs.com). C'est exactement le même jeu que la page web, avec en plus :
 
 - **fonctionnement hors ligne** : les polices sont incluses et le jeu ne fait aucun appel réseau ;

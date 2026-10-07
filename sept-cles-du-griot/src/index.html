@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#140c1f">
+<meta name="color-scheme" content="dark">
+<title>Les 7 Clés du Griot</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
+<!--NATIVE-->
+</head>
+<body>
+<div id="app">
+  <!-- Écran titre -->
+  <section class="screen" id="scr-title">
+    <div class="title-bg" id="title-bg"></div>
+    <div class="title-content">
+      <div class="title-kicker">Une aventure à travers 15 capitales africaines</div>
+      <h1 class="logo"><span class="logo-num">7</span><span class="logo-txt">Clés<small>du Griot</small></span></h1>
+      <div class="title-buttons">
+        <button class="btn big" id="btn-play">Jouer</button>
+        <button class="btn ghost" id="btn-new" hidden>Nouvelle partie</button>
+        <div class="title-row">
+          <button class="icon-btn labelled" id="btn-carnet-t" aria-label="Carnet"><span class="ico" data-ico="carnet"></span><span>Carnet</span></button>
+          <button class="icon-btn labelled" id="btn-settings-t" aria-label="Réglages"><span class="ico" data-ico="reglages"></span><span>Réglages</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="title-foot">Écouteurs conseillés · Sans publicité · Hors ligne</div>
+  </section>
+
+  <!-- Carte de l'Afrique -->
+  <section class="screen" id="scr-map" hidden>
+    <header class="topbar">
+      <button class="icon-btn" id="btn-map-home" aria-label="Accueil"><span class="ico" data-ico="maison"></span></button>
+      <div class="pill" title="Clés"><span class="ico" data-ico="cle"></span><b id="map-keys">0/7</b></div>
+      <div class="pill" title="Cauris"><span class="ico" data-ico="cauri"></span><b id="map-cauris">0</b></div>
+      <button class="icon-btn" id="btn-carnet-m" aria-label="Carnet"><span class="ico" data-ico="carnet"></span></button>
+    </header>
+    <div class="map-wrap" id="map-wrap"></div>
+    <div class="map-panel" id="map-panel"></div>
+  </section>
+
+  <!-- Histoire -->
+  <section class="screen story" id="scr-story" hidden>
+    <div class="bg" id="st-bg"></div>
+    <div class="vignette" id="st-vignette"></div>
+    <div class="actors">
+      <div class="actor left" id="actor-l"></div>
+      <div class="actor right" id="actor-r"></div>
+    </div>
+    <header class="topbar story-top">
+      <button class="icon-btn" id="btn-st-menu" aria-label="Menu"><span class="ico" data-ico="menu"></span></button>
+      <div class="st-place" id="st-place"></div>
+      <button class="icon-btn" id="btn-carnet-s" aria-label="Carnet"><span class="ico" data-ico="carnet"></span></button>
+    </header>
+    <div class="narr" id="st-narr" hidden></div>
+    <div class="dlg" id="st-dlg" hidden>
+      <div class="dlg-name" id="st-name"></div>
+      <div class="dlg-text" id="st-text"></div>
+      <div class="dlg-next" aria-hidden="true">▼</div>
+    </div>
+    <div class="choices" id="st-choices" hidden></div>
+    <div class="phone" id="st-phone" hidden>
+      <div class="phone-head"><span class="phone-av" id="ph-av"></span><div><b id="ph-name"></b><small id="ph-status">en ligne</small></div></div>
+      <div class="phone-body" id="ph-body"></div>
+      <div class="phone-hint">Touchez pour continuer</div>
+    </div>
+    <div class="card-pop" id="st-card" hidden></div>
+    <div class="tap-catcher" id="st-tap"></div>
+  </section>
+
+  <!-- Mini-jeux -->
+  <section class="screen game" id="scr-game" hidden>
+    <header class="topbar game-top">
+      <button class="icon-btn" id="btn-g-pause" aria-label="Pause"><span class="ico" data-ico="pause"></span></button>
+      <div class="g-title" id="g-title"></div>
+      <div class="pill" title="Cauris"><span class="ico" data-ico="cauri"></span><b id="g-cauris">0</b></div>
+    </header>
+    <div class="g-stage" id="g-stage"></div>
+  </section>
+
+  <!-- Fenêtres -->
+  <div class="overlay" id="overlay" hidden>
+    <div class="modal" id="modal" role="dialog" aria-modal="true"></div>
+  </div>
+  <div class="toast" id="toast" hidden></div>
+  <div class="flash" id="flash"></div>
+</div>
+
+<script src="js/core.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/art.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/story.js"></script>
+<script src="js/games.js"></script>
+<script src="js/games2.js"></script>
+<script src="js/engine.js"></script>
+</body>
+</html>
