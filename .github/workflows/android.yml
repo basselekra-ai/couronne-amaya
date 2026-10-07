@@ -1,0 +1,72 @@
+# Construit l'application Android sur les serveurs de GitHub (gratuit pour un dépôt public ou dans le quota privé).
+# - Lancement manuel (onglet Actions > Android > Run workflow) ou à chaque tag v1.0.0, v1.0.1…
+# - Produit un APK de test (à installer sur ton téléphone) et, si les secrets de signature existent,
+#   un fichier .aab signé à envoyer sur Google Play.
+name: Android
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Préparer le jeu pour le mobile
+        run: npm run sync
+
+      - name: Numéro de version
+        run: |
+          echo "VERSION_CODE=$((GITHUB_RUN_NUMBER + 100))" >> "$GITHUB_ENV"
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then echo "VERSION_NAME=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"; else echo "VERSION_NAME=1.0.0" >> "$GITHUB_ENV"; fi
+
+      - name: Clé de signature (si configurée)
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+            echo "ANDROID_KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+          else
+            echo "Aucune clé : seul l'APK de test sera produit."
+          fi
+
+      - name: APK de test
+        working-directory: android
+        run: ./gradlew --no-daemon assembleDebug
+
+      - name: Bundle signé pour Google Play
+        if: env.ANDROID_KEYSTORE_PATH != ''
+        working-directory: android
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: ./gradlew --no-daemon bundleRelease
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: couronne-amaya-apk-test
+          path: android/app/build/outputs/apk/debug/*.apk
+
+      - uses: actions/upload-artifact@v4
+        if: env.ANDROID_KEYSTORE_PATH != ''
+        with:
+          name: couronne-amaya-google-play-aab
+          path: android/app/build/outputs/bundle/release/*.aab

@@ -1,0 +1,21 @@
+# Vérifie que le projet iOS compile (sans signature, pour le simulateur).
+# La publication sur l'App Store se fait ensuite depuis Xcode sur un Mac (voir README).
+name: iOS (vérification)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run sync
+      - name: Compiler pour le simulateur
+        working-directory: ios/App
+        run: xcodebuild -project App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build

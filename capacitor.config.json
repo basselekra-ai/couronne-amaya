@@ -1,0 +1,12 @@
+{
+  "appId": "com.basselekra.couronneamaya",
+  "appName": "La Couronne d'Amaya",
+  "webDir": "www",
+  "backgroundColor": "#140f2b",
+  "android": { "backgroundColor": "#140f2b" },
+  "ios": { "backgroundColor": "#140f2b", "contentInset": "never" },
+  "plugins": {
+    "SplashScreen": { "launchAutoHide": false, "backgroundColor": "#140f2b", "showSpinner": false },
+    "StatusBar": { "style": "DARK", "backgroundColor": "#140f2b" }
+  }
+}
