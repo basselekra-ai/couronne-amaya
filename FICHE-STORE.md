@@ -30,7 +30,7 @@ Aligne les gemmes, chasse l'ombre et sauve la reine. Une aventure pleine d'âme.
 >
 > ✦ JOUE COMME TU VEUX
 > • Pas de vies, pas d'attente : rejoue autant que tu veux
-> • Pas de publicité
+> • Publicités discrètes : une vidéo facultative pour gagner 5 coups, rien pendant les parties
 > • Fonctionne sans connexion Internet
 > • 12 niveaux d'histoire, puis des niveaux sans fin
 > • Code de transfert pour retrouver ta partie sur un autre appareil
@@ -42,16 +42,30 @@ Aligne les gemmes, chasse l'ombre et sauve la reine. Une aventure pleine d'âme.
 
 **Coordonnées** : ton e-mail (obligatoire) et l'adresse web de `CONFIDENTIALITE.md` une fois en ligne.
 
+### Contient des annonces
+Play Console → *Règles et programmes → Contenu de l'application → Annonces* : **Oui, mon application contient des annonces.**
+
+### Identifiant publicitaire
+*Contenu de l'application → Identifiant publicitaire* : **Oui**, l'application l'utilise. Usage : **Publicité ou marketing**. (Le module Google ajoute lui-même la permission `AD_ID`.)
+
 ### Questionnaire « Sécurité des données » (Data safety)
-- L'application collecte-t-elle ou partage-t-elle des données utilisateur ? **Non**
-- Toutes les données sont-elles chiffrées en transit ? Sans objet : aucune donnée n'est transmise.
-- Les utilisateurs peuvent-ils demander la suppression ? Sans objet. La désinstallation efface tout.
+Ce sont les réponses à donner à cause du module Google AdMob (le jeu lui-même ne collecte rien) :
+- L'application collecte-t-elle ou partage-t-elle des données ? **Oui**
+- Toutes les données sont-elles chiffrées en transit ? **Oui**
+- Les utilisateurs peuvent-ils demander la suppression ? **Non** (gérée par Google via les paramètres de l'appareil)
+- Données à cocher, chacune **collectée et partagée**, finalité **Publicité ou marketing** (et **Analyse** pour les deux premières), **non facultative**, traitée de façon temporaire : non :
+  - *Appareil ou autres identifiants* (identifiant publicitaire)
+  - *Activité dans l'application → Interactions avec l'application* (annonces vues ou touchées)
+  - *Position approximative* (déduite de l'adresse IP)
+  - *Infos et performances de l'application → Journaux de plantage, Diagnostics*
+
+Google publie une aide officielle : « Google Mobile Ads SDK – Data disclosure » (developers.google.com/admob/android/privacy/play-data-disclosure). Vérifie-la au moment de remplir, au cas où elle aurait changé.
 
 ### Questionnaire de classification (IARC)
 Catégorie : *Jeu*. Réponds **Non** à violence réaliste, sang, peur intense, sexualité, grossièretés, drogues, jeux d'argent, achats intégrés, interaction entre utilisateurs, partage de position. Un « méchant » de dessin animé sans violence montrée donne en général **PEGI 3 / Tout public**.
 
 ### Public cible
-Choisis **13 ans et plus** (ou « tous âges » si tu acceptes les règles « Familles » de Google, plus strictes). Le jeu convient aux enfants, mais déclarer moins de 13 ans impose le programme Familles et ses vérifications supplémentaires.
+Choisis **13 ans et plus**. C'est important avec la publicité : déclarer des moins de 13 ans impose le programme « Familles », avec des régies publicitaires certifiées uniquement et des réglages AdMob différents.
 
 ### Visuels demandés
 - Icône 512 × 512 : `assets/icon-only.png` réduite
@@ -62,9 +76,9 @@ Choisis **13 ans et plus** (ou « tous âges » si tu acceptes les règles « Fa
 
 **Nom** (19/30) : La Couronne d'Amaya
 **Sous-titre** (27/30) : Gemmes, ombre et grand cœur
-**Texte promotionnel** (≤170) : Aide Amaya à sauver sa grand-mère de l'ombre de Morvane. Pas de vies, pas d'attente, pas de pub : juste toi, les gemmes et le suspense.
-**Mots-clés** (94/100) : match 3,gemmes,puzzle,princesse,aventure,histoire,hors ligne,combo,royaume,casse-tête,sans pub
+**Texte promotionnel** (≤170) : Aide Amaya à sauver sa grand-mère de l'ombre de Morvane. Pas de vies, pas d'attente : juste toi, les gemmes et le suspense.
+**Mots-clés** (94/100) : match 3,gemmes,puzzle,princesse,aventure,histoire,hors ligne,combo,royaume,casse-tête,énigme
 **Catégorie principale** : Jeux > Puzzle · secondaire : Jeux > Aventure
 **Classification d'âge** : 4+ (réponses « Aucun » partout, sauf « Violence de dessin animé ou fantastique : peu fréquente/légère » si tu veux être prudent, ce qui donne 9+)
-**Confidentialité de l'app** : « Données non collectées »
+**Confidentialité de l'app** : avec AdMob, déclare *Identifiants (identifiant de l'appareil)*, *Données d'utilisation (interactions avec le produit, données publicitaires)*, *Diagnostics* et *Localisation approximative*, utilisés pour la **publicité tierce** et l'**analyse**, et **utilisés pour le suivi** si les annonces personnalisées sont activées
 **Description** : reprends la description complète Google Play ci-dessus.

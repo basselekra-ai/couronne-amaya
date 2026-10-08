@@ -176,6 +176,7 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 @keyframes starin{to{transform:scale(1);opacity:1}}
 .final-score{font-family:var(--f-display);font-size:28px;font-variant-numeric:tabular-nums}
 .mini-portrait{width:96px;height:96px;margin:0 auto 8px;border-radius:50%;border:3px solid var(--gold);overflow:hidden}
+.ad-msg{font-size:13px!important;color:var(--muted)}
 .link-btn{font-weight:800;font-size:14px;color:var(--muted);text-decoration:underline;text-underline-offset:4px;padding:6px 10px}
 .sync-status{display:flex;gap:10px;align-items:flex-start;text-align:left;background:rgba(0,0,0,.25);border-radius:14px;padding:10px 12px;font-size:14px}
 .sync-status .dot{flex:none;width:10px;height:10px;border-radius:50%;margin-top:5px;background:var(--gold)}
@@ -297,6 +298,85 @@ function persist() {
   if (Pref) Pref.set({ key: SAVE_KEY, value: json }).catch(() => {});
   Sync.schedule();
 }
+
+/* ---------- Publicités (application mobile uniquement, jamais obligatoires) ----------
+   - vidéo « avec récompense » : le joueur CHOISIT de la regarder pour gagner 5 coups (après le +5 gratuit)
+   - publicité plein écran entre deux niveaux : au plus une tous les 3 niveaux gagnés et toutes les 3 minutes,
+     jamais pendant les premiers niveaux. Rien ne s'affiche dans la version web.
+   Les identifiants viennent de ads.config.json (injectés par le script de construction). */
+const Ads = {
+  plugin: null, cfg: null, ready: false, privacy: false, rewardLoaded: false, interLoaded: false, wins: 0, lastInter: 0, busy: false,
+  ids() { return this.cfg[window.Capacitor?.getPlatform?.() === 'ios' ? 'ios' : 'android']; },
+  async init() {
+    try {
+      this.plugin = window.AmayaNative?.AdMob || null; this.cfg = window.AMAYA_ADS || null;
+      if (!this.plugin || !this.cfg) return;
+      await this.plugin.initialize({ initializeForTesting: !!this.cfg.test });
+      // Consentement (obligatoire en Europe et au Royaume-Uni) : formulaire officiel de Google, seulement là où la loi l'exige
+      let info = await this.plugin.requestConsentInfo();
+      if (info.isConsentFormAvailable && info.status === 'REQUIRED') info = await this.plugin.showConsentForm();
+      this.privacy = info.privacyOptionsRequirementStatus === 'REQUIRED';
+      if (info.canRequestAds === false) return;
+      this.ready = true;
+      this.loadReward(); this.loadInter();
+    } catch (e) { this.ready = false; }
+  },
+  async loadReward() {
+    if (!this.ready || this.rewardLoaded) return;
+    try { await this.plugin.prepareRewardVideoAd({ adId: this.ids().rewarded, isTesting: !!this.cfg.test }); this.rewardLoaded = true; }
+    catch (e) { this.rewardLoaded = false; setTimeout(() => this.loadReward(), 60000); }
+  },
+  async loadInter() {
+    if (!this.ready || this.interLoaded) return;
+    try { await this.plugin.prepareInterstitial({ adId: this.ids().interstitial, isTesting: !!this.cfg.test }); this.interLoaded = true; }
+    catch (e) { this.interLoaded = false; setTimeout(() => this.loadInter(), 60000); }
+  },
+  hasReward() { return this.ready && this.rewardLoaded && !this.busy; },
+  /* Affiche une publicité plein écran ; se termine quand le joueur la ferme */
+  async show(kind) {
+    this.busy = true; AU.setMusic(false);
+    const events = kind === 'reward'
+      ? { reward: 'onRewardedVideoAdReward', end: ['onRewardedVideoAdDismissed', 'onRewardedVideoAdFailedToShow'] }
+      : { end: ['interstitialAdDismissed', 'interstitialAdFailedToShow'] };
+    let earned = false; const handles = [];
+    try {
+      await new Promise(async resolve => {
+        const stop = setTimeout(resolve, 150000);
+        const done = () => { clearTimeout(stop); setTimeout(resolve, 60); };
+        try {
+          if (events.reward) handles.push(await this.plugin.addListener(events.reward, () => { earned = true; }));
+          for (const ev of events.end) handles.push(await this.plugin.addListener(ev, done));
+          if (kind === 'reward') { const r = await this.plugin.showRewardVideoAd(); if (r) earned = true; }
+          else await this.plugin.showInterstitial();
+        } catch (e) { done(); }
+      });
+    } finally {
+      for (const h of handles) try { h.remove(); } catch (e) {}
+      this.busy = false; AU.setMusic(save.music);
+    }
+    return earned;
+  },
+  /* Vidéo avec récompense : renvoie true seulement si le joueur l'a regardée jusqu'au bout */
+  async watchForReward() {
+    if (!this.hasReward()) return false;
+    this.rewardLoaded = false;
+    const ok = await this.show('reward');
+    this.loadReward();
+    return ok;
+  },
+  /* Appelée au passage au niveau suivant */
+  async betweenLevels(n) {
+    if (!this.ready) return;
+    this.wins++;
+    const c = this.cfg;
+    if (!this.interLoaded || this.busy || n < c.from || this.wins % c.every !== 0 || Date.now() - this.lastInter < c.gap * 1000) return;
+    this.interLoaded = false;
+    await this.show('inter');
+    this.lastInter = Date.now();
+    this.loadInter();
+  },
+  privacyForm() { try { return this.plugin.showPrivacyOptionsForm(); } catch (e) { return Promise.resolve(); } },
+};
 
 /* ---------- Synchronisation ----------
    1. Application mobile : stockage natif (Capacitor Preferences), qui survit au nettoyage du navigateur.
@@ -1921,7 +2001,7 @@ function showWin(stars, prevStars) {
     <div class="actions"><button class="btn big" id="wNext">Niveau suivant</button><div class="row"><button class="btn ghost" id="wRetry">Rejouer</button><button class="btn ghost" id="wMap">Carte</button></div></div>
   </div>`;
   [1, 2, 3].forEach(i => { if (i <= stars) setTimeout(() => AU.star(i), 150 + i * 220); });
-  $('#wNext').onclick = () => { closeOverlay(); goLevel(n + 1); };
+  $('#wNext').onclick = async () => { closeOverlay(); await Ads.betweenLevels(n); goLevel(n + 1); };
   $('#wRetry').onclick = () => { closeOverlay(); goLevel(n); };
   $('#wMap').onclick = () => { closeOverlay(); G = null; showMap(); };
 }
@@ -1929,20 +2009,29 @@ function showLose() {
   const n = G.n;
   overlay.hidden = false; overlay.className = '';
   const canContinue = !G.second;
+  const canWatch = !canContinue && !G.adMore && Ads.hasReward();
   overlay.innerHTML = `<div class="modal" role="dialog" aria-labelledby="lT">
     <div class="mini-portrait">${portraitSVG('amaya', canContinue ? 'panic' : 'sad')}</div>
     <div class="eyebrow">Plus de coups</div>
     <h3 id="lT">${canContinue ? 'Si près du but…' : 'Grand-mère compte sur toi'}</h3>
     <p>Il reste à faire :</p>
     ${goalCardsHTML(G.goals.filter(g => g.left > 0))}
-    <p>${canContinue ? 'Amaya refuse d’abandonner. Reprends avec 5 coups de plus.' : 'Chaque essai t’apprend quelque chose. Réessaie, tu y es presque.'}</p>
-    <div class="actions">${canContinue ? `<button class="btn big coral" id="lMore">+5 coups</button>` : ''}<div class="row"><button class="btn ${canContinue ? 'ghost' : ''}" id="lRetry">Réessayer</button><button class="btn ghost" id="lMap">Carte</button></div></div>
+    <p>${canContinue ? 'Amaya refuse d’abandonner. Reprends avec 5 coups de plus.' : canWatch ? 'Regarde une courte vidéo pour reprendre avec 5 coups de plus, ou réessaie.' : 'Chaque essai t’apprend quelque chose. Réessaie, tu y es presque.'}</p>
+    <div class="actions">${canContinue ? `<button class="btn big coral" id="lMore">+5 coups</button>` : canWatch ? `<button class="btn big coral" id="lAd"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-4px;margin-right:6px" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Vidéo : +5 coups</button><p class="ad-msg" id="lAdMsg" hidden></p>` : ''}<div class="row"><button class="btn ${canContinue || canWatch ? 'ghost' : ''}" id="lRetry">Réessayer</button><button class="btn ghost" id="lMap">Carte</button></div></div>
   </div>`;
-  if (canContinue) $('#lMore').onclick = () => {
-    closeOverlay(); G.second = true; G.moves += 5; G.busy = false; updateHUD();
+  const resume5 = () => {
+    closeOverlay(); G.moves += 5; G.busy = false; updateHUD();
     praise(0, '+5 coups !', ''); say(['Je n’abandonnerai jamais !', 'Encore une chance. Je ne la gâcherai pas.'], 'determined', true);
     if (!hasMove()) shuffleBoard();
     armHint();
+  };
+  if (canContinue) $('#lMore').onclick = () => { G.second = true; resume5(); };
+  if (canWatch) $('#lAd').onclick = async e => {
+    const btn = e.currentTarget; btn.disabled = true;
+    const ok = await Ads.watchForReward();
+    if (ok) { G.adMore = true; resume5(); return; }
+    btn.hidden = true;
+    const msg = $('#lAdMsg'); if (msg) { msg.hidden = false; msg.textContent = 'La vidéo n’a pas été regardée jusqu’au bout : pas de coups bonus cette fois.'; }
   };
   $('#lRetry').onclick = () => { closeOverlay(); showLevelIntro(n); };
   $('#lMap').onclick = () => { closeOverlay(); G = null; showMap(); };
@@ -1956,11 +2045,12 @@ function showPause() {
     <div class="eyebrow">Niveau ${G.n}</div><h3 id="pT">Pause</h3>
     ${goalCardsHTML(G.goals)}
     <div class="toggles"><button id="tMusic" aria-pressed="${save.music}">${ICON_MUSIC}Musique</button><button id="tSfx" aria-pressed="${save.sfx}">${ICON_SFX}Effets</button></div>
-    <div class="actions"><button class="btn big" id="pResume">Reprendre</button><div class="row"><button class="btn ghost" id="pRetry">Recommencer</button><button class="btn ghost" id="pMap">Carte</button></div><button class="link-btn" id="pSave">Sauvegarde et appareils</button></div>
+    <div class="actions"><button class="btn big" id="pResume">Reprendre</button><div class="row"><button class="btn ghost" id="pRetry">Recommencer</button><button class="btn ghost" id="pMap">Carte</button></div><button class="link-btn" id="pSave">Sauvegarde et appareils</button>${Ads.privacy ? '<button class="link-btn" id="pAds">Mes choix pour les publicités</button>' : ''}</div>
   </div>`;
   bindToggles();
   $('#pResume').onclick = closeOverlay;
   $('#pSave').onclick = () => showSaveModal(showPause);
+  if ($('#pAds')) $('#pAds').onclick = () => Ads.privacyForm();
   $('#pRetry').onclick = () => { closeOverlay(); showLevelIntro(G.n); };
   $('#pMap').onclick = () => { closeOverlay(); clearHint(); G = null; showMap(); };
 }
@@ -2099,6 +2189,7 @@ function start(data) {
   requestAnimationFrame(frame);
   Sync.init();
   bindNativeBack();
+  Ads.init();
 }
 /* Bouton retour Android (application mobile uniquement). */
 function bindNativeBack() {
@@ -2114,7 +2205,7 @@ function bindNativeBack() {
     if (!$('#scr-map').hidden) { showTitle(); return; }
     App.exitApp();
   });
-  App.addListener('pause', () => { if (G && !G.ended && !$('#scr-game').hidden && overlay.hidden) showPause(); });
+  App.addListener('pause', () => { if (!Ads.busy && G && !G.ended && !$('#scr-game').hidden && overlay.hidden) showPause(); });
 }
 window.claude?.hot?.snapshot?.(() => ({ save }));
 window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});

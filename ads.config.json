@@ -1,0 +1,17 @@
+{
+  "_aide": "Identifiants Google AdMob. Tant que ce sont ceux de test (ca-app-pub-3940256099942544…), le jeu affiche des publicités d'essai qui ne rapportent rien. Remplace-les par les tiens puis mets \"test\" à false.",
+  "test": true,
+  "android": {
+    "appId": "ca-app-pub-3940256099942544~3347511713",
+    "rewarded": "ca-app-pub-3940256099942544/5224354917",
+    "interstitial": "ca-app-pub-3940256099942544/1033173712"
+  },
+  "ios": {
+    "appId": "ca-app-pub-3940256099942544~1458002511",
+    "rewarded": "ca-app-pub-3940256099942544/1712485313",
+    "interstitial": "ca-app-pub-3940256099942544/4411468910"
+  },
+  "interstitialEveryLevels": 3,
+  "interstitialFromLevel": 5,
+  "interstitialMinSeconds": 180
+}

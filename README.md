@@ -21,6 +21,7 @@ Ce dossier transforme le jeu en application Android et iOS avec [Capacitor](http
 | `assets/` | Icône 1024 px et écran de démarrage 2732 px, sources des icônes générées. |
 | `android/`, `ios/` | Projets natifs (Android Studio, Xcode). |
 | `.github/workflows/` | Compilation automatique sur GitHub (Android et vérification iOS). |
+| `ads.config.json` | Identifiants Google AdMob (de test pour l'instant) et fréquence des publicités. |
 | `FICHE-STORE.md` | Textes prêts à coller dans Google Play et l'App Store, et réponses aux questionnaires. |
 | `CONFIDENTIALITE.md` | Politique de confidentialité exigée par les stores. |
 | `NOM-ET-MARQUE.md` | Vérification du nom et démarches de dépôt de marque. |
@@ -72,6 +73,26 @@ Un **Mac avec Xcode** est obligatoire pour publier sur l'App Store, ainsi que l'
 5. Dans [App Store Connect](https://appstoreconnect.apple.com), remplis la fiche avec `FICHE-STORE.md`, fais tester via TestFlight, puis soumets à la validation d'Apple.
 
 Le workflow GitHub **iOS (vérification)** compile le projet sur un Mac de GitHub pour s'assurer qu'il n'y a pas d'erreur, même sans Mac chez toi. Il ne produit pas de version publiable.
+
+## Publicités (Google AdMob)
+
+Le jeu gagne de l'argent avec **Google AdMob**, la régie de Google pour les applications. AdSense, lui, ne sert qu'aux sites web et est interdit dans les applications.
+
+- **Vidéo avec récompense** : quand les coups sont épuisés et que le « +5 coups » gratuit a déjà servi, le joueur peut *choisir* de regarder une vidéo pour 5 coups de plus. Il ne les reçoit que s'il la regarde jusqu'au bout.
+- **Publicité entre deux niveaux** : au plus une tous les 3 niveaux gagnés et toutes les 3 minutes, jamais avant le niveau 5, jamais pendant une partie.
+- **Consentement** : le formulaire officiel de Google s'affiche au premier lancement pour les joueurs d'Europe, du Royaume-Uni et de Suisse. Ils peuvent changer d'avis dans *Pause → Mes choix pour les publicités*.
+- La version web du jeu n'affiche aucune publicité.
+
+**Tous les réglages sont dans `ads.config.json`.** Il contient pour l'instant les identifiants **de test** de Google : de vraies publicités d'essai s'affichent, mais elles ne rapportent rien. C'est voulu, car cliquer sur ses propres vraies annonces fait bloquer le compte AdMob.
+
+Pour passer aux vraies publicités :
+1. Dans AdMob, crée l'application Android, puis deux blocs d'annonces : **Avec récompense** et **Interstitiel** (et la même chose pour iOS si tu publies sur l'App Store).
+2. Recopie les identifiants dans `ads.config.json`, puis mets `"test": false`. Le script de construction refuse `"test": false` avec des identifiants de test, et inversement vérifie leur format.
+3. Lance `npm run sync` : l'identifiant d'application est recopié automatiquement dans `strings.xml` (Android) et `Info.plist` (iOS).
+4. Mets en ligne le fichier **`app-ads.txt`** à la racine du site déclaré comme « site web du développeur » sur Google Play (GitHub Pages convient). Sa seule ligne : `google.com, pub-TON_NUMERO_EDITEUR, DIRECT, f08c47fec0942fa0`. Le numéro d'éditeur est dans AdMob → Paramètres.
+5. Dans la Play Console, déclare « contient des annonces », l'identifiant publicitaire et la sécurité des données : les réponses sont dans `FICHE-STORE.md`.
+
+Pour tester sur ton téléphone avec les vrais identifiants sans risque, ajoute ton téléphone comme **appareil de test** dans AdMob (Paramètres → Appareils de test).
 
 ## Mettre à jour le jeu
 
